@@ -12,10 +12,12 @@ import shutil
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import utils
+
 
 child = pexpect.spawn('pm3')
 
-child.expect('pm3 -->')
+child.expect('usb')
 
 print(child.before.decode('utf-8'))
 
@@ -29,18 +31,23 @@ class Ui_MainWindow(object):
         child.sendline('hf mf autopwn')
         child.expect('pm3 -->')
         result = child.before.decode('utf-8')
-        new_file_path = self.move_result_files(result)
-        print(new_file_path)
+        new_file_path = utils.analyze_result_files(result)
         if new_file_path:
             last_read_file = new_file_path
         print(result)
-        
+    
+    def clone_card(self):
+        global last_read_file
+        if last_read_file:
+            child.sendline(f'hf mf cload -f {last_read_file}')
+            child.expect('pm3 -->')
+            result = child.before.decode('utf-8')
+            print(result)
 
     def move_result_files(self, string):
         eml_file = re.search(r'hf-mf-.*\.eml', string)
         if eml_file:
             eml_file = eml_file.group()
-            print(eml_file)
             return shutil.move(eml_file, "files")
 
 
@@ -100,6 +107,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.button_scan.clicked.connect(self.read_card)
+        self.button_clone.clicked.connect(self.clone_card)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
