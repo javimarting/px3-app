@@ -58,7 +58,7 @@ background: rgb(28, 123, 130);
 padding: 10pt;</string>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="connectProxmarkPage">
          <property name="sizePolicy">
@@ -121,7 +121,7 @@ border-radius: 10pt;
             <item>
              <widget class="QPushButton" name="connectProxmarkButton">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -137,6 +137,12 @@ border-radius: 10pt;
                 <width>300</width>
                 <height>150</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+                <kerning>false</kerning>
+               </font>
               </property>
               <property name="autoFillBackground">
                <bool>false</bool>

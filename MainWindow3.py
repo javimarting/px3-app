@@ -76,13 +76,17 @@ class Ui_MainWindow(object):
         spacerItem = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         self.verticalLayout_2.addItem(spacerItem)
         self.connectProxmarkButton = QtWidgets.QPushButton(self.connectProxmarkPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.connectProxmarkButton.sizePolicy().hasHeightForWidth())
         self.connectProxmarkButton.setSizePolicy(sizePolicy)
         self.connectProxmarkButton.setMinimumSize(QtCore.QSize(300, 150))
         self.connectProxmarkButton.setMaximumSize(QtCore.QSize(300, 150))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setKerning(False)
+        self.connectProxmarkButton.setFont(font)
         self.connectProxmarkButton.setAutoFillBackground(False)
         self.connectProxmarkButton.setStyleSheet("")
         self.connectProxmarkButton.setObjectName("connectProxmarkButton")
@@ -179,7 +183,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
