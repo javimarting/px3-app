@@ -174,12 +174,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.cloneCardButton)
         self.verticalLayout_3.addLayout(self.verticalLayout_4)
         self.stackedWidget.addWidget(self.hfPage)
-        self.verticalLayout_8.addWidget(self.stackedWidget, 0, QtCore.Qt.AlignHCenter)
+        self.verticalLayout_8.addWidget(self.stackedWidget, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.horizontalLayout.addLayout(self.verticalLayout_8)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
