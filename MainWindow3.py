@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainw.ui'
+# Form implementation generated from reading ui file 'app-gui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -14,7 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(433, 703)
+        MainWindow.resize(480, 730)
+        MainWindow.setMinimumSize(QtCore.QSize(480, 0))
         MainWindow.setStyleSheet("\n"
 "background-color: rgb(3, 3, 40);\n"
 "\n"
@@ -24,6 +25,8 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -84,7 +87,7 @@ class Ui_MainWindow(object):
         self.connectProxmarkButton.setStyleSheet("")
         self.connectProxmarkButton.setObjectName("connectProxmarkButton")
         self.verticalLayout_2.addWidget(self.connectProxmarkButton)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         self.verticalLayout_2.addItem(spacerItem1)
         self.verticalLayout.addLayout(self.verticalLayout_2)
         self.stackedWidget.addWidget(self.connectProxmarkPage)
@@ -171,7 +174,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.cloneCardButton)
         self.verticalLayout_3.addLayout(self.verticalLayout_4)
         self.stackedWidget.addWidget(self.hfPage)
-        self.horizontalLayout.addWidget(self.stackedWidget, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.verticalLayout_8.addWidget(self.stackedWidget, 0, QtCore.Qt.AlignHCenter)
+        self.horizontalLayout.addLayout(self.verticalLayout_8)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -191,4 +195,3 @@ class Ui_MainWindow(object):
         self.connectionOkButton.setText(_translate("MainWindow", "OK"))
         self.readCardButton.setText(_translate("MainWindow", "READ CARD"))
         self.cloneCardButton.setText(_translate("MainWindow", "CLONE CARD"))
-
