@@ -236,6 +236,12 @@ border-radius: 10pt;
                <layout class="QVBoxLayout" name="verticalLayout_13">
                 <item>
                  <widget class="QLabel" name="mifareTagInformationLabel">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>80</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>25</pointsize>

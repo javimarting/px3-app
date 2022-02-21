@@ -132,6 +132,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_13 = QtWidgets.QVBoxLayout()
         self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.mifareTagInformationLabel = QtWidgets.QLabel(self.mifareResultsPage)
+        self.mifareTagInformationLabel.setMinimumSize(QtCore.QSize(0, 80))
         font = QtGui.QFont()
         font.setPointSize(25)
         font.setBold(True)
