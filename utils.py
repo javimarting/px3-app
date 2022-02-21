@@ -8,7 +8,7 @@ def rename_and_move_files(filenames, new_folder):
     formatted_dt = dt.strftime('%Y%m%d-%H%M%S')
     eml_file = ""
     for filename in filenames:
-        new_filename = re.sub(r'hf-mf', formatted_dt, filename)
+        new_filename = re.sub(r'hf-mf', f"hf-mf-{formatted_dt}", filename)
         os.rename(filename, os.path.join(new_folder, new_filename))
         if new_filename.endswith('eml'):
             eml_file = os.path.join(new_folder, new_filename)
