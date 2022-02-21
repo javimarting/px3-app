@@ -65,6 +65,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         worker_thread.started.connect(proxmark_worker.connect_proxmark)
         proxmark_worker.connected.connect(self.handle_connected)
         proxmark_worker.not_connected.connect(self.handle_not_connected)
+        proxmark_worker.finished.connect(worker_thread.quit)
         worker_thread.start()
         
 
