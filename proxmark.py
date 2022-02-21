@@ -2,6 +2,8 @@ import re
 import pexpect
 from PyQt5.QtCore import QObject, pyqtSignal
 
+pchild = ""
+
 class Proxmark(QObject):
     connected = pyqtSignal(pexpect.pty_spawn.spawn)
     not_connected = pyqtSignal(str)
@@ -10,41 +12,63 @@ class Proxmark(QObject):
     finished = pyqtSignal()
 
     def connect_proxmark(self):
-        self.child = pexpect.spawn('pm3', timeout=30, encoding='utf-8')
-        result = self.child.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
+        self.pchild = pexpect.spawn('pm3', timeout=30, encoding='utf-8')
+        result = self.pchild.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
         
         if result == 0:
-            self.connected.emit(self.child)
+            self.connected.emit(self.pchild)
         else:
             self.not_connected.emit("Couldn't establish connection")
-        self.finished.emit()
+        
     
     def read_mifare_hf_tag(self):
-        self.child.sendline('hf mf autopwn')
-        result = self.child.expect(["autopwn execution time", "card select failed"])
+        self.pchild.sendline('hf mf autopwn')
+        result = self.pchild.expect(["autopwn execution time", "card select failed", pexpect.EOF, pexpect.TIMEOUT])
         if result == 0:
-            return self.child.before
+            return self.pchild.before
     
     def read_tag(self):
-        self.child.sendline('auto')
-        self.child.expect('pm3 -->')
-        output = self.child.before
+        self.pchild.sendline('auto')
+        self.pchild.expect('pm3 -->')
+        output = self.pchild.before
+        response = ""
         tag_found = re.search(r'Valid .* found', output)
         if tag_found:
-            return tag_found.group()
+            raw_string = tag_found.group()
+            string = re.sub(r"\[32m", "", raw_string)
+            response = re.sub(r"\[0m ", "", string)
+            
         else:
-            return "Couldn't detect tag"
+            response = "Couldn't detect tag"
+        return response
 
 
+class Worker(QObject):
+    finished = pyqtSignal(str)
+    successful = pyqtSignal(str)
 
+    def read_tag(self):
+        self.pchild.sendline('auto')
+        self.pchild.expect('pm3 -->')
+        output = self.pchild.before
+        tag_found = re.search(r'Valid .* found', output)
+        response = ""
+        if tag_found:
+            raw_string = tag_found.group()
+            string = re.sub(r"\[32m", "", raw_string)
+            response = re.sub(r"\[0m ", "", string)
+        else:
+            response = "Couldn't detect tag"
+        self.finished.emit(response)
+        
 
 # def connect_proxmark():
-#     child = pexpect.spawn('pm3', timeout=10, encoding='utf-8')
-#     result = child.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
+#     pchild = pexpect.spawn('pm3', timeout=10, encoding='utf-8')
+#     result = pchild.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
 #     print(result)
-#     print(child.before)
+#     print(pchild.before)
 #     if result == 0:
-#         return child
+#         return pchild
 #     else:
 #         return None
     

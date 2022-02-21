@@ -62,7 +62,7 @@ color: rgb(255, 255, 255);
 }</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="connectProxmarkPage">
          <property name="sizePolicy">
@@ -184,7 +184,7 @@ border-radius: 10pt;
           <item>
            <layout class="QGridLayout" name="gridLayout">
             <item row="1" column="3">
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="customCommandButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -192,12 +192,13 @@ border-radius: 10pt;
                </sizepolicy>
               </property>
               <property name="text">
-               <string>PushButton</string>
+               <string>CUSTOM
+COMMAND</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="savedTagsButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -205,12 +206,13 @@ border-radius: 10pt;
                </sizepolicy>
               </property>
               <property name="text">
-               <string>SAVED TAGS</string>
+               <string>SAVED
+TAGS</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="tagInfoButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -218,12 +220,13 @@ border-radius: 10pt;
                </sizepolicy>
               </property>
               <property name="text">
-               <string>TAG INFO</string>
+               <string>TAG
+INFO</string>
               </property>
              </widget>
             </item>
             <item row="0" column="3">
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="mifareButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
