@@ -20,13 +20,13 @@ def rename_and_move_files(filenames, new_folder):
 def analyze_result_files(string):
     if re.search(r'hf-mf-', string):
         filenames = []
-        keys_file = re.search(r'hf-mf-.*-key\.bin', string).group()
+        keys_file = re.search(r'hf-mf-.*-key.*\.bin', string).group()
         filenames.append(keys_file)
-        binary_file = re.search(r'hf-mf-.*-dump\.bin', string).group()
+        binary_file = re.search(r'hf-mf-.*-dump.*\.bin', string).group()
         filenames.append(binary_file)
-        text_file = re.search(r'hf-mf-.*-dump\.eml', string).group()
+        text_file = re.search(r'hf-mf-.*-dump.*\.eml', string).group()
         filenames.append(text_file)
-        json_file = re.search(r'hf-mf-.*-dump\.json', string).group()
+        json_file = re.search(r'hf-mf-.*-dump.*\.json', string).group()
         filenames.append(json_file)
 
         return rename_and_move_files(filenames, "files")
