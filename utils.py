@@ -1,19 +1,23 @@
 import datetime
 import re
 import os
+import json
 
 
 def rename_and_move_files(filenames, new_folder):
     dt = datetime.datetime.now()
     formatted_dt = dt.strftime('%Y%m%d-%H%M%S')
     eml_file = ""
+    json_file = ""
     for filename in filenames:
         new_filename = re.sub(r'hf-mf', f"hf-mf-{formatted_dt}", filename)
         os.rename(filename, os.path.join(new_folder, new_filename))
         if new_filename.endswith('eml'):
             eml_file = os.path.join(new_folder, new_filename)
+        elif new_filename.endswith('json'):
+            json_file = os.path.join(new_folder, new_filename)
     
-    return eml_file
+    return {'eml_file': eml_file, 'json_file': json_file}
     
 
 
@@ -32,3 +36,26 @@ def analyze_result_files(string):
         return rename_and_move_files(filenames, "files")
         
 
+def parse_json_file(json_file):
+    with open(json_file, "r") as f:
+        data = json.load(f)
+        uid = data['Card']['UID']
+        atqa = data['Card']['ATQA']
+        sak = data['Card']['SAK']
+        memory_sectors = {}
+        block = 0
+
+        for n in range(16):
+            memory_sectors[f'{n}'] = {}
+            for i in range(4):
+                memory_sectors[f'{n}'][f'{i}'] = data['blocks'][f'{block}']
+                block += 1
+        
+        memory_string = ""
+
+        for s, b in memory_sectors.items():
+            memory_string += f"\nSector {s}:\n"
+            for key, value in b.items():
+                memory_string += f"\t{key}: {value}\n"
+    
+        return f"UID: {uid}\nATQA: {atqa}\nSAK: {sak}"

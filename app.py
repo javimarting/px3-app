@@ -30,8 +30,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tagInformationOkButton.clicked.connect(self.show_main_menu_page)
         self.tagInfoButton.clicked.connect(self.show_tag_info_page)
         self.tagInfoButton.clicked.connect(self.read_tag)
-        self.mifareButton.clicked.connect(self.show_tag_info_page)
-        self.mifareButton.clicked.connect(self.read_hf_tag)
+        self.mifareButton.clicked.connect(self.show_mifare_options_page)
+        self.readMifareTagButton.clicked.connect(self.show_mifare_results_page)
+        self.readMifareTagButton.clicked.connect(self.read_hf_tag)
+        self.backMifareButton.clicked.connect(self.show_mifare_options_page)
 
     def show_connecting_page(self):
         self.connectionOkButton.hide()
@@ -41,13 +43,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def show_main_menu_page(self):
         self.stackedWidget.setCurrentWidget(self.mainMenuPage)
     
+    def show_mifare_options_page(self):
+        self.stackedWidget.setCurrentWidget(self.mifarePage)
+        self.mifareStackedWidget.setCurrentWidget(self.mifareOptionsPage)
+    
+    def show_mifare_results_page(self):
+        self.mifareStackedWidget.setCurrentWidget(self.mifareResultsPage)
+    
     def read_hf_tag(self):
         global proxmark_worker
         result = self.proxmark_worker.read_mifare_hf_tag()
         if result:
-            utils.analyze_result_files(result)
-            text = "UID: 56 45 32 34\nDATE: 2/21/2022\nKEY"
-            self.tagInformationLabel.setText(text)
+            files = utils.analyze_result_files(result)
+            print(files['json_file'])
+            text = utils.parse_json_file(files['json_file'])
+            self.mifareTagResultsLabel.setText(text)
     
     def show_tag_info_page(self):
         self.tagInformationLabel.setText("")
