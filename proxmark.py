@@ -4,11 +4,13 @@ from PyQt5.QtCore import QObject, pyqtSignal
 
 pchild = ""
 
+
 class Proxmark(QObject):
     connected = pyqtSignal(pexpect.pty_spawn.spawn)
     not_connected = pyqtSignal(str)
     successful_operation = pyqtSignal(str)
     unsuccessful_operation = pyqtSignal(str)
+    finished_operation = pyqtSignal(str)
     finished = pyqtSignal()
 
     def connect_proxmark(self):
@@ -19,8 +21,7 @@ class Proxmark(QObject):
             self.connected.emit(self.pchild)
         else:
             self.not_connected.emit("Couldn't establish connection")
-        
-    
+
     def read_mifare_hf_tag(self):
         self.pchild.sendline('hf mf autopwn')
         result = self.pchild.expect(["autopwn execution time", "card select failed", pexpect.EOF, pexpect.TIMEOUT])
