@@ -204,6 +204,9 @@ class Ui_MainWindow(object):
         self.tagMemoryLabel.setObjectName("tagMemoryLabel")
         self.verticalLayout_15.addWidget(self.tagMemoryLabel)
         self.scrollArea = QtWidgets.QScrollArea(self.memoryLayoutPage)
+        self.scrollArea.setStyleSheet("QScrollBar:vertical {\n"
+"    width: 50px;\n"
+"}")
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()

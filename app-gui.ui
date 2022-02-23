@@ -406,6 +406,11 @@ MEMORY</string>
               </item>
               <item>
                <widget class="QScrollArea" name="scrollArea">
+                <property name="styleSheet">
+                 <string notr="true">QScrollBar:vertical {
+    width: 50px;
+}</string>
+                </property>
                 <property name="widgetResizable">
                  <bool>true</bool>
                 </property>
