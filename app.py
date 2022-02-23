@@ -1,10 +1,8 @@
-import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QObject, QThread, pyqtSignal
 from MainWindow3 import Ui_MainWindow
 from proxmark import Proxmark, Worker, pchild
-from models import TableModel
 import utils
 from tags import Mifare1k
 
@@ -17,12 +15,13 @@ proxmark_child = None
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.last_mifare_tag_read = None
-        self.memory_data = ['hola']
         self.setupUi(self)
-        self.worker_thread = QThread()
+
+        self.last_mifare_tag_read = None
+
+        self.proxmark_thread = QThread()
         self.proxmark_worker = Proxmark()
-        self.proxmark_worker.moveToThread(self.worker_thread)
+        self.proxmark_worker.moveToThread(self.proxmark_thread)
 
         self.stackedWidget.setCurrentWidget(self.connectProxmarkPage)
 
@@ -34,6 +33,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tagInfoButton.clicked.connect(self.read_tag)
         self.mifareButton.clicked.connect(self.show_mifare_options_page)
         self.readMifareTagButton.clicked.connect(self.show_mifare_results_page)
+        self.mifareOptionsBackButton.clicked.connect(self.show_main_menu_page)
         self.readMifareTagButton.clicked.connect(self.read_hf_tag)
         self.backMifareButton.clicked.connect(self.show_mifare_options_page)
         self.viewMemoryMifareButton.clicked.connect(self.show_memory_page)
@@ -41,9 +41,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def show_memory_page(self):
         self.mifareStackedWidget.setCurrentWidget(self.memoryLayoutPage)
-        model = TableModel(self.last_mifare_tag_read.memory)
-        self.memoryTableView.setModel(model)
-        self.memoryTableView.resizeColumnsToContents()
+        print(self.last_mifare_tag_read.memory_string())
+        # model = TableModel(self.last_mifare_tag_read.memory)
+        # self.memoryTableView.setModel(model)
+        # self.memoryTableView.resizeColumnsToContents()
+        self.memoryLayoutLabel.setText(self.last_mifare_tag_read.memory_string())
 
     def show_connecting_page(self):
         self.connectionOkButton.hide()
@@ -52,6 +54,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def show_main_menu_page(self):
         self.stackedWidget.setCurrentWidget(self.mainMenuPage)
+
+    def show_tag_info_page(self):
+        self.tagInformationLabel.setText("")
+        self.stackedWidget.setCurrentWidget(self.tagDetailsPage)
     
     def show_mifare_options_page(self):
         self.stackedWidget.setCurrentWidget(self.mifarePage)
@@ -66,13 +72,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             files = utils.analyze_result_files(result)
             print(files['json_file'])
             mifare_tag = Mifare1k(files)
+            self.mifareTagResultsLabel.setStyleSheet("color: rgb(255, 255, 255);")
             self.mifareTagResultsLabel.setText(mifare_tag.basic_info())
+            self.manage_mifare_tag_information_buttons(True)
             self.last_mifare_tag_read = mifare_tag
-    
-    def show_tag_info_page(self):
-        self.tagInformationLabel.setText("")
-        self.stackedWidget.setCurrentWidget(self.tagDetailsPage)
-        
+        else:
+            self.mifareTagResultsLabel.setText("Couldn't read tag")
+            self.mifareTagResultsLabel.setStyleSheet("color: rgb(255, 0, 0);")
+            self.manage_mifare_tag_information_buttons(False)
+
+    def manage_mifare_tag_information_buttons(self, bool):
+        self.cloneMifareTagButton.setEnabled(bool)
+        self.simulateMifareButton.setEnabled(bool)
+        self.viewMemoryMifareButton.setEnabled(bool)
+
     def show_tag_info(self, info):
         self.tagInformationLabel.setText(info)
 
@@ -84,10 +97,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tagInformationLabel.setText(text)
 
     def start_connection(self):
-        self.worker_thread.started.connect(self.proxmark_worker.connect_proxmark)
+        self.proxmark_thread.started.connect(self.proxmark_worker.connect_proxmark)
         self.proxmark_worker.connected.connect(self.handle_connected)
         self.proxmark_worker.not_connected.connect(self.handle_not_connected)
-        self.worker_thread.start()
+        self.proxmark_thread.start()
 
     def handle_connected(self, pexpect_object):
         self.stackedWidget.setCurrentWidget(self.mainMenuPage)

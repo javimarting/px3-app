@@ -2,9 +2,7 @@ import datetime
 import re
 import os
 import json
-import pandas as pd
 
-from tags import Mifare1k
 
 
 def rename_and_move_files(filenames, new_folder):
@@ -46,11 +44,13 @@ def parse_json_file(json_file):
         atqa = data['Card']['ATQA']
         sak = data['Card']['SAK']
         memory = []
+        memory_blocks = {}
         memory_sectors = {}
         block = 0
 
         for i in range(64):
             memory.append([i, data['blocks'][str(i)]])
+            memory_blocks[str(i)] = data['blocks'][str(i)]
 
         for n in range(16):
             memory_sectors[f'{n}'] = {}
@@ -66,17 +66,18 @@ def parse_json_file(json_file):
                 memory_string += f"\t{key}: {value}\n"
 
 
-        mem = pd.DataFrame(
-            [data['blocks'][str(i)] for i in range(64)],
-            columns=["Value"],
-            index=[str(i) for i in range(64)],
-        )
+        # mem = pd.DataFrame(
+        #     [data['blocks'][str(i)] for i in range(64)],
+        #     columns=["Value"],
+        #     index=[str(i) for i in range(64)],
+        # )
+
 
         json_data = {
             'uid': uid,
             'atqa': atqa,
             'sak': sak,
-            'memory': mem,
+            'memory': memory_sectors,
         }
         # return f"UID: {uid}\nATQA: {atqa}\nSAK: {sak}"
         return json_data

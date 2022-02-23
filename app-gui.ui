@@ -232,6 +232,22 @@ border-radius: 10pt;
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QPushButton" name="mifareOptionsBackButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(188, 0, 4);</string>
+                  </property>
+                  <property name="text">
+                   <string>BACK</string>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </item>
              </layout>
@@ -279,7 +295,6 @@ border-radius: 10pt;
                 </property>
                 <property name="styleSheet">
                  <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(0, 25, 51);
 border-radius: 10;
 padding: 10px;
 border: 10px;</string>
@@ -354,13 +369,73 @@ MEMORY</string>
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="mifareClonePage">
+             <layout class="QVBoxLayout" name="verticalLayout_17">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_16"/>
+              </item>
+             </layout>
+            </widget>
             <widget class="QWidget" name="memoryLayoutPage">
              <layout class="QVBoxLayout" name="verticalLayout_15">
               <item>
-               <widget class="QTableView" name="memoryTableView">
-                <attribute name="verticalHeaderVisible">
+               <widget class="QLabel" name="tagMemoryLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>25</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(33, 136, 145);</string>
+                </property>
+                <property name="text">
+                 <string>TAG MEMORY</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QScrollArea" name="scrollArea">
+                <property name="widgetResizable">
                  <bool>true</bool>
-                </attribute>
+                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>334</width>
+                   <height>338</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_18">
+                  <item>
+                   <widget class="QLabel" name="memoryLayoutLabel">
+                    <property name="font">
+                     <font>
+                      <family>Monaco</family>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: rgb(255, 255, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
               <item>

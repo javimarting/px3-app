@@ -12,3 +12,12 @@ class Mifare1k():
 
     def basic_info(self):
         return f"UID: {self.uid}\nATQA: {self.atqa}\nSAK: {self.sak}"
+
+    def memory_string(self):
+        result = ""
+        for i in range(16):
+            result += f"SECTOR {i}:\n"
+            for n in range(4):
+                result += f"{self.memory[str(i)][str(n)]}\n"
+            result += "\n"
+        return result
