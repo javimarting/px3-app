@@ -19,9 +19,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.last_mifare_tag_read = None
 
-        self.proxmark_thread = QThread()
+        # self.proxmark_thread = QThread()
         self.proxmark_worker = Proxmark()
-        self.proxmark_worker.moveToThread(self.proxmark_thread)
+        # self.proxmark_worker.moveToThread(self.proxmark_thread)
 
         self.stackedWidget.setCurrentWidget(self.connectProxmarkPage)
 
@@ -90,17 +90,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tagInformationLabel.setText(info)
 
     def read_tag(self):
+        # thread = QThread()
+        # worker = Worker(self.proxmark_child)
+        # worker.moveToThread(thread)
+        # thread.started.connect(worker.read_tag)
+        # worker.read.connect(self.set_tag_info)
         result = self.proxmark_worker.read_tag()
         self.tagInformationLabel.setText(result)
+        # thread.start()
+
+    def set_tag_info(self, info):
+        self.tagInformationLabel.setText(info)
 
     def set_label_text(self, text):
         self.tagInformationLabel.setText(text)
 
     def start_connection(self):
-        self.proxmark_thread.started.connect(self.proxmark_worker.connect_proxmark)
-        self.proxmark_worker.connected.connect(self.handle_connected)
-        self.proxmark_worker.not_connected.connect(self.handle_not_connected)
-        self.proxmark_thread.start()
+        # self.proxmark_thread.started.connect(self.proxmark_worker.connect_proxmark)
+        # self.proxmark_worker.connected.connect(self.handle_connected)
+        # self.proxmark_worker.not_connected.connect(self.handle_not_connected)
+        # self.proxmark_thread.start()
+
+        child = self.proxmark_worker.connect_proxmark()
+        if child:
+            self.handle_connected(child)
+        else:
+            self.handle_not_connected("Could not establish connection")
 
     def handle_connected(self, pexpect_object):
         self.stackedWidget.setCurrentWidget(self.mainMenuPage)
@@ -111,7 +126,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.connectionOkButton.show()
         self.connectionStatusLabel.show()
         self.connectionStatusLabel.setStyleSheet("color: rgb(255, 0, 0);")
-        self.connectionStatusLabel.setText("Could not establish connection")
+        self.connectionStatusLabel.setText(string)
 
     def return_to_connection_page(self):
         self.stackedWidget.setCurrentWidget(self.connectProxmarkPage)

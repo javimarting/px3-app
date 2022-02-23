@@ -19,6 +19,7 @@ class Proxmark(QObject):
         
         if result == 0:
             self.connected.emit(self.pchild)
+            return self.pchild
         else:
             self.not_connected.emit("Couldn't establish connection")
 
@@ -45,13 +46,16 @@ class Proxmark(QObject):
 
 
 class Worker(QObject):
+    def __init__(self, child):
+        super().__init__()
+        self.child = child
     finished = pyqtSignal(str)
-    successful = pyqtSignal(str)
+    read = pyqtSignal(str)
 
     def read_tag(self):
-        self.pchild.sendline('auto')
-        self.pchild.expect('pm3 -->')
-        output = self.pchild.before
+        self.child.sendline('auto')
+        self.child.expect('pm3 -->')
+        output = self.child.before
         tag_found = re.search(r'Valid .* found', output)
         response = ""
         if tag_found:
@@ -60,7 +64,7 @@ class Worker(QObject):
             response = re.sub(r"\[0m ", "", string)
         else:
             response = "Couldn't detect tag"
-        self.finished.emit(response)
+        self.read.emit(response)
         
 
 # def connect_proxmark():
