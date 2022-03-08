@@ -1,5 +1,6 @@
 import utils
 
+
 class Mifare1k():
     def __init__(self, files):
         self.eml_file = files['eml_file']
@@ -18,6 +19,5 @@ class Mifare1k():
         for i in range(16):
             result += f"SECTOR {i}:\n"
             for n in range(4):
-                result += f"{self.memory[str(i)][str(n)]}\n"
-            result += "\n"
+                result += f"  {str(n)}: {self.memory[str(i)][str(n)]}\n"
         return result

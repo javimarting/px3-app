@@ -4,7 +4,6 @@ import os
 import json
 
 
-
 def rename_and_move_files(filenames, new_folder):
     dt = datetime.datetime.now()
     formatted_dt = dt.strftime('%Y%m%d-%H%M%S')
@@ -19,7 +18,6 @@ def rename_and_move_files(filenames, new_folder):
             json_file = os.path.join(new_folder, new_filename)
     
     return {'eml_file': eml_file, 'json_file': json_file}
-    
 
 
 def analyze_result_files(string):
@@ -43,35 +41,14 @@ def parse_json_file(json_file):
         uid = data['Card']['UID']
         atqa = data['Card']['ATQA']
         sak = data['Card']['SAK']
-        memory = []
-        memory_blocks = {}
         memory_sectors = {}
         block = 0
-
-        for i in range(64):
-            memory.append([i, data['blocks'][str(i)]])
-            memory_blocks[str(i)] = data['blocks'][str(i)]
 
         for n in range(16):
             memory_sectors[f'{n}'] = {}
             for i in range(4):
                 memory_sectors[f'{n}'][f'{i}'] = data['blocks'][f'{block}']
                 block += 1
-        
-        memory_string = ""
-
-        for s, b in memory_sectors.items():
-            memory_string += f"\nSector {s}:\n"
-            for key, value in b.items():
-                memory_string += f"\t{key}: {value}\n"
-
-
-        # mem = pd.DataFrame(
-        #     [data['blocks'][str(i)] for i in range(64)],
-        #     columns=["Value"],
-        #     index=[str(i) for i in range(64)],
-        # )
-
 
         json_data = {
             'uid': uid,
@@ -79,5 +56,9 @@ def parse_json_file(json_file):
             'sak': sak,
             'memory': memory_sectors,
         }
-        # return f"UID: {uid}\nATQA: {atqa}\nSAK: {sak}"
+
         return json_data
+
+
+def get_saved_mifare_tags():
+    pass

@@ -26,17 +26,121 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
+   <string notr="true">/*background-color: rgb(30, 39, 68);
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(3, 25, 50, 255), stop:1 rgba(3, 3, 40, 255));*/
 background-color: rgb(3, 3, 40);
+
 
 
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+color: rgb(255, 255, 255);
+}</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_13">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_8">
-      <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+      <item>
+       <widget class="QWidget" name="backExitContainer" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="backButton">
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>80</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+border-radius: 15;
+/*background-color: rgb(33, 136, 145);*/
+background-color: rgb(110, 117, 169);
+color: rgb(0, 0, 0);
+box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+}
+QPushButton:hover {
+background-color: rgb(28, 123, 130);
+}
+</string>
+           </property>
+           <property name="text">
+            <string>BACK</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="exitButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>80</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 15;
+/*background-color: rgb(160, 0, 0);*/
+background-color: rgb(190, 103, 94);</string>
+           </property>
+           <property name="text">
+            <string>EXIT</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -55,7 +159,7 @@ background-color: rgb(3, 3, 40);
 background-color: rgb(33, 136, 145);
 /*background-color: rgb(25, 145, 190);*/
 color: rgb(255, 255, 255);
-border-radius: 10;
+border-radius: 15;
 font-size: 20pt;
 }
 QPushButton:hover {
@@ -189,66 +293,63 @@ border-radius: 10pt;
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item alignment="Qt::AlignHCenter">
            <widget class="QStackedWidget" name="mifareStackedWidget">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
             <widget class="QWidget" name="mifareOptionsPage">
              <layout class="QVBoxLayout" name="verticalLayout_12">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_9">
-                <item>
-                 <widget class="QPushButton" name="readMifareTagButton">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>100</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>READ TAG</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="cloneMifareTagButton">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>100</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>CLONE TAG</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="simulateMifareTagButton">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>100</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>SIMULATE TAG</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="mifareOptionsBackButton">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>80</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(188, 0, 4);</string>
-                  </property>
-                  <property name="text">
-                   <string>BACK</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QWidget" name="mifareOptionsContainer" native="true">
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border: 1px solid;
+padding: 10px;
+box-shadow: 5px 10px 18px rgb(33, 136, 145);</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_20">
+                 <item>
+                  <widget class="QPushButton" name="readMifareTagButton">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>READ TAG</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="cloneMifareTagButton">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>CLONE TAG</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="simulateMifareTagButton">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>SIMULATE TAG</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -256,6 +357,12 @@ border-radius: 10pt;
              <layout class="QVBoxLayout" name="verticalLayout_14">
               <item>
                <widget class="QLabel" name="mifareTagInformationLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -282,6 +389,12 @@ border-radius: 10pt;
               </item>
               <item>
                <widget class="QLabel" name="mifareTagResultsLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -308,12 +421,25 @@ border: 10px;</string>
                </widget>
               </item>
               <item>
-               <layout class="QGridLayout" name="gridLayout_2">
-                <item row="1" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QPushButton" name="cloneMifareButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>80</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>CLONE</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="viewMemoryMifareButton">
                   <property name="minimumSize">
                    <size>
-                    <width>160</width>
+                    <width>120</width>
                     <height>80</height>
                    </size>
                   </property>
@@ -323,40 +449,11 @@ MEMORY</string>
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1">
-                 <widget class="QPushButton" name="backMifareButton">
-                  <property name="minimumSize">
-                   <size>
-                    <width>160</width>
-                    <height>80</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(204, 0, 4);</string>
-                  </property>
-                  <property name="text">
-                   <string>BACK</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="cloneMifareButton">
-                  <property name="minimumSize">
-                   <size>
-                    <width>160</width>
-                    <height>80</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>CLONE</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
+                <item>
                  <widget class="QPushButton" name="simulateMifareButton">
                   <property name="minimumSize">
                    <size>
-                    <width>160</width>
+                    <width>120</width>
                     <height>80</height>
                    </size>
                   </property>
@@ -366,6 +463,41 @@ MEMORY</string>
                  </widget>
                 </item>
                </layout>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="mifareCloneResultsPage">
+             <layout class="QVBoxLayout" name="verticalLayout_19">
+              <item>
+               <widget class="QLabel" name="mifareCloneResultsLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>20</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 255, 255)</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="mifareCloneResultsOkButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>80</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>OK</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -408,7 +540,7 @@ MEMORY</string>
                <widget class="QScrollArea" name="scrollArea">
                 <property name="styleSheet">
                  <string notr="true">QScrollBar:vertical {
-    width: 50px;
+    width: 30px;
 }</string>
                 </property>
                 <property name="widgetResizable">
@@ -419,8 +551,8 @@ MEMORY</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>334</width>
-                   <height>338</height>
+                   <width>388</width>
+                   <height>420</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -467,8 +599,72 @@ MEMORY</string>
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="otherPage">
-         <layout class="QVBoxLayout" name="verticalLayout_10"/>
+        <widget class="QWidget" name="resultsPage">
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QLabel" name="resultsPageTitleLabel">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>30</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(33, 136, 145);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QScrollArea" name="resultsPageScrollArea">
+            <property name="styleSheet">
+             <string notr="true">QScrollBar:vertical {
+    width: 30px;
+}</string>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="resultsPageScrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>428</width>
+               <height>538</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_21">
+              <item>
+               <widget class="QLabel" name="resultsPageDataLabel">
+                <property name="font">
+                 <font>
+                  <family>Monaco</family>
+                  <pointsize>20</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
         </widget>
         <widget class="QWidget" name="mainMenuPage">
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -537,24 +733,6 @@ INFO</string>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_6">
-            <item>
-             <widget class="QLabel" name="connectingProxmarkLabel">
-              <property name="font">
-               <font>
-                <pointsize>20</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);</string>
-              </property>
-              <property name="text">
-               <string>Connecting to the Proxmark...</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
             <item>
              <widget class="QLabel" name="connectionStatusLabel">
               <property name="font">
@@ -671,6 +849,22 @@ border: 10px;</string>
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

@@ -2,79 +2,55 @@ import re
 import pexpect
 from PyQt5.QtCore import QObject, pyqtSignal
 
-pchild = ""
 
-
-class Proxmark(QObject):
-    connected = pyqtSignal(pexpect.pty_spawn.spawn)
-    not_connected = pyqtSignal(str)
-    successful_operation = pyqtSignal(str)
-    unsuccessful_operation = pyqtSignal(str)
-    finished_operation = pyqtSignal(str)
-    finished = pyqtSignal()
+class Proxmark:
+    def __init__(self):
+        self.child = None
 
     def connect_proxmark(self):
-        self.pchild = pexpect.spawn('pm3', timeout=30, encoding='utf-8')
-        result = self.pchild.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
-        
+        self.child = pexpect.spawn('pm3', timeout=30, encoding='utf-8')
+        result = self.child.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
         if result == 0:
-            self.connected.emit(self.pchild)
-            return self.pchild
-        else:
-            self.not_connected.emit("Couldn't establish connection")
+            return self.child
+
+    def execute_command(self, command):
+        self.child.sendline(command)
+        result = self.child.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
+        if result:
+            return self.child.before
 
     def read_mifare_hf_tag(self):
-        self.pchild.sendline('hf mf autopwn')
-        result = self.pchild.expect(["autopwn execution time", "card select failed", pexpect.EOF, pexpect.TIMEOUT])
-        if result == 0:
-            return self.pchild.before
-    
-    def read_tag(self):
-        self.pchild.sendline('auto')
-        self.pchild.expect('pm3 -->')
-        output = self.pchild.before
-        response = ""
-        tag_found = re.search(r'Valid .* found', output)
-        if tag_found:
-            raw_string = tag_found.group()
-            string = re.sub(r"\[32m", "", raw_string)
-            response = re.sub(r"\[0m ", "", string)
-            
-        else:
-            response = "Couldn't detect tag"
-        return response
-
-
-class Worker(QObject):
-    def __init__(self, child):
-        super().__init__()
-        self.child = child
-    finished = pyqtSignal(str)
-    read = pyqtSignal(str)
-
-    def read_tag(self):
-        self.child.sendline('auto')
+        self.child.sendline('hf mf autopwn')
         self.child.expect('pm3 -->')
         output = self.child.before
-        tag_found = re.search(r'Valid .* found', output)
-        response = ""
-        if tag_found:
-            raw_string = tag_found.group()
-            string = re.sub(r"\[32m", "", raw_string)
-            response = re.sub(r"\[0m ", "", string)
-        else:
-            response = "Couldn't detect tag"
-        self.read.emit(response)
-        
-
-# def connect_proxmark():
-#     pchild = pexpect.spawn('pm3', timeout=10, encoding='utf-8')
-#     result = pchild.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
-#     print(result)
-#     print(pchild.before)
-#     if result == 0:
-#         return pchild
-#     else:
-#         return None
+        result = re.search(r'autopwn execution time', output)
+        # result = self.pchild.expect(["autopwn execution time", "card select failed", pexpect.EOF, pexpect.TIMEOUT])
+        if result:
+            return self.child.before
     
+    def read_tag(self):
+        self.child.sendline('auto')
+        result = self.child.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
+        response = ""
+        if result == 0:
+            output = self.child.before
+            tag_found = re.search(r'Valid .* found', output)
+            if tag_found:
+                raw_string = tag_found.group()
+                string = re.sub(r"\[32m", "", raw_string)
+                response = re.sub(r"\[0m ", "", string)
+                return response
+
+    def clone_mifare_1k_tag(self, file):
+        print(file)
+        command = f"hf mf cload -f {file}"
+        self.child.sendline(command)
+        self.child.expect('pm3 -->')
+        output = self.child.before
+        print(output)
+        cloned = re.search(r'Done', output)
+        if cloned:
+            return True
+
+
     
