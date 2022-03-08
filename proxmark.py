@@ -1,6 +1,5 @@
 import re
 import pexpect
-from PyQt5.QtCore import QObject, pyqtSignal
 
 
 class Proxmark:
@@ -53,4 +52,3 @@ class Proxmark:
             return True
 
 
-    

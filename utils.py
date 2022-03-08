@@ -59,6 +59,3 @@ def parse_json_file(json_file):
 
         return json_data
 
-
-def get_saved_mifare_tags():
-    pass

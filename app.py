@@ -1,14 +1,10 @@
 import sys
 from PyQt5 import QtWidgets
+
 from MainWindow3 import Ui_MainWindow
 from proxmark import Proxmark
 import utils
 from tags import Mifare1k
-
-
-
-proxmark_worker = None
-proxmark_child = None
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -18,6 +14,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.last_page = self.connectProxmarkPage
         self.actual_page = self.connectProxmarkPage
         self.backButton.hide()
+
+        self.proxmark = Proxmark()
 
         self.proxmark_child = None
 
@@ -61,6 +59,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.resultsPageDataLabel.setText(data)
         self.last_page = last_page
 
+    def start_connection(self):
+        connection = self.proxmark.connect_proxmark()
+        if connection:
+            self.show_main_menu_page()
+        else:
+            title = "CONNECTION STATUS"
+            data = "Couldn't establish connection"
+            last_page = self.connectProxmarkPage
+            self.set_results_data(False, title, data, last_page)
+            self.show_results_page()
+
     def show_last_page(self):
         if self.last_page is self.mainMenuPage or self.last_page is self.connectProxmarkPage:
             self.backButton.hide()
@@ -80,8 +89,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         elif self.actual_page is self.mifareOptionsPage:
             self.show_main_menu_page()
         elif self.actual_page is self.resultsPage:
-            self.resultsPageDataLabel.setStyleSheet("color: rgb(255, 255, 255);")
             self.resultsPageDataLabel.setText("")
+
+        if self.last_page is self.connectProxmarkPage:
+            self.show_connect_proxmark_page()
+        elif self.last_page is self.mainMenuPage:
             self.show_main_menu_page()
 
         # self.stackedWidget.setCurrentWidget(self.last_page)
@@ -152,20 +164,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.mifareCloneResultsLabel.setText("Unable to clone tag")
 
     def read_tag(self):
-        result = self.proxmark_worker.read_tag()
+        result = self.proxmark.read_tag()
         title = "TAG INFORMATION"
+        data = ""
         if result:
+            data = result
             self.set_results_data(True, title, result, self.mainMenuPage)
         else:
             data = "Couldn't read tag"
             self.set_results_data(False, title, data, self.mainMenuPage)
 
-    def start_connection(self):
-        child = self.proxmark_worker.connect_proxmark()
-        if child:
-            self.handle_connected(child)
-        else:
-            self.handle_not_connected("Could not establish connection")
 
     def handle_connected(self, pexpect_object):
         self.show_main_menu_page()

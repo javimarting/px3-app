@@ -17,8 +17,10 @@ class Ui_MainWindow(object):
         MainWindow.resize(480, 730)
         MainWindow.setMinimumSize(QtCore.QSize(480, 700))
         MainWindow.setMaximumSize(QtCore.QSize(480, 750))
-        MainWindow.setStyleSheet("/*background-color: rgb(30, 39, 68);*/\n"
+        MainWindow.setStyleSheet("/*background-color: rgb(30, 39, 68);\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(3, 25, 50, 255), stop:1 rgba(3, 3, 40, 255));*/\n"
 "background-color: rgb(3, 3, 40);\n"
+"\n"
 "\n"
 "\n"
 "")
@@ -31,30 +33,33 @@ class Ui_MainWindow(object):
         self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setSpacing(25)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.backButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backExitContainer = QtWidgets.QWidget(self.centralwidget)
+        self.backExitContainer.setMinimumSize(QtCore.QSize(0, 0))
+        self.backExitContainer.setObjectName("backExitContainer")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.backExitContainer)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.backButton = QtWidgets.QPushButton(self.backExitContainer)
         self.backButton.setMinimumSize(QtCore.QSize(120, 80))
         self.backButton.setMaximumSize(QtCore.QSize(80, 16777215))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.backButton.setFont(font)
         self.backButton.setStyleSheet("QPushButton {\n"
-"border-radius: 10;\n"
+"border-radius: 15;\n"
 "/*background-color: rgb(33, 136, 145);*/\n"
 "background-color: rgb(110, 117, 169);\n"
 "color: rgb(0, 0, 0);\n"
+"box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;\n"
 "}\n"
 "QPushButton:hover {\n"
 "background-color: rgb(28, 123, 130);\n"
 "}\n"
 "")
         self.backButton.setObjectName("backButton")
-        self.horizontalLayout.addWidget(self.backButton)
+        self.horizontalLayout_3.addWidget(self.backButton)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.exitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.horizontalLayout_3.addItem(spacerItem)
+        self.exitButton = QtWidgets.QPushButton(self.backExitContainer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -65,12 +70,12 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(20)
         self.exitButton.setFont(font)
-        self.exitButton.setStyleSheet("border-radius: 10;\n"
+        self.exitButton.setStyleSheet("border-radius: 15;\n"
 "/*background-color: rgb(160, 0, 0);*/\n"
 "background-color: rgb(190, 103, 94);")
         self.exitButton.setObjectName("exitButton")
-        self.horizontalLayout.addWidget(self.exitButton)
-        self.verticalLayout_8.addLayout(self.horizontalLayout)
+        self.horizontalLayout_3.addWidget(self.exitButton)
+        self.verticalLayout_8.addWidget(self.backExitContainer)
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -83,7 +88,7 @@ class Ui_MainWindow(object):
 "background-color: rgb(33, 136, 145);\n"
 "/*background-color: rgb(25, 145, 190);*/\n"
 "color: rgb(255, 255, 255);\n"
-"border-radius: 10;\n"
+"border-radius: 15;\n"
 "font-size: 20pt;\n"
 "}\n"
 "QPushButton:hover {\n"
@@ -153,21 +158,27 @@ class Ui_MainWindow(object):
         self.mifareOptionsPage.setObjectName("mifareOptionsPage")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.mifareOptionsPage)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
-        self.verticalLayout_9 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_9.setObjectName("verticalLayout_9")
-        self.readMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsPage)
+        self.mifareOptionsContainer = QtWidgets.QWidget(self.mifareOptionsPage)
+        self.mifareOptionsContainer.setAutoFillBackground(False)
+        self.mifareOptionsContainer.setStyleSheet("border: 1px solid;\n"
+"padding: 10px;\n"
+"box-shadow: 5px 10px 18px rgb(33, 136, 145);")
+        self.mifareOptionsContainer.setObjectName("mifareOptionsContainer")
+        self.verticalLayout_20 = QtWidgets.QVBoxLayout(self.mifareOptionsContainer)
+        self.verticalLayout_20.setObjectName("verticalLayout_20")
+        self.readMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsContainer)
         self.readMifareTagButton.setMinimumSize(QtCore.QSize(0, 100))
         self.readMifareTagButton.setObjectName("readMifareTagButton")
-        self.verticalLayout_9.addWidget(self.readMifareTagButton)
-        self.cloneMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsPage)
+        self.verticalLayout_20.addWidget(self.readMifareTagButton)
+        self.cloneMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsContainer)
         self.cloneMifareTagButton.setMinimumSize(QtCore.QSize(0, 100))
         self.cloneMifareTagButton.setObjectName("cloneMifareTagButton")
-        self.verticalLayout_9.addWidget(self.cloneMifareTagButton)
-        self.simulateMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsPage)
+        self.verticalLayout_20.addWidget(self.cloneMifareTagButton)
+        self.simulateMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsContainer)
         self.simulateMifareTagButton.setMinimumSize(QtCore.QSize(0, 100))
         self.simulateMifareTagButton.setObjectName("simulateMifareTagButton")
-        self.verticalLayout_9.addWidget(self.simulateMifareTagButton)
-        self.verticalLayout_12.addLayout(self.verticalLayout_9)
+        self.verticalLayout_20.addWidget(self.simulateMifareTagButton)
+        self.verticalLayout_12.addWidget(self.mifareOptionsContainer)
         self.mifareStackedWidget.addWidget(self.mifareOptionsPage)
         self.mifareResultsPage = QtWidgets.QWidget()
         self.mifareResultsPage.setObjectName("mifareResultsPage")
@@ -318,7 +329,7 @@ class Ui_MainWindow(object):
         self.resultsPageScrollArea.setWidgetResizable(True)
         self.resultsPageScrollArea.setObjectName("resultsPageScrollArea")
         self.resultsPageScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 428, 538))
+        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 428, 466))
         self.resultsPageScrollAreaWidgetContents.setObjectName("resultsPageScrollAreaWidgetContents")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.resultsPageScrollAreaWidgetContents)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
@@ -439,7 +450,8 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(2)
+        self.mifareStackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
