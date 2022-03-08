@@ -15,7 +15,7 @@ class Proxmark:
     def execute_command(self, command):
         self.child.sendline(command)
         result = self.child.expect(['pm3 -->', pexpect.EOF, pexpect.TIMEOUT])
-        if result:
+        if result == 0:
             return self.child.before
 
     def read_mifare_hf_tag(self):

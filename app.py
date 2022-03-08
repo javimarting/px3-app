@@ -1,6 +1,10 @@
 import sys
-from PyQt5 import QtWidgets
+import re
 
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
+
+from ansi2html import Ansi2HTMLConverter
 from MainWindow3 import Ui_MainWindow
 from proxmark import Proxmark
 import utils
@@ -54,8 +58,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         color = "color: rgb(255, 255, 255);"
         if not successful:
             color = "color: rgb(255, 0, 0);"
-        self.resultsPageDataLabel.setStyleSheet(color)
+        # self.resultsPageDataLabel.setStyleSheet(color)
         self.resultsPageTitleLabel.setText(title)
+        self.resultsPageDataLabel.setTextFormat(Qt.RichText)
+        self.resultsPageDataLabel.setWordWrap(True)
         self.resultsPageDataLabel.setText(data)
         self.last_page = last_page
 
@@ -131,7 +137,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.last_page = self.mifareOptionsPage
     
     def read_hf_tag(self):
-        result = self.proxmark_worker.read_mifare_hf_tag()
+        result = self.proxmark.read_mifare_hf_tag()
         if result:
             files = utils.analyze_result_files(result)
             mifare_tag = Mifare1k(files)
@@ -164,15 +170,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.mifareCloneResultsLabel.setText("Unable to clone tag")
 
     def read_tag(self):
-        result = self.proxmark.read_tag()
+        # result = self.proxmark.read_tag()
+        result = self.proxmark.execute_command("hf search")
+        print(repr(result))
         title = "TAG INFORMATION"
-        data = ""
-        if result:
-            data = result
-            self.set_results_data(True, title, result, self.mainMenuPage)
-        else:
-            data = "Couldn't read tag"
-            self.set_results_data(False, title, data, self.mainMenuPage)
+        parsed_result = re.sub(r'\r\n', r'\r', result)
+        # if result:
+        #     conv = Ansi2HTMLConverter()
+        #     data = conv.convert(result)
+        #     self.set_results_data(True, title, data, self.mainMenuPage)
+        # else:
+        #     # data = "Couldn't read tag"
+        #     conv = Ansi2HTMLConverter()
+        #     data = conv.convert(result)
+        #     self.set_results_data(True, title, data, self.mainMenuPage)
+        conv = Ansi2HTMLConverter()
+        data = conv.convert(parsed_result)
+        with open("output.html", "w") as f, open("output.txt", "w") as f2:
+            f.write(data)
+            f2.write(parsed_result)
+        self.set_results_data(True, title, data, self.mainMenuPage)
 
 
     def handle_connected(self, pexpect_object):

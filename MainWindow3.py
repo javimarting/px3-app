@@ -162,7 +162,7 @@ class Ui_MainWindow(object):
         self.mifareOptionsContainer.setAutoFillBackground(False)
         self.mifareOptionsContainer.setStyleSheet("border: 1px solid;\n"
 "padding: 10px;\n"
-"box-shadow: 5px 10px 18px rgb(33, 136, 145);")
+"")
         self.mifareOptionsContainer.setObjectName("mifareOptionsContainer")
         self.verticalLayout_20 = QtWidgets.QVBoxLayout(self.mifareOptionsContainer)
         self.verticalLayout_20.setObjectName("verticalLayout_20")
@@ -336,8 +336,9 @@ class Ui_MainWindow(object):
         self.resultsPageDataLabel = QtWidgets.QLabel(self.resultsPageScrollAreaWidgetContents)
         font = QtGui.QFont()
         font.setFamily("Monaco")
-        font.setPointSize(20)
+        font.setPointSize(13)
         self.resultsPageDataLabel.setFont(font)
+        self.resultsPageDataLabel.setStyleSheet("background-color: rgb(15, 8, 22);")
         self.resultsPageDataLabel.setText("")
         self.resultsPageDataLabel.setObjectName("resultsPageDataLabel")
         self.verticalLayout_21.addWidget(self.resultsPageDataLabel)
@@ -450,7 +451,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(1)
         self.mifareStackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

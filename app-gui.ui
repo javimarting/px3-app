@@ -172,7 +172,7 @@ color: rgb(255, 255, 255);
 }</string>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="connectProxmarkPage">
          <property name="sizePolicy">
@@ -306,7 +306,7 @@ border-radius: 10pt;
                 <property name="styleSheet">
                  <string notr="true">border: 1px solid;
 padding: 10px;
-box-shadow: 5px 10px 18px rgb(33, 136, 145);</string>
+</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_20">
                  <item>
@@ -652,8 +652,11 @@ MEMORY</string>
                 <property name="font">
                  <font>
                   <family>Monaco</family>
-                  <pointsize>20</pointsize>
+                  <pointsize>13</pointsize>
                  </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(15, 8, 22);</string>
                 </property>
                 <property name="text">
                  <string/>
