@@ -31,7 +31,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.connectProxmarkButton.clicked.connect(self.start_connection)
         self.connectionOkButton.clicked.connect(self.return_to_connection_page)
-        self.tagInformationOkButton.clicked.connect(self.show_main_menu_page)
         self.tagInfoButton.clicked.connect(self.show_results_page)
         self.tagInfoButton.clicked.connect(self.read_tag)
         self.mifareButton.clicked.connect(self.show_mifare_options_page)
@@ -170,26 +169,36 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.mifareCloneResultsLabel.setText("Unable to clone tag")
 
     def read_tag(self):
-        # result = self.proxmark.read_tag()
-        result = self.proxmark.execute_command("hf search")
-        print(repr(result))
+        result = self.proxmark.execute_command("auto")
         title = "TAG INFORMATION"
+        regex = re.compile(r'Valid.*found')
+        match = regex.search(result)
+        if match:
+            index = match.end()
+            result = result[:index+1]
         parsed_result = re.sub(r'\r[\r\n]', r'\r', result)
-        # if result:
-        #     conv = Ansi2HTMLConverter()
-        #     data = conv.convert(result)
-        #     self.set_results_data(True, title, data, self.mainMenuPage)
-        # else:
-        #     # data = "Couldn't read tag"
-        #     conv = Ansi2HTMLConverter()
-        #     data = conv.convert(result)
-        #     self.set_results_data(True, title, data, self.mainMenuPage)
         conv = Ansi2HTMLConverter()
         data = conv.convert(parsed_result)
         with open("output.html", "w") as f, open("output.txt", "w") as f2:
             f.write(data)
-            f2.write(parsed_result)
+            f2.write(repr(parsed_result))
         self.set_results_data(True, title, data, self.mainMenuPage)
+
+    def read_mifare_1k_tag(self):
+        result = self.proxmark.execute_command("hf mf autopwn")
+        if result:
+            files = utils.analyze_result_files(result)
+            mifare_tag = Mifare1k(files)
+            title = "TAG INFORMATION"
+            self.mifareTagResultsLabel.setStyleSheet("color: rgb(255, 255, 255);")
+            self.mifareTagResultsLabel.setText(mifare_tag.basic_info())
+            self.manage_mifare_tag_information_buttons(True)
+            self.last_mifare_tag_read = mifare_tag
+        else:
+            self.mifareTagResultsLabel.setText("Couldn't read tag")
+            self.mifareTagResultsLabel.setStyleSheet("color: rgb(255, 0, 0);")
+            self.manage_mifare_tag_information_buttons(False)
+
 
 
     def handle_connected(self, pexpect_object):

@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.backButton = QtWidgets.QPushButton(self.backExitContainer)
-        self.backButton.setMinimumSize(QtCore.QSize(120, 60))
+        self.backButton.setMinimumSize(QtCore.QSize(100, 60))
         self.backButton.setMaximumSize(QtCore.QSize(80, 16777215))
         font = QtGui.QFont()
         font.setPointSize(20)
@@ -87,7 +87,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.exitButton.sizePolicy().hasHeightForWidth())
         self.exitButton.setSizePolicy(sizePolicy)
-        self.exitButton.setMinimumSize(QtCore.QSize(120, 60))
+        self.exitButton.setMinimumSize(QtCore.QSize(100, 60))
         self.exitButton.setMaximumSize(QtCore.QSize(80, 16777215))
         font = QtGui.QFont()
         font.setPointSize(20)
@@ -415,8 +415,8 @@ class Ui_MainWindow(object):
 "background-color: #111927;\n"
 "border-radius: 15;\n"
 "margin: 5px;\n"
-"margin-left: 50px;\n"
-"margin-right: 50px;")
+"margin-left: 40px;\n"
+"margin-right: 40px;")
         self.resultsPageTitleLabel.setText("")
         self.resultsPageTitleLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.resultsPageTitleLabel.setObjectName("resultsPageTitleLabel")
@@ -480,6 +480,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tagInfoButton.sizePolicy().hasHeightForWidth())
         self.tagInfoButton.setSizePolicy(sizePolicy)
+        self.tagInfoButton.setMinimumSize(QtCore.QSize(200, 200))
         self.tagInfoButton.setMaximumSize(QtCore.QSize(200, 200))
         self.tagInfoButton.setStyleSheet("")
         self.tagInfoButton.setObjectName("tagInfoButton")
@@ -490,6 +491,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mifareButton.sizePolicy().hasHeightForWidth())
         self.mifareButton.setSizePolicy(sizePolicy)
+        self.mifareButton.setMinimumSize(QtCore.QSize(200, 200))
         self.mifareButton.setMaximumSize(QtCore.QSize(200, 200))
         self.mifareButton.setObjectName("mifareButton")
         self.gridLayout_2.addWidget(self.mifareButton, 0, 1, 1, 1)
@@ -499,6 +501,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.savedTagsButton.sizePolicy().hasHeightForWidth())
         self.savedTagsButton.setSizePolicy(sizePolicy)
+        self.savedTagsButton.setMinimumSize(QtCore.QSize(200, 200))
         self.savedTagsButton.setMaximumSize(QtCore.QSize(200, 200))
         self.savedTagsButton.setObjectName("savedTagsButton")
         self.gridLayout_2.addWidget(self.savedTagsButton, 1, 0, 1, 1)
@@ -508,10 +511,11 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.customCommandButton.sizePolicy().hasHeightForWidth())
         self.customCommandButton.setSizePolicy(sizePolicy)
+        self.customCommandButton.setMinimumSize(QtCore.QSize(200, 200))
         self.customCommandButton.setMaximumSize(QtCore.QSize(200, 200))
         self.customCommandButton.setObjectName("customCommandButton")
         self.gridLayout_2.addWidget(self.customCommandButton, 1, 1, 1, 1)
-        self.verticalLayout_5.addWidget(self.mainMenuContainer)
+        self.verticalLayout_5.addWidget(self.mainMenuContainer, 0, QtCore.Qt.AlignVCenter)
         self.stackedWidget.addWidget(self.mainMenuPage)
         self.connectingMessagePage = QtWidgets.QWidget()
         self.connectingMessagePage.setObjectName("connectingMessagePage")
@@ -577,7 +581,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(3)
         self.mifareStackedWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -599,8 +603,8 @@ class Ui_MainWindow(object):
         self.mifareCloneResultsOkButton.setText(_translate("MainWindow", "OK"))
         self.tagMemoryLabel.setText(_translate("MainWindow", "TAG MEMORY"))
         self.memoryOkButton.setText(_translate("MainWindow", "OK"))
-        self.tagInfoButton.setText(_translate("MainWindow", "TAG\n"
-"INFO"))
+        self.tagInfoButton.setText(_translate("MainWindow", "AUTO DETECT\n"
+"TAG"))
         self.mifareButton.setText(_translate("MainWindow", "MIFARE"))
         self.savedTagsButton.setText(_translate("MainWindow", "SAVED\n"
 "TAGS"))
