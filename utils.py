@@ -3,6 +3,8 @@ import re
 import os
 import json
 
+from ansi2html import Ansi2HTMLConverter
+
 
 def rename_and_move_files(filenames, new_folder):
     dt = datetime.datetime.now()
@@ -58,4 +60,52 @@ def parse_json_file(json_file):
         }
 
         return json_data
+
+
+def parse_result(string):
+    mod_string = string
+
+    rep = {
+        "\r\r": r"\r",
+        "\r\n": r"\r",
+        "\x1b[?2004l": "",
+        "\x1b[?2004h": "",
+        "[\x1b[1;32musb\x1b[0m]": "",
+    }
+
+    rep = {re.escape(k): v for k, v in rep.items()}
+
+    for k, v in rep.items():
+        mod_string = re.sub(k, v, mod_string)
+
+    mod_string = f"\x1b[33mCommand\x1b[0m\r {mod_string}"
+
+    print(repr(mod_string))
+
+    conv = Ansi2HTMLConverter()
+    data = conv.convert(mod_string)
+    return data
+
+
+def parse_search_result(string):
+    mod_string = string
+    valid_tag_pattern = re.escape("Valid \x1b[32m") + r".*" + re.escape("\x1b[0m found")
+    tag_found = re.search(valid_tag_pattern, mod_string)
+    pm3_file_pattern = r'lf_unknown.*\.pm3'
+    pm3_file_found = re.search(pm3_file_pattern, mod_string)
+
+    if tag_found:
+        mod_string = mod_string[:tag_found.end()+1]
+    elif pm3_file_found:
+        filename = pm3_file_found.group()
+        pat1 = re.escape('[\x1b[32m+\x1b[0m] saved \x1b[33m40000\x1b[0m bytes to PM3 file \x1b[33m')
+        pat2 = re.escape('\x1b[0m\r')
+        pattern = pat1 + f"'{filename}'" + pat2
+        mod_string = re.sub(pattern, "", mod_string)
+        try:
+            os.remove(filename)
+        except:
+            pass
+
+    return parse_result(mod_string)
 

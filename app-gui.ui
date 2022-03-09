@@ -42,139 +42,9 @@
    <property name="styleSheet">
     <string notr="true">background-color: #111927;
 
-QWidget#centralwidget {
-padding: 0px;
-margin: 0;
-border: 0px;
-}
-
-
-QLabel {
-border-radius: 10;
-}</string>
+</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_13">
-    <item>
-     <widget class="QWidget" name="backExitContainer" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget#backExitContainer {
-background-color: rgb(26, 35, 50);
-padding: 0px;
-margin: 0;
-}
-QPushButton {
-border-radius: 18;
-background-color: #111927;
-}</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <property name="spacing">
-        <number>-1</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
-       </property>
-       <item>
-        <widget class="QPushButton" name="backButton">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>80</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-color: #93dd03;
-}
-QPushButton:hover {
-background-color: #93dd03;
-color: #111927;
-}
-</string>
-         </property>
-         <property name="text">
-          <string>BACK</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="exitButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>80</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-color: #c43437;
-}
-QPushButton:hover {
-background-color: #c43437;
-color: #111927;
-}</string>
-         </property>
-         <property name="text">
-          <string>EXIT</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_8">
       <property name="spacing">
@@ -183,6 +53,24 @@ color: #111927;
       <property name="leftMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QLabel" name="topLogoLabel">
+        <property name="styleSheet">
+         <string notr="true">
+padding: 10;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="resources.qrc">:/icons/app-logo-small.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="sizePolicy">
@@ -202,18 +90,15 @@ color: #111927;
 border-radius: 15;
 }
 
-QStackedWidget {
-margin: 0;
-padding: 0px;
-}
 
 QPushButton {
 color: #93dd03;
 background-color: #111927;
-border-radius: 10;
+border-radius: 15;
 border: 1px solid;
 border-color: #93dd03;
-font-size: 20pt;
+font-size: 15pt;
+margin: 15;
 }
 
 QPushButton:hover {
@@ -226,7 +111,7 @@ color: rgb(255, 255, 255);
 }</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="connectProxmarkPage">
          <property name="sizePolicy">
@@ -266,7 +151,10 @@ color: rgb(255, 255, 255);
 </string>
                </property>
                <property name="text">
-                <string>PXMK-APP</string>
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="resources.qrc">:/icons/app-logo.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -298,9 +186,7 @@ color: rgb(255, 255, 255);
                </property>
                <property name="font">
                 <font>
-                 <pointsize>20</pointsize>
-                 <weight>50</weight>
-                 <bold>false</bold>
+                 <pointsize>15</pointsize>
                 </font>
                </property>
                <property name="autoFillBackground">
@@ -325,7 +211,7 @@ color: rgb(255, 255, 255);
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>140</height>
+                 <height>80</height>
                 </size>
                </property>
               </spacer>
@@ -339,8 +225,14 @@ color: rgb(255, 255, 255);
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item alignment="Qt::AlignHCenter">
            <widget class="QStackedWidget" name="mifareStackedWidget">
+            <property name="styleSheet">
+             <string notr="true">QStackedWidget {
+border-radius: 10;
+background-color: #1a2332;
+}</string>
+            </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="mifareOptionsPage">
              <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -350,20 +242,25 @@ color: rgb(255, 255, 255);
                  <bool>false</bool>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">.QWidget {
-border: 1px solid;
-border-radius: 10;
-padding: 10px;
+                 <string notr="true">QWidget#mifareOptionsContainer {
+
+
 background-color: #1a2332;
 }</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_20">
                  <item>
                   <widget class="QPushButton" name="readMifareTagButton">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>100</height>
+                     <height>120</height>
                     </size>
                    </property>
                    <property name="autoFillBackground">
@@ -376,10 +273,16 @@ background-color: #1a2332;
                  </item>
                  <item>
                   <widget class="QPushButton" name="cloneMifareTagButton">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>100</height>
+                     <height>120</height>
                     </size>
                    </property>
                    <property name="text">
@@ -389,10 +292,16 @@ background-color: #1a2332;
                  </item>
                  <item>
                   <widget class="QPushButton" name="simulateMifareTagButton">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>100</height>
+                     <height>120</height>
                     </size>
                    </property>
                    <property name="text">
@@ -604,7 +513,7 @@ MEMORY</string>
                    <x>0</x>
                    <y>0</y>
                    <width>390</width>
-                   <height>370</height>
+                   <height>323</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -637,7 +546,7 @@ MEMORY</string>
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>20</pointsize>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -755,7 +664,7 @@ margin-right: 40px;</string>
                   <x>0</x>
                   <y>0</y>
                   <width>400</width>
-                  <height>494</height>
+                  <height>417</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -789,7 +698,7 @@ margin-right: 40px;</string>
                     <bool>false</bool>
                    </property>
                    <property name="wordWrap">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
@@ -810,22 +719,18 @@ padding: 0px;
 }</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item alignment="Qt::AlignVCenter">
+          <item>
            <widget class="QWidget" name="mainMenuContainer" native="true">
             <property name="styleSheet">
              <string notr="true">QWidget#mainMenuContainer {
 padding: 20px;
 background-color: #1a2332;
 border-radius: 15;
-}
-
-QPushButton {
-margin: 15;
 }</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0">
-              <widget class="QPushButton" name="tagInfoButton">
+            <layout class="QVBoxLayout" name="verticalLayout_23">
+             <item>
+              <widget class="QPushButton" name="basicCommandsButton">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                  <horstretch>0</horstretch>
@@ -835,28 +740,32 @@ margin: 15;
                <property name="minimumSize">
                 <size>
                  <width>200</width>
-                 <height>200</height>
+                 <height>120</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
-                 <height>200</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>AUTO DETECT
-TAG</string>
+                <string>BASIC COMMANDS</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QPushButton" name="mifareButton">
+             <item>
+              <widget class="QPushButton" name="mifare1kButton">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -864,47 +773,21 @@ TAG</string>
                <property name="minimumSize">
                 <size>
                  <width>200</width>
-                 <height>200</height>
+                 <height>120</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
-                 <height>200</height>
+                 <width>1777777</width>
+                 <height>1777777</height>
                 </size>
                </property>
                <property name="text">
-                <string>MIFARE</string>
+                <string>MIFARE 1K</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="savedTagsButton">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>200</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>200</width>
-                 <height>200</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>SAVED
-TAGS</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
+             <item>
               <widget class="QPushButton" name="customCommandButton">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -915,18 +798,44 @@ TAGS</string>
                <property name="minimumSize">
                 <size>
                  <width>200</width>
-                 <height>200</height>
+                 <height>120</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
-                 <height>200</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
                 <string>CUSTOM
 COMMAND</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="savedTagsButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>120</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>SAVED
+TAGS</string>
                </property>
               </widget>
              </item>
@@ -974,81 +883,81 @@ COMMAND</string>
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tagDetailsPage">
+        <widget class="QWidget" name="basicCommandsPage">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <widget class="QLabel" name="tagInformationTitleLabel">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>100</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>25</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(33, 136, 145);</string>
-              </property>
-              <property name="text">
-               <string>TAG INFORMATION</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="tagInformationLabel">
-              <property name="font">
-               <font>
-                <pointsize>20</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(0, 25, 51);
-border-radius: 10;
-padding: 10px;
-border: 10px;</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="tagInformationOkButton">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>100</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>OK</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QWidget" name="basicCommandsContainer" native="true">
+            <property name="styleSheet">
+             <string notr="true">QWidget#basicCommandsContainer {
+padding: 20px;
+background-color: #1a2332;
+border-radius: 15;
+}</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QPushButton" name="hwStatusButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>120</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>HARDWARE STATUS</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="autoDetectTagButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>120</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>AUTO-DETECT TAG</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="readLFTagButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>120</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>READ LOW-FREQUENCY TAG</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="readHFTagButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>120</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>READ HIGH-FREQUENCY TAG</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1056,9 +965,137 @@ border: 10px;</string>
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QWidget" name="backExitContainer" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget#backExitContainer {
+/*background-color: #1a2332;*/
+padding: 0px;
+margin: 0;
+border-radius: 15;
+}
+QPushButton {
+border-radius: 15;
+background-color: #111927;
+}</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>-1</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <item>
+        <widget class="QPushButton" name="backButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+color: #93dd03;
+border: 1px solid;
+border-color: #93dd03;
+}
+QPushButton:hover {
+background-color: #93dd03;
+color: #111927;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>BACK</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exitButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+color: #c43437;
+border: 1px solid;
+border-color: #c43437;
+}
+QPushButton:hover {
+background-color: #c43437;
+color: #111927;
+}</string>
+         </property>
+         <property name="text">
+          <string>EXIT</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

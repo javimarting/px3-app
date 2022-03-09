@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="icons">
+        <file alias="app-logo.png">img/px3-app-logo.png</file>
+        <file alias="app-logo-small.png">img/px3-app-logo-small.png</file>
+    </qresource>
+</RCC>
