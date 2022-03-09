@@ -17,42 +17,64 @@ class Ui_MainWindow(object):
         MainWindow.resize(480, 730)
         MainWindow.setMinimumSize(QtCore.QSize(480, 700))
         MainWindow.setMaximumSize(QtCore.QSize(480, 750))
-        MainWindow.setStyleSheet("/*background-color: rgb(30, 39, 68);\n"
-"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(3, 25, 50, 255), stop:1 rgba(3, 3, 40, 255));*/\n"
-"background-color: rgb(3, 3, 40);\n"
+        MainWindow.setStyleSheet("/*background-color: rgb(17, 25, 39);*/\n"
 "\n"
 "\n"
 "\n"
 "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setStyleSheet("QPushButton {\n"
-"color: rgb(255, 255, 255);\n"
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
+        self.centralwidget.setSizePolicy(sizePolicy)
+        self.centralwidget.setStyleSheet("background-color: #111927;\n"
+"\n"
+"QWidget#centralwidget {\n"
+"padding: 0px;\n"
+"margin: 0;\n"
+"border: 0px;\n"
+"}\n"
+"\n"
+"\n"
+"QLabel {\n"
+"border-radius: 10;\n"
 "}")
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_13.setObjectName("verticalLayout_13")
-        self.verticalLayout_8 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.backExitContainer = QtWidgets.QWidget(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.backExitContainer.sizePolicy().hasHeightForWidth())
+        self.backExitContainer.setSizePolicy(sizePolicy)
         self.backExitContainer.setMinimumSize(QtCore.QSize(0, 0))
+        self.backExitContainer.setStyleSheet("QWidget#backExitContainer {\n"
+"background-color: rgb(26, 35, 50);\n"
+"padding: 0px;\n"
+"margin: 0;\n"
+"}\n"
+"QPushButton {\n"
+"border-radius: 18;\n"
+"background-color: #111927;\n"
+"}")
         self.backExitContainer.setObjectName("backExitContainer")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.backExitContainer)
+        self.horizontalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.backButton = QtWidgets.QPushButton(self.backExitContainer)
-        self.backButton.setMinimumSize(QtCore.QSize(120, 80))
+        self.backButton.setMinimumSize(QtCore.QSize(120, 60))
         self.backButton.setMaximumSize(QtCore.QSize(80, 16777215))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.backButton.setFont(font)
         self.backButton.setStyleSheet("QPushButton {\n"
-"border-radius: 15;\n"
-"/*background-color: rgb(33, 136, 145);*/\n"
-"background-color: rgb(110, 117, 169);\n"
-"color: rgb(0, 0, 0);\n"
-"box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;\n"
+"color: #93dd03;\n"
 "}\n"
 "QPushButton:hover {\n"
-"background-color: rgb(28, 123, 130);\n"
+"background-color: #93dd03;\n"
+"color: #111927;\n"
 "}\n"
 "")
         self.backButton.setObjectName("backButton")
@@ -65,17 +87,24 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.exitButton.sizePolicy().hasHeightForWidth())
         self.exitButton.setSizePolicy(sizePolicy)
-        self.exitButton.setMinimumSize(QtCore.QSize(120, 80))
+        self.exitButton.setMinimumSize(QtCore.QSize(120, 60))
         self.exitButton.setMaximumSize(QtCore.QSize(80, 16777215))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.exitButton.setFont(font)
-        self.exitButton.setStyleSheet("border-radius: 15;\n"
-"/*background-color: rgb(160, 0, 0);*/\n"
-"background-color: rgb(190, 103, 94);")
+        self.exitButton.setStyleSheet("QPushButton {\n"
+"color: #c43437;\n"
+"}\n"
+"QPushButton:hover {\n"
+"background-color: #c43437;\n"
+"color: #111927;\n"
+"}")
         self.exitButton.setObjectName("exitButton")
         self.horizontalLayout_3.addWidget(self.exitButton)
-        self.verticalLayout_8.addWidget(self.backExitContainer)
+        self.verticalLayout_13.addWidget(self.backExitContainer)
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_8.setContentsMargins(0, -1, -1, -1)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -84,17 +113,28 @@ class Ui_MainWindow(object):
         self.stackedWidget.setSizePolicy(sizePolicy)
         self.stackedWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.stackedWidget.setAutoFillBackground(False)
-        self.stackedWidget.setStyleSheet("QPushButton {\n"
-"background-color: rgb(33, 136, 145);\n"
-"/*background-color: rgb(25, 145, 190);*/\n"
-"color: rgb(255, 255, 255);\n"
+        self.stackedWidget.setStyleSheet("QWidget {\n"
 "border-radius: 15;\n"
+"}\n"
+"\n"
+"QStackedWidget {\n"
+"margin: 0;\n"
+"padding: 0px;\n"
+"}\n"
+"\n"
+"QPushButton {\n"
+"color: #93dd03;\n"
+"background-color: #111927;\n"
+"border-radius: 10;\n"
+"border: 1px solid;\n"
+"border-color: #93dd03;\n"
 "font-size: 20pt;\n"
 "}\n"
+"\n"
 "QPushButton:hover {\n"
-"background-color: rgb(28, 123, 130);\n"
+"background-color: #93dd03;\n"
+"color: #111927;\n"
 "}\n"
-"padding: 10pt;\n"
 "\n"
 "QLabel {\n"
 "color: rgb(255, 255, 255);\n"
@@ -109,44 +149,45 @@ class Ui_MainWindow(object):
         self.connectProxmarkPage.setObjectName("connectProxmarkPage")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.connectProxmarkPage)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.pxmkappLabel = QtWidgets.QLabel(self.connectProxmarkPage)
+        self.connectionPageContainer = QtWidgets.QWidget(self.connectProxmarkPage)
+        self.connectionPageContainer.setObjectName("connectionPageContainer")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.connectionPageContainer)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.pxmkappLabel = QtWidgets.QLabel(self.connectionPageContainer)
         self.pxmkappLabel.setMinimumSize(QtCore.QSize(0, 60))
+        self.pxmkappLabel.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setPointSize(30)
         font.setBold(True)
         font.setWeight(75)
         self.pxmkappLabel.setFont(font)
-        self.pxmkappLabel.setStyleSheet("color: rgb(33, 136, 145);\n"
-"border-radius: 10pt;\n"
+        self.pxmkappLabel.setStyleSheet("\n"
 "\n"
 "")
         self.pxmkappLabel.setScaledContents(False)
         self.pxmkappLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.pxmkappLabel.setObjectName("pxmkappLabel")
-        self.verticalLayout_2.addWidget(self.pxmkappLabel)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        self.verticalLayout_2.addItem(spacerItem1)
-        self.connectProxmarkButton = QtWidgets.QPushButton(self.connectProxmarkPage)
+        self.verticalLayout_9.addWidget(self.pxmkappLabel)
+        self.connectProxmarkButton = QtWidgets.QPushButton(self.connectionPageContainer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.connectProxmarkButton.sizePolicy().hasHeightForWidth())
         self.connectProxmarkButton.setSizePolicy(sizePolicy)
-        self.connectProxmarkButton.setMinimumSize(QtCore.QSize(0, 150))
+        self.connectProxmarkButton.setMinimumSize(QtCore.QSize(350, 150))
         self.connectProxmarkButton.setMaximumSize(QtCore.QSize(600, 150))
         font = QtGui.QFont()
         font.setPointSize(20)
-        font.setKerning(False)
+        font.setBold(False)
+        font.setWeight(50)
         self.connectProxmarkButton.setFont(font)
         self.connectProxmarkButton.setAutoFillBackground(False)
         self.connectProxmarkButton.setStyleSheet("")
         self.connectProxmarkButton.setObjectName("connectProxmarkButton")
-        self.verticalLayout_2.addWidget(self.connectProxmarkButton)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 100, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        self.verticalLayout_2.addItem(spacerItem2)
-        self.verticalLayout.addLayout(self.verticalLayout_2)
+        self.verticalLayout_9.addWidget(self.connectProxmarkButton)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 140, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_9.addItem(spacerItem1)
+        self.verticalLayout.addWidget(self.connectionPageContainer, 0, QtCore.Qt.AlignHCenter)
         self.stackedWidget.addWidget(self.connectProxmarkPage)
         self.mifarePage = QtWidgets.QWidget()
         self.mifarePage.setObjectName("mifarePage")
@@ -160,14 +201,18 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.setObjectName("verticalLayout_12")
         self.mifareOptionsContainer = QtWidgets.QWidget(self.mifareOptionsPage)
         self.mifareOptionsContainer.setAutoFillBackground(False)
-        self.mifareOptionsContainer.setStyleSheet("border: 1px solid;\n"
+        self.mifareOptionsContainer.setStyleSheet(".QWidget {\n"
+"border: 1px solid;\n"
+"border-radius: 10;\n"
 "padding: 10px;\n"
-"")
+"background-color: #1a2332;\n"
+"}")
         self.mifareOptionsContainer.setObjectName("mifareOptionsContainer")
         self.verticalLayout_20 = QtWidgets.QVBoxLayout(self.mifareOptionsContainer)
         self.verticalLayout_20.setObjectName("verticalLayout_20")
         self.readMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsContainer)
         self.readMifareTagButton.setMinimumSize(QtCore.QSize(0, 100))
+        self.readMifareTagButton.setAutoFillBackground(False)
         self.readMifareTagButton.setObjectName("readMifareTagButton")
         self.verticalLayout_20.addWidget(self.readMifareTagButton)
         self.cloneMifareTagButton = QtWidgets.QPushButton(self.mifareOptionsContainer)
@@ -282,7 +327,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 388, 420))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 390, 370))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_18 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_18.setObjectName("verticalLayout_18")
@@ -310,80 +355,163 @@ class Ui_MainWindow(object):
         self.resultsPage.setObjectName("resultsPage")
         self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.resultsPage)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
-        self.resultsPageTitleLabel = QtWidgets.QLabel(self.resultsPage)
+        self.resultsPageContainer = QtWidgets.QWidget(self.resultsPage)
+        self.resultsPageContainer.setStyleSheet("QWidget#resultsPageContainer {\n"
+"background-color: #1a2332;\n"
+"border-radius: 10;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical {\n"
+"margin: 30px 0 30px 0;\n"
+"width: 35px;\n"
+"border-right: 1px solid #93dd03;\n"
+"border-left: 1px solid #93dd03;\n"
+"background-color: #263143;\n"
+"border-radius: 0;\n"
+"}\n"
+"\n"
+"QScrollBar::handle::vertical {\n"
+"border: 1px solid #93dd03;\n"
+"background-color: #111927;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"border: 1px solid #93dd03;\n"
+"height: 30px;\n"
+"border-top-left-radius: 7px;\n"
+"border-top-right-radius: 7px;\n"
+"subcontrol-position: top;\n"
+"subcontrol-origin: margin;\n"
+"background-color: #111927;\n"
+"color: #93dd03;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"border: 1px solid #93dd03;\n"
+"height: 30px;\n"
+"border-bottom-left-radius: 7px;\n"
+"border-bottom-right-radius: 7px;\n"
+"subcontrol-position: bottom;\n"
+"subcontrol-origin: margin;\n"
+"background-color: #111927;\n"
+"color: #93dd03;\n"
+"}")
+        self.resultsPageContainer.setObjectName("resultsPageContainer")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.resultsPageContainer)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.resultsPageTitleLabel = QtWidgets.QLabel(self.resultsPageContainer)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.resultsPageTitleLabel.sizePolicy().hasHeightForWidth())
+        self.resultsPageTitleLabel.setSizePolicy(sizePolicy)
         self.resultsPageTitleLabel.setMinimumSize(QtCore.QSize(0, 60))
         font = QtGui.QFont()
-        font.setPointSize(30)
-        font.setBold(True)
-        font.setWeight(75)
+        font.setPointSize(25)
+        font.setBold(False)
+        font.setWeight(50)
         self.resultsPageTitleLabel.setFont(font)
-        self.resultsPageTitleLabel.setStyleSheet("color: rgb(33, 136, 145);")
+        self.resultsPageTitleLabel.setStyleSheet("color: #93dd03;\n"
+"background-color: #111927;\n"
+"border-radius: 15;\n"
+"margin: 5px;\n"
+"margin-left: 50px;\n"
+"margin-right: 50px;")
         self.resultsPageTitleLabel.setText("")
         self.resultsPageTitleLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.resultsPageTitleLabel.setObjectName("resultsPageTitleLabel")
-        self.verticalLayout_10.addWidget(self.resultsPageTitleLabel)
-        self.resultsPageScrollArea = QtWidgets.QScrollArea(self.resultsPage)
-        self.resultsPageScrollArea.setStyleSheet("QScrollBar:vertical {\n"
-"    width: 30px;\n"
-"}")
+        self.verticalLayout_2.addWidget(self.resultsPageTitleLabel)
+        self.resultsPageScrollArea = QtWidgets.QScrollArea(self.resultsPageContainer)
+        self.resultsPageScrollArea.setMinimumSize(QtCore.QSize(400, 0))
+        self.resultsPageScrollArea.setStyleSheet("")
         self.resultsPageScrollArea.setWidgetResizable(True)
         self.resultsPageScrollArea.setObjectName("resultsPageScrollArea")
         self.resultsPageScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 428, 466))
+        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 494))
         self.resultsPageScrollAreaWidgetContents.setObjectName("resultsPageScrollAreaWidgetContents")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.resultsPageScrollAreaWidgetContents)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
         self.resultsPageDataLabel = QtWidgets.QLabel(self.resultsPageScrollAreaWidgetContents)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.resultsPageDataLabel.sizePolicy().hasHeightForWidth())
+        self.resultsPageDataLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Monaco")
         font.setPointSize(13)
         self.resultsPageDataLabel.setFont(font)
-        self.resultsPageDataLabel.setStyleSheet("background-color: rgb(15, 8, 22);")
+        self.resultsPageDataLabel.setStyleSheet("")
+        self.resultsPageDataLabel.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.resultsPageDataLabel.setFrameShadow(QtWidgets.QFrame.Plain)
         self.resultsPageDataLabel.setText("")
+        self.resultsPageDataLabel.setScaledContents(False)
+        self.resultsPageDataLabel.setWordWrap(True)
         self.resultsPageDataLabel.setObjectName("resultsPageDataLabel")
         self.verticalLayout_21.addWidget(self.resultsPageDataLabel)
         self.resultsPageScrollArea.setWidget(self.resultsPageScrollAreaWidgetContents)
-        self.verticalLayout_10.addWidget(self.resultsPageScrollArea)
+        self.verticalLayout_2.addWidget(self.resultsPageScrollArea)
+        self.verticalLayout_10.addWidget(self.resultsPageContainer, 0, QtCore.Qt.AlignHCenter)
         self.stackedWidget.addWidget(self.resultsPage)
         self.mainMenuPage = QtWidgets.QWidget()
+        self.mainMenuPage.setStyleSheet("QWidget#mainMenuPage {\n"
+"margin: 0;\n"
+"padding: 0px;\n"
+"}")
         self.mainMenuPage.setObjectName("mainMenuPage")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.mainMenuPage)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.gridLayout = QtWidgets.QGridLayout()
-        self.gridLayout.setObjectName("gridLayout")
-        self.customCommandButton = QtWidgets.QPushButton(self.mainMenuPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.customCommandButton.sizePolicy().hasHeightForWidth())
-        self.customCommandButton.setSizePolicy(sizePolicy)
-        self.customCommandButton.setObjectName("customCommandButton")
-        self.gridLayout.addWidget(self.customCommandButton, 1, 3, 1, 1)
-        self.savedTagsButton = QtWidgets.QPushButton(self.mainMenuPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.savedTagsButton.sizePolicy().hasHeightForWidth())
-        self.savedTagsButton.setSizePolicy(sizePolicy)
-        self.savedTagsButton.setObjectName("savedTagsButton")
-        self.gridLayout.addWidget(self.savedTagsButton, 1, 1, 1, 1)
-        self.tagInfoButton = QtWidgets.QPushButton(self.mainMenuPage)
+        self.mainMenuContainer = QtWidgets.QWidget(self.mainMenuPage)
+        self.mainMenuContainer.setStyleSheet("QWidget#mainMenuContainer {\n"
+"padding: 20px;\n"
+"background-color: #1a2332;\n"
+"border-radius: 15;\n"
+"}\n"
+"\n"
+"QPushButton {\n"
+"margin: 15;\n"
+"}")
+        self.mainMenuContainer.setObjectName("mainMenuContainer")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.mainMenuContainer)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.tagInfoButton = QtWidgets.QPushButton(self.mainMenuContainer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tagInfoButton.sizePolicy().hasHeightForWidth())
         self.tagInfoButton.setSizePolicy(sizePolicy)
+        self.tagInfoButton.setMaximumSize(QtCore.QSize(200, 200))
+        self.tagInfoButton.setStyleSheet("")
         self.tagInfoButton.setObjectName("tagInfoButton")
-        self.gridLayout.addWidget(self.tagInfoButton, 0, 1, 1, 1)
-        self.mifareButton = QtWidgets.QPushButton(self.mainMenuPage)
+        self.gridLayout_2.addWidget(self.tagInfoButton, 0, 0, 1, 1)
+        self.mifareButton = QtWidgets.QPushButton(self.mainMenuContainer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mifareButton.sizePolicy().hasHeightForWidth())
         self.mifareButton.setSizePolicy(sizePolicy)
+        self.mifareButton.setMaximumSize(QtCore.QSize(200, 200))
         self.mifareButton.setObjectName("mifareButton")
-        self.gridLayout.addWidget(self.mifareButton, 0, 3, 1, 1)
-        self.verticalLayout_5.addLayout(self.gridLayout)
+        self.gridLayout_2.addWidget(self.mifareButton, 0, 1, 1, 1)
+        self.savedTagsButton = QtWidgets.QPushButton(self.mainMenuContainer)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.savedTagsButton.sizePolicy().hasHeightForWidth())
+        self.savedTagsButton.setSizePolicy(sizePolicy)
+        self.savedTagsButton.setMaximumSize(QtCore.QSize(200, 200))
+        self.savedTagsButton.setObjectName("savedTagsButton")
+        self.gridLayout_2.addWidget(self.savedTagsButton, 1, 0, 1, 1)
+        self.customCommandButton = QtWidgets.QPushButton(self.mainMenuContainer)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.customCommandButton.sizePolicy().hasHeightForWidth())
+        self.customCommandButton.setSizePolicy(sizePolicy)
+        self.customCommandButton.setMaximumSize(QtCore.QSize(200, 200))
+        self.customCommandButton.setObjectName("customCommandButton")
+        self.gridLayout_2.addWidget(self.customCommandButton, 1, 1, 1, 1)
+        self.verticalLayout_5.addWidget(self.mainMenuContainer)
         self.stackedWidget.addWidget(self.mainMenuPage)
         self.connectingMessagePage = QtWidgets.QWidget()
         self.connectingMessagePage.setObjectName("connectingMessagePage")
@@ -446,13 +574,11 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.tagDetailsPage)
         self.verticalLayout_8.addWidget(self.stackedWidget)
         self.verticalLayout_13.addLayout(self.verticalLayout_8)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout_13.addItem(spacerItem3)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
-        self.mifareStackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(2)
+        self.mifareStackedWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -460,7 +586,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.backButton.setText(_translate("MainWindow", "BACK"))
         self.exitButton.setText(_translate("MainWindow", "EXIT"))
-        self.pxmkappLabel.setText(_translate("MainWindow", "PXMKAPP"))
+        self.pxmkappLabel.setText(_translate("MainWindow", "PXMK-APP"))
         self.connectProxmarkButton.setText(_translate("MainWindow", "CONNECT PROXMARK"))
         self.readMifareTagButton.setText(_translate("MainWindow", "READ TAG"))
         self.cloneMifareTagButton.setText(_translate("MainWindow", "CLONE TAG"))
@@ -473,13 +599,13 @@ class Ui_MainWindow(object):
         self.mifareCloneResultsOkButton.setText(_translate("MainWindow", "OK"))
         self.tagMemoryLabel.setText(_translate("MainWindow", "TAG MEMORY"))
         self.memoryOkButton.setText(_translate("MainWindow", "OK"))
-        self.customCommandButton.setText(_translate("MainWindow", "CUSTOM\n"
-"COMMAND"))
-        self.savedTagsButton.setText(_translate("MainWindow", "SAVED\n"
-"TAGS"))
         self.tagInfoButton.setText(_translate("MainWindow", "TAG\n"
 "INFO"))
         self.mifareButton.setText(_translate("MainWindow", "MIFARE"))
+        self.savedTagsButton.setText(_translate("MainWindow", "SAVED\n"
+"TAGS"))
+        self.customCommandButton.setText(_translate("MainWindow", "CUSTOM\n"
+"COMMAND"))
         self.connectionOkButton.setText(_translate("MainWindow", "OK"))
         self.tagInformationTitleLabel.setText(_translate("MainWindow", "TAG INFORMATION"))
         self.tagInformationOkButton.setText(_translate("MainWindow", "OK"))

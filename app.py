@@ -174,7 +174,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         result = self.proxmark.execute_command("hf search")
         print(repr(result))
         title = "TAG INFORMATION"
-        parsed_result = re.sub(r'\r\n', r'\r', result)
+        parsed_result = re.sub(r'\r[\r\n]', r'\r', result)
         # if result:
         #     conv = Ansi2HTMLConverter()
         #     data = conv.convert(result)
