@@ -41,6 +41,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.startCloningButton.clicked.connect(self.clone_mf_1k_tag)
         self.deleteTagButton.clicked.connect(self.delete_mf_1k_tag)
         self.startSimulatingButton.clicked.connect(self.simulate_mf_1k_tag)
+        self.customCommandButton.clicked.connect(self.show_custom_command_page)
+        self.runCommandButton.clicked.connect(self.run_custom_command)
 
     def show_connect_proxmark_page(self):
         self.backButton.hide()
@@ -58,6 +60,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.actual_page = self.basicCommandsPage
         self.last_page = self.mainMenuPage
         self.stackedWidget.setCurrentWidget(self.basicCommandsPage)
+
+    def show_custom_command_page(self):
+        self.backButton.show()
+        self.actual_page = self.customCommandPage
+        self.last_page = self.mainMenuPage
+        self.stackedWidget.setCurrentWidget(self.customCommandPage)
 
     def set_results_data(self, successful, title, data, last_page):
         color = "color: rgb(255, 255, 255);"
@@ -87,12 +95,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.last_page is self.mainMenuPage or self.last_page is self.connectProxmarkPage:
             self.backButton.hide()
 
-        if self.actual_page is self.memoryLayoutPage:
-            self.memoryLayoutLabel.setText("")
-            self.show_mifare_options_page()
-        elif self.actual_page is self.mifareResultsPage:
-            self.mifareTagResultsLabel.setText("")
-            self.show_mifare_options_page()
         elif self.actual_page is self.resultsPage:
             self.resultsPageDataLabel.setText("")
             self.resultsPageTitleLabel.setText("")
@@ -108,6 +110,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.show_basic_commands_page()
         elif self.last_page is self.mifareCloneSimulatePage:
             self.show_mf_clone_simulate_page()
+        elif self.last_page is self.customCommandPage:
+            self.show_custom_command_page()
 
         self.actual_page = self.last_page
 
@@ -204,6 +208,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             del self.mfTagsModel.tags[index.row()]
             self.mfTagsModel.layoutChanged.emit()
             self.mfTagsListView.clearSelection()
+
+    def run_custom_command(self):
+        command = self.commandEdit.text()
+        if command:
+            result = self.proxmark.execute_command(command)
+            title = "COMMAND RESULT"
+            data = utils.parse_result(result)
+            self.set_results_data(True, title, data, self.customCommandPage)
+            self.commandEdit.setText("")
 
     def exit_app(self):
         sys.exit()

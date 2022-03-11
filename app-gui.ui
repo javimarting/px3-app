@@ -71,7 +71,7 @@ padding: 10;
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -111,7 +111,7 @@ color: rgb(255, 255, 255);
 }</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="connectProxmarkPage">
          <property name="sizePolicy">
@@ -769,6 +769,61 @@ border-radius: 15;
                </property>
                <property name="text">
                 <string>READ HIGH-FREQUENCY TAG</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="customCommandPage">
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item alignment="Qt::AlignVCenter">
+           <widget class="QWidget" name="customCommandContainer" native="true">
+            <property name="styleSheet">
+             <string notr="true">QWidget#customCommandContainer {
+padding: 20px;
+background-color: #1a2332;
+border-radius: 15;
+}</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <widget class="QLineEdit" name="commandEdit">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+padding: 10;
+margin: 5px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Enter command</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="runCommandButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>80</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin: 5px;</string>
+               </property>
+               <property name="text">
+                <string>RUN</string>
                </property>
               </widget>
              </item>
