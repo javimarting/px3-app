@@ -4,7 +4,7 @@ import os
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
-from MainWindow3 import Ui_MainWindow
+from MainWindow import Ui_MainWindow
 from proxmark import Proxmark
 import utils
 from models import MfTagsModel
@@ -23,32 +23,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mfTagsModel = MfTagsModel(utils.mf_tags)
         self.mfTagsListView.setModel(self.mfTagsModel)
 
-        self.proxmark_child = None
-
         self.last_mifare_tag_read = None
-
-        self.proxmark_worker = Proxmark()
 
         self.stackedWidget.setCurrentWidget(self.connectProxmarkPage)
 
         self.connectProxmarkButton.clicked.connect(self.start_connection)
-        # self.autoDetectTagButton.clicked.connect(self.show_results_page)
         self.autoDetectTagButton.clicked.connect(self.read_tag)
         self.mifare1kButton.clicked.connect(self.show_mifare_options_page)
-        # self.readMifareTagButton.clicked.connect(self.show_results_page)
-        self.readMifareTagButton.clicked.connect(self.read_mifare_1k_tag)
-        self.viewMemoryMifareButton.clicked.connect(self.show_memory_page)
-        self.memoryOkButton.clicked.connect(self.show_mifare_options_page)
-        self.mifareCloneResultsOkButton.clicked.connect(self.show_mifare_options_page)
-        self.cloneMifareButton.clicked.connect(self.clone_mifare_1k_tag)
+        self.readMifareTagButton.clicked.connect(self.read_mf_1k_tag)
         self.backButton.clicked.connect(self.show_last_page)
         self.exitButton.clicked.connect(self.exit_app)
         self.basicCommandsButton.clicked.connect(self.show_basic_commands_page)
-        # self.hwStatusButton.clicked.connect(self.show_results_page)
         self.hwStatusButton.clicked.connect(self.get_hardware_status)
-        # self.readLFTagButton.clicked.connect(self.show_results_page)
         self.readLFTagButton.clicked.connect(self.search_lf_tag)
-        # self.readHFTagButton.clicked.connect(self.show_results_page)
         self.readHFTagButton.clicked.connect(self.search_hf_tag)
         self.cloneMifareTagButton.clicked.connect(self.show_mf_clone_simulate_page)
         self.startCloningButton.clicked.connect(self.clone_mf_1k_tag)
@@ -124,14 +111,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.actual_page = self.last_page
 
-    def show_memory_page(self):
-        self.actual_page = self.memoryLayoutPage
-        self.last_page = self.mifareOptionsPage
-        self.mifareStackedWidget.setCurrentWidget(self.memoryLayoutPage)
-        print(self.last_mifare_tag_read.memory_string())
-        self.memoryLayoutLabel.setText(self.last_mifare_tag_read.memory_string())
-        self.last_page = self.mifareOptionsPage
-
     def show_main_menu_page(self):
         self.backButton.hide()
         self.last_page = self.mainMenuPage
@@ -150,44 +129,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.actual_page = self.mifareCloneSimulatePage
         self.stackedWidget.setCurrentWidget(self.mifarePage)
         self.mifareStackedWidget.setCurrentWidget(self.mifareCloneSimulatePage)
-
-    def show_mifare_results_page(self):
-        self.actual_page = self.mifareResultsPage
-        self.mifareStackedWidget.setCurrentWidget(self.mifareResultsPage)
-        self.last_page = self.mifareOptionsPage
-    
-    # def read_hf_tag(self):
-    #     result = self.proxmark.read_mifare_hf_tag()
-    #     if result:
-    #         files = utils.analyze_result_files(result)
-    #         mifare_tag = Mifare1k(files)
-    #         self.mifareTagResultsLabel.setStyleSheet("color: rgb(255, 255, 255);")
-    #         self.mifareTagResultsLabel.setText(mifare_tag.basic_info())
-    #         self.manage_mifare_tag_information_buttons(True)
-    #         self.last_mifare_tag_read = mifare_tag
-    #     else:
-    #         self.mifareTagResultsLabel.setText("Couldn't read tag")
-    #         self.mifareTagResultsLabel.setStyleSheet("color: rgb(255, 0, 0);")
-    #         self.manage_mifare_tag_information_buttons(False)
-
-    def manage_mifare_tag_information_buttons(self, bool):
-        self.cloneMifareTagButton.setEnabled(bool)
-        self.simulateMifareButton.setEnabled(bool)
-        self.viewMemoryMifareButton.setEnabled(bool)
-
-    def clone_mifare_1k_tag(self):
-        eml_file = self.last_mifare_tag_read.eml_file
-        print(eml_file)
-        result = self.proxmark_worker.clone_mifare_1k_tag(eml_file)
-        self.mifareStackedWidget.setCurrentWidget(self.mifareCloneResultsPage)
-        self.last_page = self.mifareOptionsPage
-
-        if result:
-            self.mifareCloneResultsLabel.setStyleSheet("color: rgb(255, 255, 255);")
-            self.mifareCloneResultsLabel.setText("Tag cloned successfully!")
-        else:
-            self.mifareCloneResultsLabel.setStyleSheet("color: rgb(255, 0, 0);")
-            self.mifareCloneResultsLabel.setText("Unable to clone tag")
 
     def read_tag(self):
         command = "auto"
@@ -218,7 +159,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         data = utils.parse_search_result(result)
         self.set_results_data(True, title, data, self.basicCommandsPage)
 
-    def read_mifare_1k_tag(self):
+    def read_mf_1k_tag(self):
         result = self.proxmark.execute_command("hf mf autopwn")
         if result:
             title = "MIFARE TAG INFO"
@@ -263,10 +204,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             del self.mfTagsModel.tags[index.row()]
             self.mfTagsModel.layoutChanged.emit()
             self.mfTagsListView.clearSelection()
-
-    def return_to_connection_page(self):
-        self.stackedWidget.setCurrentWidget(self.connectProxmarkPage)
-        self.connectionStatusLabel.setText("")
 
     def exit_app(self):
         sys.exit()

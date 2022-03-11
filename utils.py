@@ -1,6 +1,5 @@
 import re
 import os
-import json
 import datetime
 
 from ansi2html import Ansi2HTMLConverter
@@ -42,11 +41,6 @@ def get_mf_tag(dump_eml_file):
 
     return tag
 
-def get_tag_basic_info(tag: dict):
-    tag_info = f"Tag {tag['id']}:\nDate: {tag['date']['year']}-{tag['date']['month']}-{tag['date']['day']}\n" \
-               f"Time: {tag['date']['hour']}:{tag['date']['minute']}"
-    return tag_info
-
 
 def rename_and_move_files(filenames, new_folder):
     dt = datetime.datetime.now()
@@ -57,31 +51,6 @@ def rename_and_move_files(filenames, new_folder):
         os.rename(filename, os.path.join(new_folder, new_filename))
         files[filename] = new_filename
     return files
-        
-
-def parse_json_file(json_file):
-    with open(json_file, "r") as f:
-        data = json.load(f)
-        uid = data['Card']['UID']
-        atqa = data['Card']['ATQA']
-        sak = data['Card']['SAK']
-        memory_sectors = {}
-        block = 0
-
-        for n in range(16):
-            memory_sectors[f'{n}'] = {}
-            for i in range(4):
-                memory_sectors[f'{n}'][f'{i}'] = data['blocks'][f'{block}']
-                block += 1
-
-        json_data = {
-            'uid': uid,
-            'atqa': atqa,
-            'sak': sak,
-            'memory': memory_sectors,
-        }
-
-        return json_data
 
 
 def clean_search_output(command_output: str):
@@ -108,15 +77,11 @@ def parse_command_output(command_output: str) -> str:
         "\x1b[?2004h": "",
         "[\x1b[1;32musb\x1b[0m]": "",
     }
-
     for k, v in replacements.items():
         command_output = re.sub(re.escape(k), v, command_output)
-
     command_output = f"\x1b[33mCommand\x1b[0m: {command_output}"
-
     conv = Ansi2HTMLConverter()
     mod_command_output = conv.convert(command_output)
-
     return mod_command_output
 
 
@@ -170,8 +135,6 @@ def parse_mf_1k_result(command_output):
         mf_tags.insert(0, mf_tag)
 
     return parse_command_output(mod_string)
-
-
 
 
 mf_tags = get_saved_tags()
