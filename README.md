@@ -2,6 +2,8 @@
 
 A cross-platform GUI for the [proxmark3](https://github.com/RfidResearchGroup/proxmark3) client.
 
+![px3-app example](img/px3-app-example.png)
+
 ## Installation
 
 1. Install the [proxmark3](https://github.com/RfidResearchGroup/proxmark3) client on your system.

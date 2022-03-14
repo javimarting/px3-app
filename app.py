@@ -1,3 +1,5 @@
+#!python3
+
 import sys
 import os
 
@@ -30,16 +32,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.connectProxmarkButton.clicked.connect(self.start_connection)
         self.autoDetectTagButton.clicked.connect(self.read_tag)
         self.mifare1kButton.clicked.connect(self.show_mifare_options_page)
-        self.readMifareTagButton.clicked.connect(self.read_mf_1k_tag)
+        self.mfAutopwnButton.clicked.connect(self.read_mf_1k_tag)
         self.backButton.clicked.connect(self.show_last_page)
         self.exitButton.clicked.connect(self.exit_app)
         self.basicCommandsButton.clicked.connect(self.show_basic_commands_page)
         self.hwStatusButton.clicked.connect(self.get_hardware_status)
         self.readLFTagButton.clicked.connect(self.search_lf_tag)
         self.readHFTagButton.clicked.connect(self.search_hf_tag)
-        self.cloneMifareTagButton.clicked.connect(self.show_mf_clone_simulate_page)
-        self.startCloningButton.clicked.connect(self.clone_mf_1k_tag)
+        self.savedTagsButton.clicked.connect(self.show_mf_saved_tags_page)
+        self.mfCloneButton.clicked.connect(self.clone_mf_1k_tag)
         self.deleteTagButton.clicked.connect(self.delete_mf_1k_tag)
+        self.mfSimulateButton.clicked.connect(self.load_mf_1k_tag_to_memory)
         self.startSimulatingButton.clicked.connect(self.simulate_mf_1k_tag)
         self.customCommandButton.clicked.connect(self.show_custom_command_page)
         self.runCommandButton.clicked.connect(self.run_custom_command)
@@ -95,9 +98,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.last_page is self.mainMenuPage or self.last_page is self.connectProxmarkPage:
             self.backButton.hide()
 
-        elif self.actual_page is self.resultsPage:
+        if self.actual_page is self.resultsPage:
             self.resultsPageDataLabel.setText("")
             self.resultsPageTitleLabel.setText("")
+        elif self.actual_page is self.mifareSimulatePage:
+            self.mifareSimulateLabel.setText("")
+
 
         if self.last_page is self.connectProxmarkPage:
             self.topLogoLabel.hide()
@@ -108,8 +114,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.show_mifare_options_page()
         elif self.last_page is self.basicCommandsPage:
             self.show_basic_commands_page()
-        elif self.last_page is self.mifareCloneSimulatePage:
-            self.show_mf_clone_simulate_page()
+        elif self.last_page is self.mifareSavedTagsPage:
+            self.show_mf_saved_tags_page()
         elif self.last_page is self.customCommandPage:
             self.show_custom_command_page()
 
@@ -128,11 +134,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.stackedWidget.setCurrentWidget(self.mifarePage)
         self.mifareStackedWidget.setCurrentWidget(self.mifareOptionsPage)
 
-    def show_mf_clone_simulate_page(self):
+    def show_mf_saved_tags_page(self):
         self.last_page = self.mifareOptionsPage
-        self.actual_page = self.mifareCloneSimulatePage
+        self.actual_page = self.mifareSavedTagsPage
         self.stackedWidget.setCurrentWidget(self.mifarePage)
-        self.mifareStackedWidget.setCurrentWidget(self.mifareCloneSimulatePage)
+        self.mifareStackedWidget.setCurrentWidget(self.mifareSavedTagsPage)
+
+    def show_mf_simulation_page(self):
+        self.last_page = self.mifareSavedTagsPage
+        self.actual_page = self.mifareSimulatePage
+        self.stackedWidget.setCurrentWidget(self.mifarePage)
+        self.mifareStackedWidget.setCurrentWidget(self.mifareSimulatePage)
 
     def read_tag(self):
         command = "auto"
@@ -180,20 +192,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             result = self.proxmark.execute_command(f"hf mf cload -f {mf_tag.files['dump_eml_file']}")
             title = "CLONING RESULT"
             data = utils.parse_result(result)
-            self.set_results_data(True, title, data, self.mifareCloneSimulatePage)
+            self.set_results_data(True, title, data, self.mifareSavedTagsPage)
             self.mfTagsListView.clearSelection()
 
-    def simulate_mf_1k_tag(self):
+    def load_mf_1k_tag_to_memory(self):
         indexes = self.mfTagsListView.selectedIndexes()
         if indexes:
             index = indexes[0]
             mf_tag = self.mfTagsModel.tags[index.row()]
-            print(mf_tag)
             load_memory = self.proxmark.execute_command(f"hf mf eload --1k -f {mf_tag.files['dump_eml_file']}")
-            print(load_memory)
-            result = self.proxmark.execute_command("hf mf sim --1k -i")
-            print(result)
-            print("Done simulating")
+            self.show_mf_simulation_page()
+            text = utils.parse_result(load_memory)
+            self.mifareSimulateLabel.setText(text)
+
+    def simulate_mf_1k_tag(self):
+        result = self.proxmark.execute_command("hf mf sim --1k -i")
+        self.show_mf_saved_tags_page()
+
 
     def delete_mf_1k_tag(self):
         indexes = self.mfTagsListView.selectedIndexes()

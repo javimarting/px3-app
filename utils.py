@@ -133,7 +133,6 @@ def parse_search_result(command_output: str) -> str:
 
 def parse_mf_1k_result(command_output):
     mod_string = clean_search_output(command_output)
-    print(repr(mod_string))
     if re.search(r'hf-mf-', mod_string):
         filenames = []
         keys_file = re.search(r'hf-mf-[^\r]*-key[^\r]*\.bin', mod_string).group()

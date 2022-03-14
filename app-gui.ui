@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>PX3-APP</string>
   </property>
   <property name="styleSheet">
    <string notr="true">/*background-color: rgb(17, 25, 39);*/
@@ -246,7 +246,36 @@ background-color: #1a2332;
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_20">
                  <item>
-                  <widget class="QPushButton" name="readMifareTagButton">
+                  <widget class="QLabel" name="label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>15</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>MIFARE CLASSIC</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="mfAutopwnButton">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -263,12 +292,12 @@ background-color: #1a2332;
                     <bool>false</bool>
                    </property>
                    <property name="text">
-                    <string>READ AND SAVE TAG</string>
+                    <string>AUTOPWN TAG</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="cloneMifareTagButton">
+                  <widget class="QPushButton" name="savedTagsButton">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -291,19 +320,19 @@ background-color: #1a2332;
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="mifareCloneSimulatePage">
+            <widget class="QWidget" name="mifareSavedTagsPage">
              <layout class="QVBoxLayout" name="verticalLayout_17">
               <item>
-               <widget class="QWidget" name="mifareCloneSimulatePageContainer" native="true">
+               <widget class="QWidget" name="mifareSavedTagsContainer" native="true">
                 <property name="styleSheet">
-                 <string notr="true">QWidget#mifareCloneSimulatePageContainer {
+                 <string notr="true">QWidget#mifareSavedTagsContainer {
 background-color: #1a2332;
 border-radius: 10;
 }</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_16">
                  <item>
-                  <widget class="QLabel" name="mifareCloneSimulatePageLabel">
+                  <widget class="QLabel" name="mifareSavedTagsPageLabel">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -385,7 +414,7 @@ color: #93dd03;
                   </widget>
                  </item>
                  <item>
-                  <widget class="QWidget" name="mifareCloneSimulateButtonContainer" native="true">
+                  <widget class="QWidget" name="mifareSavedTagsButtonContainer" native="true">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -400,7 +429,7 @@ margin: 5px;
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
                     <item>
-                     <widget class="QPushButton" name="startCloningButton">
+                     <widget class="QPushButton" name="mfCloneButton">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -424,7 +453,7 @@ margin: 5px;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="startSimulatingButton">
+                     <widget class="QPushButton" name="mfSimulateButton">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -462,6 +491,77 @@ margin: 5px;
                      </widget>
                     </item>
                    </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="mifareSimulatePage">
+             <layout class="QVBoxLayout" name="verticalLayout_14">
+              <item>
+               <widget class="QWidget" name="mifareSimulateContainer" native="true">
+                <property name="styleSheet">
+                 <string notr="true">QWidget#mifareSimulateContainer {
+background-color: #1a2332;
+border-radius: 10;
+}</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_15">
+                 <item>
+                  <widget class="QLabel" name="mifareSimulateTitleLabel">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>60</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>60</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>20</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: #93dd03;
+background-color: #111927;
+border-radius: 15;
+margin: 5px;
+margin-left: 40px;
+margin-right: 40px;</string>
+                   </property>
+                   <property name="text">
+                    <string>SIMULATE MIFARE 1K TAG</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="mifareSimulateLabel">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="startSimulatingButton">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>START</string>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -647,6 +747,35 @@ border-radius: 15;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_23">
              <item>
+              <widget class="QLabel" name="mainMenuLabel">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>MAIN MENU</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="basicCommandsButton">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -750,6 +879,35 @@ border-radius: 15;
 }</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLabel" name="basicCommandsLabel">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>BASIC COMMANDS</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QPushButton" name="hwStatusButton">
                <property name="sizePolicy">
