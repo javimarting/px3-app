@@ -1,0 +1,6 @@
+pip
+PyQt5
+pexpect
+ptyprocess
+ansi2html
+setuptools

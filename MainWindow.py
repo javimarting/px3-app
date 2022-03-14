@@ -200,6 +200,42 @@ class Ui_MainWindow(object):
         self.mfTagsListView.setFont(font)
         self.mfTagsListView.setStyleSheet("QListView:item {\n"
 "padding: 10;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical {\n"
+"margin: 30px 0 30px 0;\n"
+"width: 35px;\n"
+"border-right: 1px solid #93dd03;\n"
+"border-left: 1px solid #93dd03;\n"
+"background-color: #263143;\n"
+"border-radius: 0;\n"
+"}\n"
+"\n"
+"QScrollBar::handle::vertical {\n"
+"border: 1px solid #93dd03;\n"
+"background-color: #111927;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"border: 1px solid #93dd03;\n"
+"height: 30px;\n"
+"border-top-left-radius: 7px;\n"
+"border-top-right-radius: 7px;\n"
+"subcontrol-position: top;\n"
+"subcontrol-origin: margin;\n"
+"background-color: #111927;\n"
+"color: #93dd03;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"border: 1px solid #93dd03;\n"
+"height: 30px;\n"
+"border-bottom-left-radius: 7px;\n"
+"border-bottom-right-radius: 7px;\n"
+"subcontrol-position: bottom;\n"
+"subcontrol-origin: margin;\n"
+"background-color: #111927;\n"
+"color: #93dd03;\n"
 "}")
         self.mfTagsListView.setAlternatingRowColors(True)
         self.mfTagsListView.setObjectName("mfTagsListView")
@@ -325,7 +361,7 @@ class Ui_MainWindow(object):
         self.resultsPageScrollArea.setWidgetResizable(True)
         self.resultsPageScrollArea.setObjectName("resultsPageScrollArea")
         self.resultsPageScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 365, 40))
+        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 395))
         self.resultsPageScrollAreaWidgetContents.setObjectName("resultsPageScrollAreaWidgetContents")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.resultsPageScrollAreaWidgetContents)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
@@ -539,7 +575,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(5)
+        self.stackedWidget.setCurrentIndex(1)
         self.mifareStackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

@@ -8,16 +8,32 @@ from tags import MifareClassic1k
 
 
 def get_saved_tags() -> list:
-    eml_files = [file for file in os.listdir("files") if file.endswith(".eml")]
+    """Function that gets the saved tags in the 'files' directory.
+
+        Returns:
+            tags_list (list): list that contains the saved tags.
+    """
+
+    dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
+    eml_files = [file for file in os.listdir(dir_path) if file.endswith(".eml")]
     tags_list = []
     if eml_files:
         for dump_eml_file in eml_files:
             tags_list.append(get_mf_tag(dump_eml_file))
+        tags_list.sort(key=lambda x: x.date, reverse=True)
 
-    return sorted(tags_list, key=lambda x: x.date, reverse=True)
+    return tags_list
 
 
-def get_mf_tag(dump_eml_file):
+def get_mf_tag(dump_eml_file: str) -> MifareClassic1k:
+    """Function that creates a MifareClassic1k tag from an eml file.
+
+        Params:
+            dump_eml_file (str): the eml file path.
+
+        Returns:
+            mf_1k_tag (MifareClassic1k): MifareClassic1k object.
+    """
     pattern = r'\d+-\d+-\w+'
     file_info = re.search(pattern, dump_eml_file).group()
     year = int(file_info[:4])
@@ -37,9 +53,9 @@ def get_mf_tag(dump_eml_file):
         'dump_json_file': os.path.join("files", dump_json_file),
         'key_bin_file': os.path.join("files", key_bin_file),
     }
-    tag = MifareClassic1k(uid=uid, date=date, files=files)
+    mf_1k_tag = MifareClassic1k(uid=uid, date=date, files=files)
 
-    return tag
+    return mf_1k_tag
 
 
 def rename_and_move_files(filenames, new_folder):
@@ -66,7 +82,7 @@ def parse_command_output(command_output: str) -> str:
     """Function that removes and replaces unwanted characters in the output string of a proxmark command.
 
         Parameters:
-            command_output (str): The output string of the proxmark command.
+            command_output (str): the output string of the proxmark command.
 
         Returns:
             mod_command_output (str): string containing the HTML code of the modified command output.
@@ -132,7 +148,8 @@ def parse_mf_1k_result(command_output):
         for k, v in files.items():
             mod_string = re.sub(k, v, mod_string)
         mf_tag = get_mf_tag(files[eml_file])
-        mf_tags.insert(0, mf_tag)
+        mf_tags.append(mf_tag)
+        mf_tags.sort(key=lambda x: x.date, reverse=True)
 
     return parse_command_output(mod_string)
 

@@ -111,7 +111,7 @@ color: rgb(255, 255, 255);
 }</string>
         </property>
         <property name="currentIndex">
-         <number>5</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="connectProxmarkPage">
          <property name="sizePolicy">
@@ -341,6 +341,42 @@ margin-right: 40px;</string>
                    <property name="styleSheet">
                     <string notr="true">QListView:item {
 padding: 10;
+}
+
+QScrollBar:vertical {
+margin: 30px 0 30px 0;
+width: 35px;
+border-right: 1px solid #93dd03;
+border-left: 1px solid #93dd03;
+background-color: #263143;
+border-radius: 0;
+}
+
+QScrollBar::handle::vertical {
+border: 1px solid #93dd03;
+background-color: #111927;
+}
+
+QScrollBar::sub-line:vertical {
+border: 1px solid #93dd03;
+height: 30px;
+border-top-left-radius: 7px;
+border-top-right-radius: 7px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+background-color: #111927;
+color: #93dd03;
+}
+
+QScrollBar::add-line:vertical {
+border: 1px solid #93dd03;
+height: 30px;
+border-bottom-left-radius: 7px;
+border-bottom-right-radius: 7px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+background-color: #111927;
+color: #93dd03;
 }</string>
                    </property>
                    <property name="alternatingRowColors">
@@ -541,8 +577,8 @@ margin-right: 40px;</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>365</width>
-                  <height>40</height>
+                  <width>400</width>
+                  <height>395</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_21">
