@@ -41,11 +41,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.readHFTagButton.clicked.connect(self.search_hf_tag)
         self.savedTagsButton.clicked.connect(self.show_mf_saved_tags_page)
         self.mfCloneButton.clicked.connect(self.clone_mf_1k_tag)
-        self.deleteTagButton.clicked.connect(self.delete_mf_1k_tag)
+        self.mfDeleteButton.clicked.connect(self.delete_mf_1k_tag)
         self.mfSimulateButton.clicked.connect(self.load_mf_1k_tag_to_memory)
         self.startSimulatingButton.clicked.connect(self.simulate_mf_1k_tag)
         self.customCommandButton.clicked.connect(self.show_custom_command_page)
         self.runCommandButton.clicked.connect(self.run_custom_command)
+        self.mfInfoButton.clicked.connect(self.get_mf_1k_tag_info)
 
     def show_connect_proxmark_page(self):
         self.backButton.hide()
@@ -76,7 +77,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             color = "color: rgb(255, 0, 0);"
         self.resultsPageDataLabel.setStyleSheet(color)
         self.resultsPageTitleLabel.setText(title)
-        self.resultsPageDataLabel.setTextFormat(Qt.RichText)
         self.resultsPageDataLabel.setWordWrap(True)
         self.resultsPageDataLabel.setText(data)
         self.last_page = last_page
@@ -209,7 +209,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         result = self.proxmark.execute_command("hf mf sim --1k -i")
         self.show_mf_saved_tags_page()
 
-
     def delete_mf_1k_tag(self):
         indexes = self.mfTagsListView.selectedIndexes()
         if indexes:
@@ -223,6 +222,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             del self.mfTagsModel.tags[index.row()]
             self.mfTagsModel.layoutChanged.emit()
             self.mfTagsListView.clearSelection()
+
+    def get_mf_1k_tag_info(self):
+        indexes = self.mfTagsListView.selectedIndexes()
+        if indexes:
+            index = indexes[0]
+            mf_tag = self.mfTagsModel.tags[index.row()]
+            title = "MIFARE TAG INFO"
+            data = mf_tag.get_basic_info()
+            print(data)
+            self.set_results_data(True, title, data, self.mifareSavedTagsPage)
 
     def run_custom_command(self):
         command = self.commandEdit.text()

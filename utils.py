@@ -1,6 +1,7 @@
 import re
 import os
 import datetime
+import json
 
 from ansi2html import Ansi2HTMLConverter
 
@@ -25,7 +26,7 @@ def get_saved_tags() -> list:
     return tags_list
 
 
-def get_mf_tag(dump_eml_file: str) -> MifareClassic1k:
+def get_mf_tag(eml_file: str) -> MifareClassic1k:
     """Function that creates a MifareClassic1k tag from an eml file.
 
         Params:
@@ -35,7 +36,18 @@ def get_mf_tag(dump_eml_file: str) -> MifareClassic1k:
             mf_1k_tag (MifareClassic1k): MifareClassic1k object.
     """
     pattern = r'\d+-\d+-\w+'
-    file_info = re.search(pattern, dump_eml_file).group()
+    file_info = re.search(pattern, eml_file).group()
+    dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
+    dump_eml_file = os.path.join(dir_path, eml_file)
+    dump_bin_file = os.path.join(dir_path, f"hf-mf-{file_info}-dump.bin")
+    dump_json_file = os.path.join(dir_path, f"hf-mf-{file_info}-dump.json")
+    key_bin_file = os.path.join(dir_path, f"hf-mf-{file_info}-key.bin")
+    files = {
+        'dump_bin_file': dump_bin_file,
+        'dump_eml_file': dump_eml_file,
+        'dump_json_file': dump_json_file,
+        'key_bin_file': key_bin_file,
+    }
     year = int(file_info[:4])
     month = int(file_info[4:6])
     day = int(file_info[6:8])
@@ -43,17 +55,21 @@ def get_mf_tag(dump_eml_file: str) -> MifareClassic1k:
     minute = int(file_info[11:13])
     second = int(file_info[13:15])
     date = datetime.datetime(year, month, day, hour, minute, second)
-    uid = file_info[16:]
-    dump_bin_file = f"hf-mf-{file_info}-dump.bin"
-    dump_json_file = f"hf-mf-{file_info}-dump.json"
-    key_bin_file = f"hf-mf-{file_info}-key.bin"
-    files = {
-        'dump_bin_file': os.path.join("files", dump_bin_file),
-        'dump_eml_file': os.path.join("files", dump_eml_file),
-        'dump_json_file': os.path.join("files", dump_json_file),
-        'key_bin_file': os.path.join("files", key_bin_file),
-    }
-    mf_1k_tag = MifareClassic1k(uid=uid, date=date, files=files)
+    uid = ""
+    atqa = ""
+    sak = ""
+    blocks = {}
+    sector_keys = {}
+    with open(dump_json_file, "r") as f:
+        data = json.load(f)
+        uid = data["Card"]["UID"]
+        atqa = data["Card"]["ATQA"]
+        sak = data["Card"]["SAK"]
+        blocks = data["blocks"]
+        sector_keys = data["SectorKeys"]
+
+    mf_1k_tag = MifareClassic1k(uid=uid, atqa=atqa, sak=sak, blocks=blocks, sector_keys=sector_keys,
+                                date=date, files=files)
 
     return mf_1k_tag
 
