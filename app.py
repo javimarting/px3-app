@@ -25,14 +25,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mfTagsModel = MfTagsModel(utils.mf_tags)
         self.mfTagsListView.setModel(self.mfTagsModel)
 
-        self.last_mifare_tag_read = None
-
         self.stackedWidget.setCurrentWidget(self.connectProxmarkPage)
 
         self.connectProxmarkButton.clicked.connect(self.start_connection)
         self.autoDetectTagButton.clicked.connect(self.read_tag)
         self.mifare1kButton.clicked.connect(self.show_mifare_options_page)
-        self.mfAutopwnButton.clicked.connect(self.read_mf_1k_tag)
+        self.mfAutopwnButton.clicked.connect(self.autopwn_mf_tag)
         self.backButton.clicked.connect(self.show_last_page)
         self.exitButton.clicked.connect(self.exit_app)
         self.basicCommandsButton.clicked.connect(self.show_basic_commands_page)
@@ -48,6 +46,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.runCommandButton.clicked.connect(self.run_custom_command)
         self.mfInfoButton.clicked.connect(self.get_mf_1k_tag_info)
 
+# Show different pages
     def show_connect_proxmark_page(self):
         self.backButton.hide()
         self.topLogoLabel.hide()
@@ -71,28 +70,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.last_page = self.mainMenuPage
         self.stackedWidget.setCurrentWidget(self.customCommandPage)
 
-    def set_results_data(self, successful, title, data, last_page):
-        color = "color: rgb(255, 255, 255);"
-        if not successful:
-            color = "color: rgb(255, 0, 0);"
-        self.resultsPageDataLabel.setStyleSheet(color)
-        self.resultsPageTitleLabel.setText(title)
-        self.resultsPageDataLabel.setWordWrap(True)
-        self.resultsPageDataLabel.setText(data)
-        self.last_page = last_page
-        self.show_results_page()
-
-    def start_connection(self):
-        connection = self.proxmark.connect_proxmark()
-        self.topLogoLabel.show()
-        if connection:
-            self.show_main_menu_page()
-        else:
-            title = "CONNECTION STATUS"
-            data = "Couldn't establish connection"
-            last_page = self.connectProxmarkPage
-            self.set_results_data(False, title, data, last_page)
-            self.show_results_page()
 
     def show_last_page(self):
         if self.last_page is self.mainMenuPage or self.last_page is self.connectProxmarkPage:
@@ -103,7 +80,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.resultsPageTitleLabel.setText("")
         elif self.actual_page is self.mifareSimulatePage:
             self.mifareSimulateLabel.setText("")
-
 
         if self.last_page is self.connectProxmarkPage:
             self.topLogoLabel.hide()
@@ -146,6 +122,30 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.stackedWidget.setCurrentWidget(self.mifarePage)
         self.mifareStackedWidget.setCurrentWidget(self.mifareSimulatePage)
 
+# Actions
+    def set_results_data(self, successful, title, data, last_page):
+        color = "color: rgb(255, 255, 255);"
+        if not successful:
+            color = "color: rgb(255, 0, 0);"
+        self.resultsPageDataLabel.setStyleSheet(color)
+        self.resultsPageTitleLabel.setText(title)
+        self.resultsPageDataLabel.setWordWrap(True)
+        self.resultsPageDataLabel.setText(data)
+        self.last_page = last_page
+        self.show_results_page()
+
+    def start_connection(self):
+        connection = self.proxmark.connect_proxmark()
+        self.topLogoLabel.show()
+        if connection:
+            self.show_main_menu_page()
+        else:
+            title = "CONNECTION STATUS"
+            data = "Couldn't establish connection"
+            last_page = self.connectProxmarkPage
+            self.set_results_data(False, title, data, last_page)
+            self.show_results_page()
+
     def read_tag(self):
         command = "auto"
         result = self.proxmark.execute_command(command)
@@ -175,11 +175,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         data = utils.parse_search_result(result)
         self.set_results_data(True, title, data, self.basicCommandsPage)
 
-    def read_mf_1k_tag(self):
+    def autopwn_mf_tag(self):
         result = self.proxmark.execute_command("hf mf autopwn")
         if result:
             title = "MIFARE TAG INFO"
-            data = utils.parse_mf_1k_result(result)
+            data = utils.parse_autopwn_result(result)
             self.set_results_data(True, title, data, self.mifareOptionsPage)
 
             self.mfTagsModel.layoutChanged.emit()
@@ -230,7 +230,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             mf_tag = self.mfTagsModel.tags[index.row()]
             title = "MIFARE TAG INFO"
             data = mf_tag.get_basic_info()
-            print(data)
             self.set_results_data(True, title, data, self.mifareSavedTagsPage)
 
     def run_custom_command(self):

@@ -35,6 +35,7 @@ def get_mf_tag(eml_file: str) -> MifareClassic1k:
         Returns:
             mf_1k_tag (MifareClassic1k): MifareClassic1k object.
     """
+
     pattern = r'\d+-\d+-\w+'
     file_info = re.search(pattern, eml_file).group()
     dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
@@ -147,7 +148,7 @@ def parse_search_result(command_output: str) -> str:
     return parse_command_output(mod_string)
 
 
-def parse_mf_1k_result(command_output):
+def parse_autopwn_result(command_output):
     mod_string = clean_search_output(command_output)
     if re.search(r'hf-mf-', mod_string):
         filenames = []
@@ -159,7 +160,8 @@ def parse_mf_1k_result(command_output):
         filenames.append(eml_file)
         json_file = re.search(r'hf-mf-[^\r]*-dump[^\r]*\.json', mod_string).group()
         filenames.append(json_file)
-        files = rename_and_move_files(filenames, "files")
+        files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
+        files = rename_and_move_files(filenames, files_path)
         for k, v in files.items():
             mod_string = re.sub(k, v, mod_string)
         mf_tag = get_mf_tag(files[eml_file])
