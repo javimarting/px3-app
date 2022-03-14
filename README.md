@@ -2,7 +2,10 @@
 
 A cross-platform GUI for the [proxmark3](https://github.com/RfidResearchGroup/proxmark3) client.
 
-![px3-app example](img/px3-app-example.png)
+|  |                                               |
+| --- |-----------------------------------------------|
+ | ![px3-app connection page](img/px3-app-connection.png) | ![px3-app main menu](img/px3-app-mainwindow.png) |
+| ![px3-app example](img/px3-app-example.png) |  |
 
 ## Installation
 
