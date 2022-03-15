@@ -1,4 +1,3 @@
-pip
 PyQt5
 pexpect
 ptyprocess

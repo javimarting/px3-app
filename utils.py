@@ -16,6 +16,8 @@ def get_saved_tags() -> list:
     """
 
     dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
     eml_files = [file for file in os.listdir(dir_path) if file.endswith(".eml")]
     tags_list = []
     if eml_files:
