@@ -1,5 +1,3 @@
-
-
 class MifareClassic1k:
     def __init__(self, uid, atqa, sak, blocks, sector_keys, date, files):
         self.uid = uid
