@@ -1,3 +1,4 @@
+import pathlib
 import re
 import os
 import datetime
@@ -6,7 +7,10 @@ import json
 from ansi2html import Ansi2HTMLConverter
 
 from px3_app.tags import MifareClassic1k
+from px3_app.utils import file_processor, json_processor, ansi_processor
 
+
+SAVED_TAGS_DIRECTORY_PATH = pathlib.Path(__file__).absolute().parents[2] / "data" / "mf_tags"
 
 conv = Ansi2HTMLConverter()
 
@@ -45,87 +49,17 @@ def get_saved_tags() -> list:
 
     # dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../data/mf_tags")
 
-    if not os.path.exists(mf_tags_path):
-        os.makedirs(mf_tags_path)
-    eml_files = [file for file in os.listdir(mf_tags_path) if file.endswith(".eml")]
-    print(f"Directory: {os.path.abspath(mf_tags_path)}")
-    for f in eml_files:
-        print(f)
+    if not SAVED_TAGS_DIRECTORY_PATH.exists():
+        SAVED_TAGS_DIRECTORY_PATH.mkdir(parents=True, exist_ok=True)
+    json_files = [file.name for file in SAVED_TAGS_DIRECTORY_PATH.iterdir() if file.name.endswith(".json")]
     tags_list = []
-    if eml_files:
-        for dump_eml_file in eml_files:
-            tags_list.append(create_mf_1k_tag_from_file(dump_eml_file))
+    if json_files:
+        for dump_json_file in json_files:
+            json_file_path = SAVED_TAGS_DIRECTORY_PATH / dump_json_file
+            tags_list.append(json_processor.json_to_mf_tag(json_file_path))
         tags_list.sort(key=lambda x: x.date, reverse=True)
 
     return tags_list
-
-
-def create_mf_1k_tag_from_file(eml_file: str) -> MifareClassic1k:
-    """
-    Function that creates a MifareClassic1k tag from an eml file.
-
-        Params:
-            dump_eml_file (str): the eml file path.
-
-        Returns:
-            mf_1k_tag (MifareClassic1k): MifareClassic1k object.
-    """
-
-    pattern = r'\d+-\d+-\w+'
-    file_info = re.search(pattern, eml_file).group()
-
-    year = int(file_info[:4])
-    month = int(file_info[4:6])
-    day = int(file_info[6:8])
-    hour = int(file_info[9:11])
-    minute = int(file_info[11:13])
-    second = int(file_info[13:15])
-    date = datetime.datetime(year, month, day, hour, minute, second)
-    # dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../data/mf_tags")
-    files = {
-        'dump_bin_file': os.path.join(mf_tags_path, f"hf-mf-{file_info}-dump.bin"),
-        'dump_eml_file': os.path.join(mf_tags_path, eml_file),
-        'dump_json_file': os.path.join(mf_tags_path, f"hf-mf-{file_info}-dump.json"),
-        'key_bin_file': os.path.join(mf_tags_path, f"hf-mf-{file_info}-key.bin"),
-    }
-    uid = ""
-    atqa = ""
-    sak = ""
-    blocks = {}
-    sector_keys = {}
-
-    with open(files["dump_json_file"], "r") as f:
-        data = json.load(f)
-        uid = data["Card"]["UID"]
-        atqa = data["Card"]["ATQA"]
-        sak = data["Card"]["SAK"]
-        blocks = data["blocks"]
-        sector_keys = data["SectorKeys"]
-
-    mf_1k_tag = MifareClassic1k(uid=uid, atqa=atqa, sak=sak, blocks=blocks, sector_keys=sector_keys,
-                                date=date, files=files)
-
-    return mf_1k_tag
-
-
-def rename_and_move_files(filenames):
-    dt = datetime.datetime.now()
-    formatted_dt = dt.strftime('%Y%m%d-%H%M%S')
-    files = {}
-    for filename in filenames:
-        new_filename = re.sub(r'hf-mf', f"hf-mf-{formatted_dt}", filename)
-        os.rename(filename, os.path.join(mf_tags_path, new_filename))
-        files[filename] = new_filename
-    return files
-
-
-def clean_search_output(command_output: str):
-    pattern = r' [🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕟🕠🕡🕢🕣🕤🕥🕦🕧][^\r]*[\r]'
-    mod_output = re.sub(pattern, "", command_output)
-    mod_output = re.sub(r"\r+", r"\r", mod_output)
-    mod_output = re.sub(r"\r\n", r"\r", mod_output)
-
-    return mod_output
 
 
 def process_command_output(command_output: str) -> str:
@@ -146,7 +80,6 @@ def process_command_output(command_output: str) -> str:
         command_output = process_auto_output(command_output)
     elif command == "hf mf autopwn":
         command_output = process_autopwn_output(command_output)
-        print(command_output)
 
     replacements = {
         r'\r\n': r'\n',
@@ -157,7 +90,7 @@ def process_command_output(command_output: str) -> str:
     for k, v in replacements.items():
         command_output = re.sub(k, v, command_output)
 
-    mod_command_output = conv.convert(command_output)
+    mod_command_output = ansi_processor.ansi_to_html(command_output)
 
     return mod_command_output
 
@@ -212,11 +145,18 @@ def process_autopwn_output(command_output: str) -> str:
         filenames.append(eml_file)
         json_file = re.search(r'hf-mf-[^\r]*-dump[^\r]*\.json', command_output).group()
         filenames.append(json_file)
+
+        json_processor.add_date_time_to_json_file(json_file)
         # files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../data/mf_tags")
-        files = rename_and_move_files(filenames)
-        for k, v in files.items():
+        f = {file: file_processor.rename_and_move_tag_file(file) for file in filenames}
+
+        # files = rename_and_move_files(filenames)
+        for k, v in f.items():
             mod_command_output = re.sub(re.escape(k), v, mod_command_output)
-        mf_tag = create_mf_1k_tag_from_file(files[eml_file])
+        # mf_tag = create_mf_1k_tag_from_file(files[eml_file])
+        json_file_path = SAVED_TAGS_DIRECTORY_PATH / f[json_file]
+        mf_tag = json_processor.json_to_mf_tag(json_file_path)
+        # mf_tag = file_processor.json_to_mf_tag(f[json_file])
         mf_tags.append(mf_tag)
         mf_tags.sort(key=lambda x: x.date, reverse=True)
 

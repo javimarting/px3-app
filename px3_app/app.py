@@ -1,13 +1,12 @@
 #!python3
 
 import sys
-import os
 
 from PyQt5 import QtWidgets
 
 from px3_app.ui.MainWindow import Ui_MainWindow
 from px3_app.proxmark import Proxmark
-from px3_app.utils import command_output_processor
+from px3_app.utils import command_output_processor, file_processor
 from px3_app.models import MfTagsModel
 
 
@@ -111,6 +110,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.last_page = self.mifareOptionsPage
         self.stackedWidget.setCurrentWidget(self.mifarePage)
         self.mifareStackedWidget.setCurrentWidget(self.mifareSavedTagsPage)
+        self.mfTagsModel.layoutChanged.emit()
 
     def show_mf_simulation_page(self):
         self.last_page = self.mifareSavedTagsPage
@@ -168,11 +168,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def delete_mf_1k_tag(self):
         tag = self.get_selected_tag()
         if tag:
-            for k, v in tag.files.items():
-                try:
-                    os.remove(v)
-                except:
-                    pass
+            file_processor.delete_tag_files(tag.files)
             self.mfTagsModel.tags.remove(tag)
             self.mfTagsModel.layoutChanged.emit()
             self.mfTagsListView.clearSelection()
