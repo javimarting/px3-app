@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'app-gui.ui'
+# Form implementation generated from reading ui file 'app.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -42,7 +42,7 @@ class Ui_MainWindow(object):
 "padding: 10;\n"
 "")
         self.topLogoLabel.setText("")
-        self.topLogoLabel.setPixmap(QtGui.QPixmap(":/icons/app-logo-small.png"))
+        self.topLogoLabel.setPixmap(QtGui.QPixmap(":/icons/app-logo-icon-small.png"))
         self.topLogoLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.topLogoLabel.setObjectName("topLogoLabel")
         self.verticalLayout_8.addWidget(self.topLogoLabel)
@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
         self.pxmkappLabel.setFont(font)
         self.pxmkappLabel.setStyleSheet("")
         self.pxmkappLabel.setText("")
-        self.pxmkappLabel.setPixmap(QtGui.QPixmap(":/icons/app-logo.png"))
+        self.pxmkappLabel.setPixmap(QtGui.QPixmap(":/icons/app-logo-icon.png"))
         self.pxmkappLabel.setScaledContents(False)
         self.pxmkappLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.pxmkappLabel.setObjectName("pxmkappLabel")
@@ -417,7 +417,7 @@ class Ui_MainWindow(object):
         self.resultsPageScrollArea.setWidgetResizable(True)
         self.resultsPageScrollArea.setObjectName("resultsPageScrollArea")
         self.resultsPageScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 395))
+        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 40))
         self.resultsPageScrollAreaWidgetContents.setObjectName("resultsPageScrollAreaWidgetContents")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.resultsPageScrollAreaWidgetContents)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
@@ -655,7 +655,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(1)
-        self.mifareStackedWidget.setCurrentIndex(1)
+        self.mifareStackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -686,4 +686,4 @@ class Ui_MainWindow(object):
         self.runCommandButton.setText(_translate("MainWindow", "RUN"))
         self.backButton.setText(_translate("MainWindow", "BACK"))
         self.exitButton.setText(_translate("MainWindow", "EXIT"))
-import resources_rc
+from px3_app.ui import resources_rc

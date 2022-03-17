@@ -4,12 +4,11 @@ import sys
 import os
 
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
 
-from MainWindow import Ui_MainWindow
-from proxmark import Proxmark
-import utils
-from models import MfTagsModel
+from px3_app.ui.MainWindow import Ui_MainWindow
+from px3_app.proxmark import Proxmark
+from px3_app.utils import command_output_processor
+from px3_app.models import MfTagsModel
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -20,7 +19,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.show_connect_proxmark_page()
 
         self.proxmark = Proxmark()
-        self.mfTagsModel = MfTagsModel(utils.mf_tags)
+        self.mfTagsModel = MfTagsModel(command_output_processor.mf_tags)
         self.mfTagsListView.setModel(self.mfTagsModel)
 
         # Connect buttons that change the current page
@@ -132,13 +131,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.show_main_menu_page()
         else:
             title = "CONNECTION STATUS"
-            data = utils.generate_error_message("Couldn't establish connection")
+            data = command_output_processor.generate_error_message("Couldn't establish connection")
             last_page = self.connectProxmarkPage
             self.set_results_data(title, data, last_page)
 
     def run_command(self, command, title, last_page):
         result = self.proxmark.execute_command(command)
-        data = utils.process_command_output(result)
+        data = command_output_processor.process_command_output(result)
         self.set_results_data(title, data, last_page)
 
     def get_selected_tag(self):
@@ -159,7 +158,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if tag:
             load_memory = self.proxmark.execute_command(f"hf mf eload --1k -f {tag.files['dump_eml_file']}")
             self.show_mf_simulation_page()
-            text = utils.process_command_output(load_memory)
+            text = command_output_processor.process_command_output(load_memory)
             self.mifareSimulateLabel.setText(text)
 
     def simulate_mf_1k_tag(self):
@@ -174,7 +173,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     os.remove(v)
                 except:
                     pass
-            del self.mfTagsModel.tags[tag]
+            self.mfTagsModel.tags.remove(tag)
             self.mfTagsModel.layoutChanged.emit()
             self.mfTagsListView.clearSelection()
 
@@ -184,7 +183,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             index = indexes[0]
             mf_tag = self.mfTagsModel.tags[index.row()]
             title = "MIFARE TAG INFO"
-            data = mf_tag.get_basic_info()
+            data = mf_tag.get_details_long()
             self.set_results_data(title, data, self.mifareSavedTagsPage)
 
     def run_custom_command(self):

@@ -8,17 +8,18 @@ class MifareClassic1k:
         self.date = date
         self.files = files
 
-    def __str__(self):
+    def __repr__(self):
+        return f"MifareClassic1k(uid={self.uid}, atqa={self.atqa}, sak={self.atqa}"
+
+    def get_details_short(self):
         formatted_date = self.date.strftime("%d-%m-%Y %H:%M:%S")
         return f"    Date: {formatted_date}\n    UID: {self.uid}"
 
-    def get_basic_info(self):
-        card = f"UID: {self.uid}\nATQA: {self.atqa}\nSAK: {self.atqa}\n"
+    def get_details_long(self):
         line = " ---------------------------------------"
-        memory = f"\nMemory:\n{line}\n"
+        card = f"UID: {self.uid}\nATQA: {self.atqa}\nSAK: {self.atqa}\n\nMemory:\n{line}\n"
         for n in range(64):
-            memory += f"| {str(n).rjust(2, ' ')} | {self.blocks[str(n)]} |\n"
+            card += f"| {str(n).rjust(2, ' ')} | {self.blocks[str(n)]} |\n"
             if (n+1)%4 == 0:
-                memory += f"{line}\n"
-        text = card + memory
-        return text
+                card += f"{line}\n"
+        return card

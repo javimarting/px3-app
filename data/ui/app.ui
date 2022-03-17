@@ -64,7 +64,7 @@ padding: 10;
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="resources.qrc">:/icons/app-logo-small.png</pixmap>
+         <pixmap resource="resources.qrc">:/icons/app-logo-icon-small.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -152,7 +152,7 @@ color: rgb(255, 255, 255);
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="resources.qrc">:/icons/app-logo.png</pixmap>
+                <pixmap resource="resources.qrc">:/icons/app-logo-icon.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -236,7 +236,7 @@ background-color: #1a2332;
 }</string>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="mifareOptionsPage">
              <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -715,7 +715,7 @@ margin-right: 40px;</string>
                   <x>0</x>
                   <y>0</y>
                   <width>400</width>
-                  <height>395</height>
+                  <height>40</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_21">

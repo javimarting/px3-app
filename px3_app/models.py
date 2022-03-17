@@ -10,7 +10,7 @@ class MfTagsModel(QtCore.QAbstractListModel):
     def data(self, index, role):
         if role == Qt.DisplayRole:
             tag = self.tags[index.row()]
-            text = f"Tag {index.row()+1}:\n{str(tag)}"
+            text = f"Tag {index.row()+1}:\n{tag.get_details_short()}"
             return text
 
     def rowCount(self, index):

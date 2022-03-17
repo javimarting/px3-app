@@ -1,6 +1,4 @@
-import re
 import pexpect
-import usb.core
 
 
 class Proxmark:

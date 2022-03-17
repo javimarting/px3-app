@@ -5,28 +5,52 @@ import json
 
 from ansi2html import Ansi2HTMLConverter
 
-from tags import MifareClassic1k
+from px3_app.tags import MifareClassic1k
 
 
 conv = Ansi2HTMLConverter()
 
+ansi_colors = {
+    "black": "30m",
+    "red": "31m",
+    "green": "32m",
+    "yellow": "33m",
+    "blue": "34m",
+    "magenta": "35m",
+    "cyan": "36m",
+    "white": "37m",
+}
+
+mf_tags_path = "data/mf_tags/"
+
+
+def apply_ansi_color(text, color):
+    ansi_pref = "\x1b["
+    ansi_reset = "\x1b[0m"
+    return ansi_pref + ansi_colors[color] + text + ansi_reset
+
 
 def generate_error_message(message):
-    output = f"\x1b[31m{message}\x1b[0m"
+    output = apply_ansi_color(message, "red")
     return conv.convert(output)
 
 
 def get_saved_tags() -> list:
-    """Function that gets the saved tags in the 'files' directory.
+    """
+    Function that gets the saved tags in the 'mf_tags' directory.
 
         Returns:
             tags_list (list): list that contains the saved tags.
     """
 
-    dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path)
-    eml_files = [file for file in os.listdir(dir_path) if file.endswith(".eml")]
+    # dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../data/mf_tags")
+
+    if not os.path.exists(mf_tags_path):
+        os.makedirs(mf_tags_path)
+    eml_files = [file for file in os.listdir(mf_tags_path) if file.endswith(".eml")]
+    print(f"Directory: {os.path.abspath(mf_tags_path)}")
+    for f in eml_files:
+        print(f)
     tags_list = []
     if eml_files:
         for dump_eml_file in eml_files:
@@ -57,12 +81,12 @@ def create_mf_1k_tag_from_file(eml_file: str) -> MifareClassic1k:
     minute = int(file_info[11:13])
     second = int(file_info[13:15])
     date = datetime.datetime(year, month, day, hour, minute, second)
-    dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
+    # dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../data/mf_tags")
     files = {
-        'dump_bin_file': os.path.join(dir_path, f"hf-mf-{file_info}-dump.bin"),
-        'dump_eml_file': os.path.join(dir_path, eml_file),
-        'dump_json_file': os.path.join(dir_path, f"hf-mf-{file_info}-dump.json"),
-        'key_bin_file': os.path.join(dir_path, f"hf-mf-{file_info}-key.bin"),
+        'dump_bin_file': os.path.join(mf_tags_path, f"hf-mf-{file_info}-dump.bin"),
+        'dump_eml_file': os.path.join(mf_tags_path, eml_file),
+        'dump_json_file': os.path.join(mf_tags_path, f"hf-mf-{file_info}-dump.json"),
+        'key_bin_file': os.path.join(mf_tags_path, f"hf-mf-{file_info}-key.bin"),
     }
     uid = ""
     atqa = ""
@@ -84,13 +108,13 @@ def create_mf_1k_tag_from_file(eml_file: str) -> MifareClassic1k:
     return mf_1k_tag
 
 
-def rename_and_move_files(filenames, new_folder):
+def rename_and_move_files(filenames):
     dt = datetime.datetime.now()
     formatted_dt = dt.strftime('%Y%m%d-%H%M%S')
     files = {}
     for filename in filenames:
         new_filename = re.sub(r'hf-mf', f"hf-mf-{formatted_dt}", filename)
-        os.rename(filename, os.path.join(new_folder, new_filename))
+        os.rename(filename, os.path.join(mf_tags_path, new_filename))
         files[filename] = new_filename
     return files
 
@@ -168,7 +192,7 @@ def process_auto_output(command_output: str) -> str:
 
 def process_autopwn_output(command_output: str) -> str:
     """
-    Function that checks the names of the created files and moves them to the files folder.
+    Function that checks the names of the created mf_tags and moves them to the mf_tags folder.
 
     Args:
         command_output (str): Output string of the autopwn command.
@@ -188,15 +212,15 @@ def process_autopwn_output(command_output: str) -> str:
         filenames.append(eml_file)
         json_file = re.search(r'hf-mf-[^\r]*-dump[^\r]*\.json', command_output).group()
         filenames.append(json_file)
-        files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
-        files = rename_and_move_files(filenames, files_path)
+        # files_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../data/mf_tags")
+        files = rename_and_move_files(filenames)
         for k, v in files.items():
-            command_output = re.sub(re.escape(k), v, command_output)
+            mod_command_output = re.sub(re.escape(k), v, mod_command_output)
         mf_tag = create_mf_1k_tag_from_file(files[eml_file])
         mf_tags.append(mf_tag)
         mf_tags.sort(key=lambda x: x.date, reverse=True)
 
-    return command_output
+    return mod_command_output
 
 
 mf_tags = get_saved_tags()
