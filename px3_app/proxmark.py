@@ -17,3 +17,4 @@ class Proxmark:
         result = self.child.expect(['pm3 --> ', pexpect.EOF, pexpect.TIMEOUT])
         if result == 0:
             return self.child.before
+

@@ -3,10 +3,11 @@
 import sys
 
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QThread
 
 from px3_app.ui.MainWindow import Ui_MainWindow
 from px3_app.proxmark import Proxmark
-from px3_app.utils import command_output_processor, file_processor
+from px3_app.utils import command_output_processor, file_processor, ansi_processor
 from px3_app.models import MfTagsModel
 
 
@@ -44,6 +45,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.readLFTagButton.clicked.connect(
             lambda: self.run_command("lf search", "LF TAG INFO", self.basicCommandsPage)
         )
+        self.readHFTagButton.clicked.connect(self.show_results_page)
         self.readHFTagButton.clicked.connect(
             lambda: self.run_command("hf search", "HF TAG INFO", self.basicCommandsPage)
         )
@@ -131,7 +133,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.show_main_menu_page()
         else:
             title = "CONNECTION STATUS"
-            data = command_output_processor.generate_error_message("Couldn't establish connection")
+            error_message = ansi_processor.apply_ansi_color("Couldn't establish connection")
+            data = ansi_processor.ansi_to_html(error_message)
             last_page = self.connectProxmarkPage
             self.set_results_data(title, data, last_page)
 

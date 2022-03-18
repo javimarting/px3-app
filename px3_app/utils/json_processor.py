@@ -1,12 +1,8 @@
 import datetime
 import re
 import json
-import pathlib
 
 from px3_app.tags import MifareClassic1k
-
-
-SAVED_TAGS_DIRECTORY_PATH = pathlib.Path(__file__).absolute().parents[2] / "data" / "mf_tags"
 
 
 def date_time_encoder(dt: datetime.datetime) -> str:

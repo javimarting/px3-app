@@ -1,4 +1,4 @@
-# PX3-APP
+# ![PX3 APP](data/icons/px3-app-logo-filled-background.png)
 
 A cross-platform GUI for the [proxmark3](https://github.com/RfidResearchGroup/proxmark3) client.
 
