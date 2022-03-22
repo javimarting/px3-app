@@ -17,7 +17,7 @@ class MifareClassic1k:
 
     def get_details_long(self):
         line = " ---------------------------------------"
-        card = f"UID: {self.uid}\nATQA: {self.atqa}\nSAK: {self.atqa}\n\nMemory:\n{line}\n"
+        card = f"UID: {self.uid}\nATQA: {self.atqa}\nSAK: {self.sak}\n\nMemory:\n{line}\n"
         for n in range(64):
             card += f"| {str(n).rjust(2, ' ')} | {self.blocks[str(n)]} |\n"
             if (n+1)%4 == 0:

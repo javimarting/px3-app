@@ -19,7 +19,7 @@ def get_saved_tags() -> list:
     Function that gets the saved tags in the 'mf_tags' directory.
 
         Returns:
-            tags_list (list): list that contains the saved tags.
+            tags_list (list): list containing the saved tags.
     """
 
     if not SAVED_MF_TAGS_DIRECTORY_PATH.exists():

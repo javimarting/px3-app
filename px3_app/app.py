@@ -3,12 +3,12 @@
 import sys
 
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QThread
 
 from px3_app.ui.MainWindow import Ui_MainWindow
 from px3_app.proxmark import Proxmark
 from px3_app.utils import command_output_processor, file_processor, ansi_processor
 from px3_app.models import MfTagsModel
+from px3_app.settings import SAVED_MF_TAGS_DIRECTORY_PATH
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -22,14 +22,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mfTagsModel = MfTagsModel(command_output_processor.mf_tags)
         self.mfTagsListView.setModel(self.mfTagsModel)
 
-        # Connect buttons that change the current page
+        # Connect buttons that change the current page when clicked
         self.backButton.clicked.connect(self.show_last_page)
         self.basicCommandsButton.clicked.connect(self.show_basic_commands_page)
         self.mifare1kButton.clicked.connect(self.show_mifare_options_page)
         self.savedTagsButton.clicked.connect(self.show_mf_saved_tags_page)
         self.customCommandButton.clicked.connect(self.show_custom_command_page)
 
-        # Connect buttons that execute an action
+        # Connect buttons that execute an action when clicked
         self.exitButton.clicked.connect(exit)
         self.connectProxmarkButton.clicked.connect(self.start_connection)
         self.autoDetectTagButton.clicked.connect(
@@ -62,19 +62,41 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.topLogoLabel.hide()
         self.stackedWidget.setCurrentWidget(self.connectProxmarkPage)
 
-    def show_results_page(self):
-        self.backButton.show()
-        self.stackedWidget.setCurrentWidget(self.resultsPage)
+    def show_main_menu_page(self):
+        self.backButton.hide()
+        self.last_page = self.mainMenuPage
+        self.stackedWidget.setCurrentWidget(self.mainMenuPage)
 
     def show_basic_commands_page(self):
         self.backButton.show()
         self.last_page = self.mainMenuPage
         self.stackedWidget.setCurrentWidget(self.basicCommandsPage)
 
+    def show_mifare_options_page(self):
+        self.backButton.show()
+        self.last_page = self.mainMenuPage
+        self.stackedWidget.setCurrentWidget(self.mifarePage)
+        self.mifareStackedWidget.setCurrentWidget(self.mifareOptionsPage)
+
+    def show_mf_saved_tags_page(self):
+        self.last_page = self.mifareOptionsPage
+        self.stackedWidget.setCurrentWidget(self.mifarePage)
+        self.mifareStackedWidget.setCurrentWidget(self.mifareSavedTagsPage)
+        self.mfTagsModel.layoutChanged.emit()
+
     def show_custom_command_page(self):
         self.backButton.show()
         self.last_page = self.mainMenuPage
         self.stackedWidget.setCurrentWidget(self.customCommandPage)
+
+    def show_results_page(self):
+        self.backButton.show()
+        self.stackedWidget.setCurrentWidget(self.resultsPage)
+
+    def show_mf_simulation_page(self):
+        self.last_page = self.mifareSavedTagsPage
+        self.stackedWidget.setCurrentWidget(self.mifarePage)
+        self.mifareStackedWidget.setCurrentWidget(self.mifareSimulatePage)
 
     def show_last_page(self):
         if self.stackedWidget.currentWidget() is self.resultsPage:
@@ -96,28 +118,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.show_mf_saved_tags_page()
         elif self.last_page is self.customCommandPage:
             self.show_custom_command_page()
-
-    def show_main_menu_page(self):
-        self.backButton.hide()
-        self.last_page = self.mainMenuPage
-        self.stackedWidget.setCurrentWidget(self.mainMenuPage)
-    
-    def show_mifare_options_page(self):
-        self.backButton.show()
-        self.last_page = self.mainMenuPage
-        self.stackedWidget.setCurrentWidget(self.mifarePage)
-        self.mifareStackedWidget.setCurrentWidget(self.mifareOptionsPage)
-
-    def show_mf_saved_tags_page(self):
-        self.last_page = self.mifareOptionsPage
-        self.stackedWidget.setCurrentWidget(self.mifarePage)
-        self.mifareStackedWidget.setCurrentWidget(self.mifareSavedTagsPage)
-        self.mfTagsModel.layoutChanged.emit()
-
-    def show_mf_simulation_page(self):
-        self.last_page = self.mifareSavedTagsPage
-        self.stackedWidget.setCurrentWidget(self.mifarePage)
-        self.mifareStackedWidget.setCurrentWidget(self.mifareSimulatePage)
 
 # Actions
     def set_results_data(self, title, data, last_page):
@@ -143,6 +143,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         data = command_output_processor.process_command_output(result)
         self.set_results_data(title, data, last_page)
 
+    # Gets the selected Mifare 1k tag from the mfTagsListView
     def get_selected_tag(self):
         indexes = self.mfTagsListView.selectedIndexes()
         if indexes:
@@ -154,12 +155,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def clone_mf_1k_tag(self):
         tag = self.get_selected_tag()
         if tag:
-            self.run_command(f"hf mf cload -f {tag.files['dump_eml_file']}", "CLONING RESULT", self.mifareSavedTagsPage)
+            eml_file_path = SAVED_MF_TAGS_DIRECTORY_PATH / tag.files['dump_eml_file']
+            self.run_command(f"hf mf cload -f {eml_file_path}", "CLONING RESULT", self.mifareSavedTagsPage)
 
     def load_mf_1k_tag_to_memory(self):
         tag = self.get_selected_tag()
         if tag:
-            load_memory = self.proxmark.execute_command(f"hf mf eload --1k -f {tag.files['dump_eml_file']}")
+            eml_file_path = SAVED_MF_TAGS_DIRECTORY_PATH / tag.files['dump_eml_file']
+            load_memory = self.proxmark.execute_command(f"hf mf eload --1k -f {eml_file_path}")
             self.show_mf_simulation_page()
             text = command_output_processor.process_command_output(load_memory)
             self.mifareSimulateLabel.setText(text)
@@ -177,12 +180,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.mfTagsListView.clearSelection()
 
     def get_mf_1k_tag_info(self):
-        indexes = self.mfTagsListView.selectedIndexes()
-        if indexes:
-            index = indexes[0]
-            mf_tag = self.mfTagsModel.tags[index.row()]
+        tag = self.get_selected_tag()
+        if tag:
             title = "MIFARE TAG INFO"
-            data = mf_tag.get_details_long()
+            data = tag.get_details_long()
             self.set_results_data(title, data, self.mifareSavedTagsPage)
 
     def run_custom_command(self):
