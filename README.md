@@ -1,9 +1,13 @@
 # ![PX3 APP](data/icons/px3-app-logo-filled-background.png)
 
-A cross-platform GUI for the [proxmark3](https://github.com/RfidResearchGroup/proxmark3) client.
+A cross-platform GUI for the [Proxmark3](https://github.com/RfidResearchGroup/proxmark3) client.
+
+## Features
+
+
 
 | ![px3-app connection page](data/screenshots/px3-app-connection.png) | ![px3-app example](data/screenshots/px3-app-example.png) |
-|--------------------------------------------------------|---------------------------------------------|
+|---------------------------------------------------------------------|----------------------------------------------------------|
 
 ## Installation
 

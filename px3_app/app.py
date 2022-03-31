@@ -38,7 +38,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mfAutopwnButton.clicked.connect(
             lambda: self.run_command("hf mf autopwn", "AUTOPWN INFO", self.mifareOptionsPage)
         )
-
         self.hwStatusButton.clicked.connect(
             lambda: self.run_command("hw status", "HARDWARE STATUS", self.basicCommandsPage)
         )
