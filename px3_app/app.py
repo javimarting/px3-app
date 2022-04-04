@@ -132,7 +132,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.show_main_menu_page()
         else:
             title = "CONNECTION STATUS"
-            error_message = ansi_processor.apply_ansi_color("Couldn't establish connection")
+            error_message = ansi_processor.apply_ansi_color("Couldn't establish connection", "red")
             data = ansi_processor.ansi_to_html(error_message)
             last_page = self.connectProxmarkPage
             self.set_results_data(title, data, last_page)
@@ -167,7 +167,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.mifareSimulateLabel.setText(text)
 
     def simulate_mf_1k_tag(self):
-        result = self.proxmark.execute_command("hf mf sim --1k -i")
+        self.proxmark.execute_command("hf mf sim --1k -i")
         self.show_mf_saved_tags_page()
 
     def delete_mf_1k_tag(self):
