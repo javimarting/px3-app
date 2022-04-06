@@ -6,19 +6,27 @@ from px3_app.tags import MifareClassic1k
 
 
 def date_time_encoder(dt: datetime.datetime) -> str:
+    """Takes a datetime object and returns a formatted date string.
+
+    Args:
+        dt (datetime.datetime): Datetime object
+
+    Returns:
+        formatted_dt (str): Formatted date string
+
+    """
     formatted_dt = dt.strftime('%d-%m-%Y %H:%M:%S')
     return formatted_dt
 
 
 def date_time_decoder(formatted_dt: str) -> datetime.datetime:
-    """
-    Function that takes a string formatted date and returns a datetime object.
+    """Takes a formatted date string and returns a datetime object.
 
-        Args:
-            formatted_dt (str): String formatted date string.
+    Args:
+        formatted_dt (str): Formatted date string.
 
-        Returns:
-            dt (datetime.datetime): Datetime object
+    Returns:
+        dt (datetime.datetime): Datetime object
 
     """
 
@@ -37,29 +45,38 @@ def date_time_decoder(formatted_dt: str) -> datetime.datetime:
 
 
 def add_data_to_json_file(data: dict, json_file):
-    with open(json_file, 'r+') as file:
-        file_data = json.load(file)
-        data.update(file_data)
-        file.seek(0)
-        json.dump(data, file, indent=2)
+    """Adds or updates fields to a json file.
+
+    Args:
+        data (dict): Dictionary containing the data.
+        json_file (str): Path of the json file.
+
+    """
+
+    with open(json_file, 'r+') as f:
+        file_data = json.load(f)
+        for k, v in data.items():
+            file_data[k] = v
+        f.seek(0)
+        json.dump(file_data, f, indent=2)
 
 
 def add_date_time_to_json_file(json_file):
     dt = datetime.datetime.now()
     formatted_dt = date_time_encoder(dt)
-    data = {'Date': formatted_dt}
+    data = {"Date": formatted_dt}
     add_data_to_json_file(data, json_file)
 
 
 def json_to_mf_tag(json_file) -> MifareClassic1k:
-    """
-    Function that creates a MifareClassic1k tag from a json file.
+    """Creates a MifareClassic1k tag from a json file.
 
-        Params:
-            json_file (str): the json file path.
+    Params:
+        json_file (str): The json file path.
 
-        Returns:
-            mf_1k_tag (MifareClassic1k): MifareClassic1k object.
+    Returns:
+        mf_1k_tag (MifareClassic1k): MifareClassic1k object.
+
     """
 
     common = re.search(r'(\d+-){2}(\w+-){3}', json_file.name).group()
@@ -77,7 +94,10 @@ def json_to_mf_tag(json_file) -> MifareClassic1k:
                 'dump_eml_file': f"{common}dump.eml",
                 'key_bin_file': f"{common}key.bin",
             }
+        name = ""
+        if "Name" in data:
+            name = data["Name"]
         mf_1k_tag = MifareClassic1k(uid=uid, atqa=atqa, sak=sak, blocks=blocks, sector_keys=sector_keys,
-                                        date=date, files=files)
+                                        date=date, files=files, name=name)
 
         return mf_1k_tag

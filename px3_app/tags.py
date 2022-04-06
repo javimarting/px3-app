@@ -1,5 +1,5 @@
 class MifareClassic1k:
-    def __init__(self, uid, atqa, sak, blocks, sector_keys, date, files):
+    def __init__(self, uid, atqa, sak, blocks, sector_keys, date, files, name):
         self.uid = uid
         self.atqa = atqa
         self.sak = sak
@@ -7,6 +7,7 @@ class MifareClassic1k:
         self.sector_keys = sector_keys
         self.date = date
         self.files = files
+        self.name = name
 
     def __repr__(self):
         return f"MifareClassic1k(uid={self.uid}, atqa={self.atqa}, sak={self.atqa}"
