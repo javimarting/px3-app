@@ -213,7 +213,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if tag:
             title = "MIFARE TAG INFO"
             data = tag.get_details_long()
-            self.set_results_data(title, data, self.mifareSavedTagsPage)
+            repl = {
+                "UID": "cyan",
+                "ATQA": "cyan",
+                "SAK": "cyan",
+                "Memory": "yellow",
+            }
+            ansi_data = ansi_processor.replace_with_ansi_color(data, repl)
+            html_data = ansi_processor.ansi_to_html(ansi_data)
+            self.set_results_data(title, html_data, self.mifareSavedTagsPage)
 
     def enter_text_page_action(self):
         if self.enter_text_type == "custom command":

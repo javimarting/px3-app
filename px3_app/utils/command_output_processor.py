@@ -31,6 +31,8 @@ def process_command_output(command: str, command_output: str) -> str:
         command_output = process_autopwn_output(command_output)
 
     replacements = {
+        re.escape("\x1b[?2004l\r"): "",
+        re.escape("\x1b[?2004h"): "",
         r'\r\n': r'\n',
         re.escape(c): f"\x1b[33mCommand\x1b[0m: {command}\n\n",
         re.escape("[\x1b[1;32musb\x1b[0m]"): "",
@@ -107,6 +109,24 @@ def process_autopwn_output(command_output: str) -> str:
         mf_tags.sort(key=lambda x: x.date, reverse=True)
 
     return mod_command_output
+
+
+def get_protocol_type(command_output: str):
+    """Returns the protocol used by a tag.
+
+    Args:
+        command_output (str): String containing the command output.
+
+    Returns:
+        protocol (str): Protocol used by the tag.
+
+    """
+
+    pattern = r'Valid ([^\r]+) found'
+    valid_tag_found = re.search(pattern, command_output)
+    if valid_tag_found:
+        protocol = ansi_processor.escape_ansi(valid_tag_found.group(1).strip())
+        return protocol
 
 
 mf_tags = file_processor.get_saved_mf_tags()
