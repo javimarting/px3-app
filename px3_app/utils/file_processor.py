@@ -1,4 +1,14 @@
 # -*- coding: utf-8 -*-
+"""Processor for the files containing the information of the read mf tags.
+
+Functions:
+    add_date_to_filename(filename)
+    get_saved_mf_tags()
+    rename_and_move_tag_file(filename)
+    delete_tag_files(files)
+
+"""
+
 
 import datetime
 import pathlib
@@ -50,7 +60,7 @@ def rename_and_move_tag_file(filename: str):
         filename (str): Filename string.
 
     Returns:
-        new_filename (str): Filename with the current date added to the beginning.
+        new_filename (str): Filename string with the current date added to the beginning.
 
     """
 

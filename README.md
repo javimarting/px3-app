@@ -9,14 +9,15 @@ A cross-platform GUI for the [Proxmark3](https://github.com/RfidResearchGroup/pr
   - Low and high frequency tag identification
 - Mifare Classic:
   - Read and save tag information
+  - Give name to saved tags
   - Tag cloning
   - Tag simulation
 - Custom commands
 
 ## Screenshots
 
-| ![px3-app connection page](data/screenshots/px3-app-connection.png) | ![px3-app example](data/screenshots/px3-app-example.png) |
-|---------------------------------------------------------------------|----------------------------------------------------------|
+| ![px3-app saved tags](data/screenshots/px3-app-saved-tags-2.png) | ![px3-app example](data/screenshots/px3-app-example.png) |
+|------------------------------------------------------------------|----------------------------------------------------------|
 
 ## Installation
 

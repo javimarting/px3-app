@@ -1,3 +1,16 @@
+# -*- coding: utf-8 -*-
+"""Processor for json files.
+
+Functions:
+    date_time_encoder(dt)
+    date_time_decoder(formatted_dt)
+    add_data_to_json_file(data, json_file)
+    add_date_time_to_json_file(json_file)
+    json_to_mf_tag(json_file)
+
+"""
+
+
 import datetime
 import re
 import json
@@ -80,7 +93,7 @@ def json_to_mf_tag(json_file) -> MifareClassic1k:
     """
 
     common = re.search(r'(\d+-){2}(\w+-){3}', json_file.name).group()
-    with json_file.open() as f:
+    with open(json_file, "r") as f:
         data = json.load(f)
         date = date_time_decoder(data["Date"])
         uid = data["Card"]["UID"]
@@ -94,10 +107,10 @@ def json_to_mf_tag(json_file) -> MifareClassic1k:
                 'dump_eml_file': f"{common}dump.eml",
                 'key_bin_file': f"{common}key.bin",
             }
-        name = ""
+        mf_1k_tag = MifareClassic1k(uid=uid, atqa=atqa, sak=sak, blocks=blocks, sector_keys=sector_keys,
+                                    date=date, files=files)
         if "Name" in data:
             name = data["Name"]
-        mf_1k_tag = MifareClassic1k(uid=uid, atqa=atqa, sak=sak, blocks=blocks, sector_keys=sector_keys,
-                                        date=date, files=files, name=name)
+            mf_1k_tag.name = name
 
         return mf_1k_tag

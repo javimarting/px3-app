@@ -1,6 +1,7 @@
 #!python3
 # -*- coding: utf-8 -*-
 
+
 import sys
 from pathlib import Path
 
@@ -188,7 +189,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             eml_file_path = SAVED_MF_TAGS_DIRECTORY_PATH / tag.files['dump_eml_file']
             command = f"hf mf eload --1k -f {eml_file_path.relative_to(str(Path.cwd()))}"
             load_memory = self.proxmark.execute_command(command)
-            # print(repr(load_memory))
             self.show_mf_simulation_page()
             text = command_output_processor.process_command_output(command, load_memory)
             self.mifareSimulateLabel.setText(text)
@@ -212,7 +212,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         tag = self.get_selected_tag()
         if tag:
             title = "MIFARE TAG INFO"
-            data = tag.get_details_long()
+            data = tag.details_long
             repl = {
                 "UID": "cyan",
                 "ATQA": "cyan",

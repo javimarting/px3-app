@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import pathlib
 
 current_directory = pathlib.Path(__file__).absolute()
