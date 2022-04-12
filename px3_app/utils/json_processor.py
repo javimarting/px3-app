@@ -82,7 +82,7 @@ def add_date_time_to_json_file(json_file):
 
 
 def json_to_mf_tag(json_file) -> MifareClassic1k:
-    """Creates a MifareClassic1k tag from a json file.
+    """Creates a MifareClassic1k tag object from a json file.
 
     Params:
         json_file (str): The json file path.
@@ -101,11 +101,12 @@ def json_to_mf_tag(json_file) -> MifareClassic1k:
         sak = data["Card"]["SAK"]
         blocks = data["blocks"]
         sector_keys = data["SectorKeys"]
+        directory_path = json_file.parent
         files = {
-                'dump_json_file': f"{common}dump.json",
-                'dump_bin_file': f"{common}dump.bin",
-                'dump_eml_file': f"{common}dump.eml",
-                'key_bin_file': f"{common}key.bin",
+                'dump_json_file': directory_path / f"{common}dump.json",
+                'dump_bin_file': directory_path / f"{common}dump.bin",
+                'dump_eml_file': directory_path / f"{common}dump.eml",
+                'key_bin_file': directory_path / f"{common}key.bin",
             }
         mf_1k_tag = MifareClassic1k(uid=uid, atqa=atqa, sak=sak, blocks=blocks, sector_keys=sector_keys,
                                     date=date, files=files)

@@ -1,20 +1,18 @@
 #!python3
-# -*- coding: utf-8 -*-
-
 
 import sys
 from pathlib import Path
 
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from px3_app.ui.MainWindow import Ui_MainWindow
 from px3_app.proxmark import Proxmark
-from px3_app.utils import command_output_processor, file_processor, ansi_processor, json_processor
+from px3_app.utils import command_output_processor, file_manager, ansi_processor, json_processor
 from px3_app.models import MfTagsModel
 from px3_app.globals import SAVED_MF_TAGS_DIRECTORY_PATH
 
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -166,7 +164,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def run_command(self, command, title, last_page):
         result = self.proxmark.execute_command(command)
         data = command_output_processor.process_command_output(command, result)
-        # print(data)
         self.set_results_data(title, data, last_page)
 
     # Gets the selected Mifare 1k tag from the mfTagsListView
@@ -195,15 +192,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def simulate_mf_1k_tag(self):
         result = self.proxmark.execute_command("hf mf sim --1k -i")
-        print("\n")
-        print(repr(result))
         if result:
             self.show_mf_saved_tags_page()
 
     def delete_mf_1k_tag(self):
         tag = self.get_selected_tag()
         if tag:
-            file_processor.delete_tag_files(tag.files)
+            file_manager.delete_tag_files(tag.files)
             self.mfTagsModel.tags.remove(tag)
             self.mfTagsModel.layoutChanged.emit()
             self.mfTagsListView.clearSelection()
@@ -248,13 +243,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def update_give_change_name_button(self):
         tag = self.get_selected_tag()
         if tag:
-            if tag.name:
-                self.mfGiveNameButton.setText("CHANGE NAME")
-            else:
-                self.mfGiveNameButton.setText("GIVE NAME")
+            text = "CHANGE NAME" if tag.name else "GIVE NAME"
+            self.mfGiveNameButton.setText(text)
 
 
-app = QtWidgets.QApplication(sys.argv)
+app = QApplication(sys.argv)
 window = MainWindow()
 window.show()
 app.exec_()

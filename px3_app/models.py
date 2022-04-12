@@ -17,5 +17,5 @@ class MfTagsModel(QtCore.QAbstractListModel):
             text = header + body
             return text
 
-    def rowCount(self, index):
+    def rowCount(self, index) -> int:
         return len(self.tags)
