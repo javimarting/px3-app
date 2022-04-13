@@ -51,6 +51,12 @@
       </property>
       <item>
        <widget class="QLabel" name="topLogoLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="styleSheet">
          <string notr="true">
 padding: 10;
@@ -70,7 +76,7 @@ padding: 10;
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -700,7 +706,7 @@ color: #93dd03;
              <item>
               <widget class="QLabel" name="resultsPageTitleLabel">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -708,7 +714,7 @@ color: #93dd03;
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>60</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="font">
@@ -722,7 +728,7 @@ color: #93dd03;
                 <string notr="true">color: #93dd03;
 background-color: #111927;
 border-radius: 15;
-margin: 5px;
+margin: 2px;
 margin-left: 40px;
 margin-right: 40px;</string>
                </property>
@@ -761,7 +767,7 @@ margin-right: 40px;</string>
                  <item>
                   <widget class="QLabel" name="resultsPageDataLabel">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>

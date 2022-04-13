@@ -6,7 +6,7 @@ from pathlib import Path
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from px3_app.ui.MainWindow import Ui_MainWindow
-from px3_app.proxmark import Proxmark
+from px3_app.proxmark_client import ProxmarkClient
 from px3_app.utils import command_output_processor, file_manager, ansi_processor, json_processor
 from px3_app.models import MfTagsModel
 from px3_app.globals import SAVED_MF_TAGS_DIRECTORY_PATH
@@ -20,7 +20,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.resultsPageButtonContainer.hide()
         self.show_connect_proxmark_page()
 
-        self.proxmark = Proxmark()
+        self.proxmark = ProxmarkClient()
         self.mfTagsModel = MfTagsModel(command_output_processor.mf_tags)
         self.mfTagsListView.setModel(self.mfTagsModel)
 
@@ -209,9 +209,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             title = "MIFARE TAG INFO"
             data = tag.details_long
             repl = {
-                "UID": "cyan",
-                "ATQA": "cyan",
-                "SAK": "cyan",
+                "UID": "yellow",
+                "ATQA": "yellow",
+                "SAK": "yellow",
                 "Memory": "yellow",
             }
             ansi_data = ansi_processor.replace_with_ansi_color(data, repl)

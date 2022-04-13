@@ -10,6 +10,8 @@ Functions:
     get_protocol_type(command_output)
 
 """
+
+
 import pathlib
 import re
 import os

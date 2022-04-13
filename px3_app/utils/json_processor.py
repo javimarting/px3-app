@@ -28,6 +28,7 @@ def date_time_encoder(dt: datetime.datetime) -> str:
         formatted_dt (str): Formatted date string
 
     """
+
     formatted_dt = dt.strftime('%d-%m-%Y %H:%M:%S')
     return formatted_dt
 

@@ -1,7 +1,7 @@
 import pexpect
 
 
-class Proxmark:
+class ProxmarkClient:
     def __init__(self):
         self.child = None
 

@@ -4,5 +4,6 @@
         <file alias="app-logo-icon.png">../../data/icons/px3-app-logo.png</file>
         <file alias="app-logo-icon-small.png">../../data/icons/px3-app-logo-small.png</file>
         <file alias="delete-icon.png">../../data/icons/delete-icon.png</file>
+        <file alias="app-logo-icon-lock.png">../../data/icons/px3-app-logo-small-lock.png</file>
     </qresource>
 </RCC>

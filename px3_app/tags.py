@@ -16,7 +16,7 @@ class MifareClassic1k:
 
     """
 
-    def __init__(self, uid: str, atqa, sak, blocks, sector_keys, date, files, name=""):
+    def __init__(self, uid, atqa, sak, blocks, sector_keys, date, files, name=""):
         self.uid = uid
         self.atqa = atqa
         self.sak = sak
@@ -26,11 +26,11 @@ class MifareClassic1k:
         self.files = files
         self.__name = name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"MifareClassic1k(uid={self.uid}, atqa={self.atqa}, sak={self.atqa}"
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__name
 
     @name.setter
@@ -63,6 +63,6 @@ class MifareClassic1k:
         details = f"UID: {self.uid}\nATQA: {self.atqa}\nSAK: {self.sak}\n\nMemory:\n{line}\n"
         for n in range(64):
             details += f"| {str(n).rjust(2, ' ')} | {self.blocks[str(n)]} |\n"
-            if (n+1)%4 == 0:
+            if (n+1) % 4 == 0:
                 details += f"{line}\n"
         return details
