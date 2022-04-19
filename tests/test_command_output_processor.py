@@ -1,6 +1,6 @@
 import unittest
 
-from px3_app.utils import command_output_processor
+from px3_app import command_output_processor
 
 
 class TestCommandOutputProcessor(unittest.TestCase):
@@ -27,6 +27,13 @@ class TestCommandOutputProcessor(unittest.TestCase):
         protocol_type = command_output_processor.get_protocol_type(text)
         expected = "ISO 14443-A tag"
         self.assertEqual(protocol_type, expected)
+
+    def test_remove_lines(self):
+        text = 'hf search\r\n\r 🕔                                           \r\r 🕕  ' \
+               'Searching for ISO14443-A tag...\r\n[\x1b[32m+\x1b[0m]  UID: \x1b[32mAD 43 EE 01 \x1b[0m\r\n'
+        result = command_output_processor.remove_lines(text)
+        expected = ' 🕕  Searching for ISO14443-A tag...\n[\x1b[32m+\x1b[0m]  UID: \x1b[32mAD 43 EE 01 \x1b[0m\n'
+        self.assertEqual(result, expected)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 class MifareClassic1k:
-    """A class to represent a Mifare Classic 1k tag.
+    """A class that represents a Mifare Classic 1k tag.
 
     Attributes:
         uid (str): String that contains the UID.
@@ -9,7 +9,7 @@ class MifareClassic1k:
         sector_keys (dict): Dictionary that contains the sector_keys.
         date (datetime.datetime): Date and time when the tag was saved.
         files (dict): Dictionary with the name of the files that contain the information of the tag.
-        name (str): Custom name given to the tag.
+        __name (str): Custom name given to the tag.
 
     Methods:
         get_details_short()

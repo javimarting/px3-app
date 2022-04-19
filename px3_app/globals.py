@@ -1,8 +1,11 @@
 import pathlib
 
 current_directory = pathlib.Path(__file__).absolute()
-SAVED_MF_TAGS_DIRECTORY_PATH = current_directory.parents[1] / "data" / "mf_tags"
+
+ROOT_DIRECTORY = current_directory.parents[1]
+
+SAVED_MF_TAGS_DIRECTORY_PATH = ROOT_DIRECTORY / "data" / "mf_tags"
 
 # Icons
-ICONS_DIRECTORY_PATH = current_directory.parents[1] / "data" / "icons"
+ICONS_DIRECTORY_PATH = ROOT_DIRECTORY / "data" / "icons"
 

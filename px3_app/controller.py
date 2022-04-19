@@ -7,12 +7,13 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from px3_app.ui.MainWindow import Ui_MainWindow
 from px3_app.proxmark_client import ProxmarkClient
-from px3_app.utils import command_output_processor, file_manager, ansi_processor, json_processor
+from px3_app.utils import file_manager, ansi_processor, json_processor
+from px3_app import command_output_processor
 from px3_app.models import MfTagsModel
 from px3_app.globals import SAVED_MF_TAGS_DIRECTORY_PATH
 
 
-class MainWindow(QMainWindow, Ui_MainWindow):
+class MainController(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -125,6 +126,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.stackedWidget.currentWidget() is self.resultsPage:
             self.resultsPageDataLabel.setText("")
             self.resultsPageTitleLabel.setText("")
+        elif self.stackedWidget.currentWidget() is self.enterTextPage:
+            self.textEdit.setText("")
+            self.enterTextButton.setText("")
         elif self.stackedWidget.currentWidget() is self.mifareStackedWidget and \
                 self.mifareStackedWidget.currentWidget() is self.mifareSimulatePage:
             self.mifareSimulateLabel.setText("")
@@ -239,15 +243,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             json_processor.add_data_to_json_file(data, json_file)
             tag.name = name
             self.show_mf_saved_tags_page()
+            self.textEdit.setText("")
+            self.enterTextButton.setText("")
+
 
     def update_give_change_name_button(self):
         tag = self.get_selected_tag()
         if tag:
             text = "CHANGE NAME" if tag.name else "GIVE NAME"
             self.mfGiveNameButton.setText(text)
-
-
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec_()

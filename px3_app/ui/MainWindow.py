@@ -34,6 +34,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.setContentsMargins(0, -1, -1, -1)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.topLogoLabel = QtWidgets.QLabel(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.topLogoLabel.sizePolicy().hasHeightForWidth())
+        self.topLogoLabel.setSizePolicy(sizePolicy)
         self.topLogoLabel.setStyleSheet("\n"
 "padding: 10;\n"
 "")
@@ -43,7 +48,7 @@ class Ui_MainWindow(object):
         self.topLogoLabel.setObjectName("topLogoLabel")
         self.verticalLayout_8.addWidget(self.topLogoLabel)
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.stackedWidget.sizePolicy().hasHeightForWidth())
@@ -210,7 +215,11 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(15)
         self.mfTagsListView.setFont(font)
-        self.mfTagsListView.setStyleSheet("\n"
+        self.mfTagsListView.setStyleSheet("QListView {\n"
+"color: rgb(255, 255, 255);\n"
+"alternate-background-color: #1a2332;\n"
+"}\n"
+"\n"
 "QListView:item {\n"
 "padding: 10;\n"
 "}\n"
@@ -369,17 +378,31 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar:vertical {\n"
 "margin: 30px 0 30px 0;\n"
-"width: 35px;\n"
+"width: 30px;\n"
 "border-right: 1px solid #93dd03;\n"
 "border-left: 1px solid #93dd03;\n"
 "background-color: #263143;\n"
 "border-radius: 0;\n"
 "}\n"
 "\n"
+"/*QScrollBar:horizontal {\n"
+"margin: 0 60px 0 30px;\n"
+"height: 30px;\n"
+"border-top: 1px solid #93dd03;\n"
+"border-bottom: 1px solid #93dd03;\n"
+"background-color: #263143;\n"
+"border-radius: 0;\n"
+"}*/\n"
+"\n"
 "QScrollBar::handle::vertical {\n"
 "border: 1px solid #93dd03;\n"
 "background-color: #111927;\n"
 "}\n"
+"\n"
+"/*QScrollBar::handle::horizontal {\n"
+"border: 1px solid #93dd03;\n"
+"background-color: #111927;\n"
+"}*/\n"
 "\n"
 "QScrollBar::sub-line:vertical {\n"
 "border: 1px solid #93dd03;\n"
@@ -392,6 +415,17 @@ class Ui_MainWindow(object):
 "color: #93dd03;\n"
 "}\n"
 "\n"
+"/*QScrollBar::sub-line:horizontal {\n"
+"border: 1px solid #93dd03;\n"
+"width: 30px;\n"
+"border-top-left-radius: 7px;\n"
+"border-bottom-left-radius: 7px;\n"
+"subcontrol-position: left;\n"
+"subcontrol-origin: margin;\n"
+"background-color: #111927;\n"
+"color: #93dd03;\n"
+"}*/\n"
+"\n"
 "QScrollBar::add-line:vertical {\n"
 "border: 1px solid #93dd03;\n"
 "height: 30px;\n"
@@ -402,17 +436,28 @@ class Ui_MainWindow(object):
 "background-color: #111927;\n"
 "color: #93dd03;\n"
 "}\n"
-"")
+"\n"
+"/*QScrollBar::add-line:horizontal {\n"
+"border: 1px solid #93dd03;\n"
+"width: 30px;\n"
+"border-top-right-radius: 7px;\n"
+"border-bottom-right-radius: 7px;\n"
+"subcontrol-position: right;\n"
+"margin-right: 30px;\n"
+"subcontrol-origin: margin;\n"
+"background-color: #111927;\n"
+"color: #93dd03;\n"
+"}*/")
         self.resultsPageContainer.setObjectName("resultsPageContainer")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.resultsPageContainer)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.resultsPageTitleLabel = QtWidgets.QLabel(self.resultsPageContainer)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.resultsPageTitleLabel.sizePolicy().hasHeightForWidth())
         self.resultsPageTitleLabel.setSizePolicy(sizePolicy)
-        self.resultsPageTitleLabel.setMinimumSize(QtCore.QSize(0, 60))
+        self.resultsPageTitleLabel.setMinimumSize(QtCore.QSize(0, 50))
         font = QtGui.QFont()
         font.setPointSize(25)
         font.setBold(False)
@@ -421,7 +466,7 @@ class Ui_MainWindow(object):
         self.resultsPageTitleLabel.setStyleSheet("color: #93dd03;\n"
 "background-color: #111927;\n"
 "border-radius: 15;\n"
-"margin: 5px;\n"
+"margin: 2px;\n"
 "margin-left: 40px;\n"
 "margin-right: 40px;")
         self.resultsPageTitleLabel.setText("")
@@ -434,12 +479,12 @@ class Ui_MainWindow(object):
         self.resultsPageScrollArea.setWidgetResizable(True)
         self.resultsPageScrollArea.setObjectName("resultsPageScrollArea")
         self.resultsPageScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 311))
+        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 40))
         self.resultsPageScrollAreaWidgetContents.setObjectName("resultsPageScrollAreaWidgetContents")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.resultsPageScrollAreaWidgetContents)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
         self.resultsPageDataLabel = QtWidgets.QLabel(self.resultsPageScrollAreaWidgetContents)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.resultsPageDataLabel.sizePolicy().hasHeightForWidth())
@@ -448,7 +493,7 @@ class Ui_MainWindow(object):
         font.setFamily("Monaco")
         font.setPointSize(12)
         self.resultsPageDataLabel.setFont(font)
-        self.resultsPageDataLabel.setStyleSheet("")
+        self.resultsPageDataLabel.setStyleSheet("padding-right: 32px;")
         self.resultsPageDataLabel.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.resultsPageDataLabel.setFrameShadow(QtWidgets.QFrame.Plain)
         self.resultsPageDataLabel.setText("")
@@ -598,8 +643,13 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.enterTextPage)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.enterTextContainer = QtWidgets.QWidget(self.enterTextPage)
-        self.enterTextContainer.setStyleSheet("QWidget#customCommandContainer {\n"
-"padding: 20px;\n"
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.enterTextContainer.sizePolicy().hasHeightForWidth())
+        self.enterTextContainer.setSizePolicy(sizePolicy)
+        self.enterTextContainer.setStyleSheet("QWidget#enterTextContainer {\n"
+"padding: 60px 20px 60px 20;\n"
 "background-color: #1a2332;\n"
 "border-radius: 15;\n"
 "}")
@@ -708,8 +758,8 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
-        self.mifareStackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(1)
+        self.mifareStackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

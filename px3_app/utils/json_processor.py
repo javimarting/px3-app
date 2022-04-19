@@ -67,12 +67,13 @@ def add_data_to_json_file(data: dict, json_file):
 
     """
 
-    with open(json_file, 'r+') as f:
-        file_data = json.load(f)
-        for k, v in data.items():
-            file_data[k] = v
-        f.seek(0)
-        json.dump(file_data, f, indent=2)
+    if data:
+        with open(json_file, 'r+') as f:
+            file_data = json.load(f)
+            for k, v in data.items():
+                file_data[k] = v
+            f.seek(0)
+            json.dump(file_data, f, indent=2)
 
 
 def add_date_time_to_json_file(json_file):
@@ -83,7 +84,7 @@ def add_date_time_to_json_file(json_file):
 
 
 def json_to_mf_tag(json_file) -> MifareClassic1k:
-    """Creates a MifareClassic1k tag object from a json file.
+    """Creates a Mifare Classic 1k tag object from a json file.
 
     Params:
         json_file (str): The json file path.
