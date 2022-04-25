@@ -3,7 +3,7 @@ import pexpect
 from px3_app.globals import ROOT_DIRECTORY
 
 
-class ProxmarkClient:
+class ProxmarkController:
     """A class that represents the Proxmark Client.
 
     Attributes:

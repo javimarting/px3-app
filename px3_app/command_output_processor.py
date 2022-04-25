@@ -33,21 +33,19 @@ def remove_lines(command_output: str) -> str:
 
     """
 
-    pattern = r'\r\n'
-    subs = r'\n'
-    command_output = re.sub(pattern, subs, command_output)
-    lines = command_output.splitlines(True)
-    mod_command_output = "".join([line for line in lines if line.endswith('\n')][1:])
+    raw_lines = re.split("\r\n", command_output)
+    lines = [re.split("\r", line)[-1] for line in raw_lines]
+    mod_command_output = "\n".join(lines[1:-1])
     return mod_command_output
 
 
 def process_command_output(command: str, command_output: str) -> str:
-    """Removes and replaces unwanted characters in the output string of a proxmark command and
+    """Removes and replaces unwanted characters in the output string of a proxmark_client command and
     converts it into HTML code.
 
      Args:
          command (str): Command executed
-         command_output (str): The output string of the proxmark command.
+         command_output (str): The output string of the proxmark_client command.
 
     Returns:
         mod_command_output (str): String containing the HTML code of the modified command output string.

@@ -30,9 +30,10 @@ class TestCommandOutputProcessor(unittest.TestCase):
 
     def test_remove_lines(self):
         text = 'hf search\r\n\r 🕔                                           \r\r 🕕  ' \
-               'Searching for ISO14443-A tag...\r\n[\x1b[32m+\x1b[0m]  UID: \x1b[32mAD 43 EE 01 \x1b[0m\r\n'
+               'Searching for ISO14443-A tag...\r\n[\x1b[32m+\x1b[0m]  UID: \x1b[32mAD 43 EE 01' \
+               ' \x1b[0m\r\n\x1b[1;32musb\x1b[0m] '
         result = command_output_processor.remove_lines(text)
-        expected = ' 🕕  Searching for ISO14443-A tag...\n[\x1b[32m+\x1b[0m]  UID: \x1b[32mAD 43 EE 01 \x1b[0m\n'
+        expected = ' 🕕  Searching for ISO14443-A tag...\n[\x1b[32m+\x1b[0m]  UID: \x1b[32mAD 43 EE 01 \x1b[0m'
         self.assertEqual(result, expected)
 
 

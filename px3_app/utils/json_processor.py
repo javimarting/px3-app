@@ -67,13 +67,12 @@ def add_data_to_json_file(data: dict, json_file):
 
     """
 
-    if data:
-        with open(json_file, 'r+') as f:
-            file_data = json.load(f)
-            for k, v in data.items():
-                file_data[k] = v
-            f.seek(0)
-            json.dump(file_data, f, indent=2)
+    with open(json_file, 'r+') as f:
+        file_data = json.load(f)
+        for k, v in data.items():
+            file_data[k] = v
+        f.seek(0)
+        json.dump(file_data, f, indent=2)
 
 
 def add_date_time_to_json_file(json_file):

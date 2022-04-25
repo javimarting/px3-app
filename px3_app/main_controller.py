@@ -1,12 +1,11 @@
 #!python3
 
-import sys
 from pathlib import Path
 
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow
 
 from px3_app.ui.MainWindow import Ui_MainWindow
-from px3_app.proxmark_client import ProxmarkClient
+from px3_app.proxmark_controller import ProxmarkController
 from px3_app.utils import file_manager, ansi_processor, json_processor
 from px3_app import command_output_processor
 from px3_app.models import MfTagsModel
@@ -21,7 +20,7 @@ class MainController(QMainWindow, Ui_MainWindow):
         self.resultsPageButtonContainer.hide()
         self.show_connect_proxmark_page()
 
-        self.proxmark = ProxmarkClient()
+        self.proxmark_client = ProxmarkController()
         self.mfTagsModel = MfTagsModel(command_output_processor.mf_tags)
         self.mfTagsListView.setModel(self.mfTagsModel)
 
@@ -95,13 +94,13 @@ class MainController(QMainWindow, Ui_MainWindow):
         self.mifareStackedWidget.setCurrentWidget(self.mifareSavedTagsPage)
         self.mfTagsModel.layoutChanged.emit()
 
-    def show_enter_text_page(self, type):
-        self.enter_text_type = type
-        if type == "custom command":
+    def show_enter_text_page(self, page_type):
+        self.enter_text_type = page_type
+        if page_type == "custom command":
             self.last_page = self.mainMenuPage
             self.textEdit.setPlaceholderText("Enter command")
             self.enterTextButton.setText("RUN")
-        elif type == "mf tag name" and self.get_selected_tag():
+        elif page_type == "mf tag name" and self.get_selected_tag():
             self.last_page = self.mifareSavedTagsPage
             self.textEdit.setPlaceholderText("Enter name")
             self.enterTextButton.setText("DONE")
@@ -154,7 +153,7 @@ class MainController(QMainWindow, Ui_MainWindow):
         self.show_results_page()
 
     def start_connection(self):
-        connection = self.proxmark.connect_proxmark()
+        connection = self.proxmark_client.connect_proxmark()
         self.topLogoLabel.show()
         if connection:
             self.show_main_menu_page()
@@ -166,7 +165,7 @@ class MainController(QMainWindow, Ui_MainWindow):
             self.set_results_data(title, data, last_page)
 
     def run_command(self, command, title, last_page):
-        result = self.proxmark.execute_command(command)
+        result = self.proxmark_client.execute_command(command)
         data = command_output_processor.process_command_output(command, result)
         self.set_results_data(title, data, last_page)
 
@@ -189,13 +188,13 @@ class MainController(QMainWindow, Ui_MainWindow):
         if tag:
             eml_file_path = SAVED_MF_TAGS_DIRECTORY_PATH / tag.files['dump_eml_file']
             command = f"hf mf eload --1k -f {eml_file_path.relative_to(str(Path.cwd()))}"
-            load_memory = self.proxmark.execute_command(command)
+            load_memory = self.proxmark_client.execute_command(command)
             self.show_mf_simulation_page()
             text = command_output_processor.process_command_output(command, load_memory)
             self.mifareSimulateLabel.setText(text)
 
     def simulate_mf_1k_tag(self):
-        result = self.proxmark.execute_command("hf mf sim --1k -i")
+        result = self.proxmark_client.execute_command("hf mf sim --1k -i")
         if result:
             self.show_mf_saved_tags_page()
 
@@ -245,7 +244,6 @@ class MainController(QMainWindow, Ui_MainWindow):
             self.show_mf_saved_tags_page()
             self.textEdit.setText("")
             self.enterTextButton.setText("")
-
 
     def update_give_change_name_button(self):
         tag = self.get_selected_tag()

@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
-from px3_app.controller import MainController
+from px3_app.main_controller import MainController
 
 
 def main():
