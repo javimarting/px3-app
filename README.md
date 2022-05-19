@@ -12,7 +12,7 @@ A cross-platform GUI for the [Proxmark3](https://github.com/RfidResearchGroup/pr
   - Give name to saved tags
   - Tag cloning
   - Tag simulation
-- Custom commands
+- Custom Proxmark Client commands
 
 ## Screenshots
 

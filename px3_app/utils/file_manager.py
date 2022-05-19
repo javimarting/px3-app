@@ -31,6 +31,7 @@ def add_date_to_filename(file_path: pathlib.Path, dt: datetime.datetime = dateti
 
     directory_path = file_path.parent
     filename = str(file_path.name)
+    dt = datetime.datetime.now()
     formatted_dt = dt.strftime('%Y%m%d-%H%M%S')
     new_filename = f"{formatted_dt}-{filename}"
     new_file_path = file_path.replace(directory_path / new_filename)

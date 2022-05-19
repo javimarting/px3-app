@@ -238,7 +238,7 @@ background-color: #1a2332;
 }</string>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="mifareOptionsPage">
              <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -632,6 +632,9 @@ margin-right: 40px;</string>
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
                    <property name="wordWrap">
                     <bool>true</bool>
                    </property>
@@ -800,7 +803,7 @@ margin-right: 40px;</string>
                   <x>0</x>
                   <y>0</y>
                   <width>400</width>
-                  <height>40</height>
+                  <height>319</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_21">

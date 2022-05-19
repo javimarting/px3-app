@@ -1,6 +1,6 @@
 #!python3
 
-from pathlib import Path
+import time
 
 from PyQt5.QtWidgets import QMainWindow
 
@@ -187,14 +187,18 @@ class MainController(QMainWindow, Ui_MainWindow):
         tag = self.get_selected_tag()
         if tag:
             eml_file_path = SAVED_MF_TAGS_DIRECTORY_PATH / tag.files['dump_eml_file']
-            command = f"hf mf eload --1k -f {eml_file_path.relative_to(str(Path.cwd()))}"
+            command = f"hf mf eload --1k -f {str(eml_file_path)}"
             load_memory = self.proxmark_client.execute_command(command)
+            other = self.proxmark_client.execute_command(" ")
+            # output = load_memory + other
             self.show_mf_simulation_page()
-            text = command_output_processor.process_command_output(command, load_memory)
-            self.mifareSimulateLabel.setText(text)
+            # text = command_output_processor.process_command_output(command, output)
+            self.mifareSimulateLabel.setText("Press START to begin the simulation.\n\nPress the button "
+                                             "on the side of the Proxmark3 to end the simulation.")
 
     def simulate_mf_1k_tag(self):
-        result = self.proxmark_client.execute_command("hf mf sim --1k -i")
+        result = self.proxmark_client.execute_command("hf mf sim --1k -i", "Emulator stopped.")
+        self.proxmark_client.execute_command(" ")
         if result:
             self.show_mf_saved_tags_page()
 

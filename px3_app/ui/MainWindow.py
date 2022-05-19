@@ -355,6 +355,7 @@ class Ui_MainWindow(object):
         self.mifareSimulateLabel = QtWidgets.QLabel(self.mifareSimulateContainer)
         self.mifareSimulateLabel.setStyleSheet("padding: 5;")
         self.mifareSimulateLabel.setText("")
+        self.mifareSimulateLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.mifareSimulateLabel.setWordWrap(True)
         self.mifareSimulateLabel.setObjectName("mifareSimulateLabel")
         self.verticalLayout_15.addWidget(self.mifareSimulateLabel)
@@ -479,7 +480,7 @@ class Ui_MainWindow(object):
         self.resultsPageScrollArea.setWidgetResizable(True)
         self.resultsPageScrollArea.setObjectName("resultsPageScrollArea")
         self.resultsPageScrollAreaWidgetContents = QtWidgets.QWidget()
-        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 40))
+        self.resultsPageScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 319))
         self.resultsPageScrollAreaWidgetContents.setObjectName("resultsPageScrollAreaWidgetContents")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.resultsPageScrollAreaWidgetContents)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
@@ -759,7 +760,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(1)
-        self.mifareStackedWidget.setCurrentIndex(1)
+        self.mifareStackedWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

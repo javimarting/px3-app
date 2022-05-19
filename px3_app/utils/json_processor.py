@@ -63,7 +63,7 @@ def add_data_to_json_file(data: dict, json_file):
 
     Args:
         data (dict): Dictionary containing the data.
-        json_file (str): Path of the json file.
+        json_file: Path of the json file.
 
     """
 
@@ -73,6 +73,8 @@ def add_data_to_json_file(data: dict, json_file):
             file_data[k] = v
         f.seek(0)
         json.dump(file_data, f, indent=2)
+        f.truncate()
+        return file_data
 
 
 def add_date_time_to_json_file(json_file):
