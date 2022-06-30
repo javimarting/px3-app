@@ -28,12 +28,11 @@ class ProxmarkController:
             return self.child
 
     def execute_command(self, command, stop='pm3 --> '):
+        print("Executing command")
         self.child.sendline(command)
         result = self.child.expect_exact([stop, pexpect.EOF, pexpect.TIMEOUT])
         if result == 0:
             data = self.child.before
-            print(f"\n\nCommand: {command}")
-            print(f"{data}\n")
             return data
 
     def simulate_tag(self, tag_path):

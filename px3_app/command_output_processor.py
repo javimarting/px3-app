@@ -39,7 +39,7 @@ def remove_lines(command_output: str) -> str:
     return mod_command_output
 
 
-def process_command_output(command: str, command_output: str) -> str:
+def process_command_output(command: str, command_output: str):
     """Removes and replaces unwanted characters in the output string of a proxmark_client command and
     converts it into HTML code.
 
@@ -56,6 +56,8 @@ def process_command_output(command: str, command_output: str) -> str:
         command_output = process_auto_output(command_output)
     elif command == "hf mf autopwn":
         command_output = process_autopwn_output(command_output)
+        if not command_output:
+            return None
 
     command_output = f"\x1b[33mCommand\x1b[0m: {command}\n\n" + remove_lines(command_output)
     mod_command_output = ansi_processor.ansi_to_html(command_output)
@@ -91,7 +93,7 @@ def process_auto_output(command_output: str) -> str:
     return mod_command_output
 
 
-def process_autopwn_output(command_output: str) -> str:
+def process_autopwn_output(command_output: str):
     """Checks the names of the created mf_tags by the 'autopwn' command and moves them to the mf_tags folder.
 
     Args:
@@ -103,7 +105,9 @@ def process_autopwn_output(command_output: str) -> str:
     """
 
     mod_command_output = command_output
-    if re.search(r'hf-mf-', command_output):
+    if not re.search(r'hf-mf-', command_output):
+        return None
+    try:
         filenames = []
         keys_filename = re.search(r'hf-mf-[^\r]*-key[^\r]*\.bin', command_output).group()
         filenames.append(keys_filename)
@@ -125,8 +129,9 @@ def process_autopwn_output(command_output: str) -> str:
         mf_tag = json_processor.json_to_mf_tag(files[json_filename])
         mf_tags.append(mf_tag)
         mf_tags.sort(key=lambda x: x.date, reverse=True)
-
-    return mod_command_output
+        return mod_command_output
+    except:
+        pass
 
 
 def get_protocol_type(command_output: str):

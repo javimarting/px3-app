@@ -45,7 +45,7 @@ class MainController(QMainWindow, Ui_MainWindow):
             lambda: self.run_command("auto", "TAG INFO", self.basicCommandsPage)
         )
         self.mfAutopwnButton.clicked.connect(
-            lambda: self.run_command("hf mf autopwn", "AUTOPWN INFO", self.mifareOptionsPage)
+            lambda: self.run_autopwn_command("hf mf autopwn", "AUTOPWN INFO", self.mifareOptionsPage)
         )
         self.hwStatusButton.clicked.connect(
             lambda: self.run_command("hw status", "HARDWARE STATUS", self.basicCommandsPage)
@@ -168,6 +168,14 @@ class MainController(QMainWindow, Ui_MainWindow):
         result = self.proxmark_client.execute_command(command)
         data = command_output_processor.process_command_output(command, result)
         self.set_results_data(title, data, last_page)
+
+    def run_autopwn_command(self, command, title, last_page):
+        while True:
+            result = self.proxmark_client.execute_command(command)
+            data = command_output_processor.process_command_output(command, result)
+            if data:
+                self.set_results_data(title, data, last_page)
+                break
 
     # Gets the selected Mifare 1k tag from the mfTagsListView
     def get_selected_tag(self):
