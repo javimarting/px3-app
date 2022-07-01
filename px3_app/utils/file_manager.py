@@ -31,6 +31,9 @@ def add_date_to_filename(file_path: pathlib.Path, dt: datetime.datetime = dateti
 
     directory_path = file_path.parent
     filename = str(file_path.name)
+    last_character = filename[filename.index(".") - 1]
+    if last_character.isnumeric():
+        filename = filename[:filename.index(".") - 2] + filename[filename.index("."):]
     dt = datetime.datetime.now()
     formatted_dt = dt.strftime('%Y%m%d-%H%M%S')
     new_filename = f"{formatted_dt}-{filename}"
