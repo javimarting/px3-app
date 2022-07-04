@@ -1,12 +1,13 @@
 # ![PX3 APP](data/icons/px3-app-logo-filled-background.png)
 
-A cross-platform GUI for the [Proxmark3](https://github.com/RfidResearchGroup/proxmark3) client.
+A cross-platform GUI for the [Proxmark3](https://github.com/RfidResearchGroup/proxmark3).
 
 ## Functionalities
 
 - Basic functionalities:
+  - Hardware status
   - Automatic tag identification
-  - Low and high frequency tag identification
+  - Low and High Frequency tag identification
 - Mifare Classic:
   - Read and save tag information
   - Give name to saved tags
@@ -21,7 +22,7 @@ A cross-platform GUI for the [Proxmark3](https://github.com/RfidResearchGroup/pr
 
 ## Installation
 
-1. Install the [proxmark3](https://github.com/RfidResearchGroup/proxmark3) client on your system.
+1. Install the [proxmark3](https://github.com/RfidResearchGroup/proxmark3) Client on your system.
 2. Clone this repository:
    ```bash
    git clone https://github.com/javimarting/px3-app
